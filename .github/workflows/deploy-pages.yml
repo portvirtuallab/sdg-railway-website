@@ -32,7 +32,7 @@ jobs:
       - run: node scripts/check-links.mjs out "$NEXT_PUBLIC_BASE_PATH"
       - run: touch out/.nojekyll
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: out
 
