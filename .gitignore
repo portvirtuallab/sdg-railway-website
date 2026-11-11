@@ -1,6 +1,12 @@
-node_modules/
 .next/
 out/
+node_modules/
+next-env.d.ts
+*.tsbuildinfo
+coverage/
+playwright-report/
+test-results/
 .env*
 !.env.example
 .DS_Store
+Thumbs.db
