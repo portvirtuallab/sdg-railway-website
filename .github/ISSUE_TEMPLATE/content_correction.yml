@@ -1,0 +1,29 @@
+name: Content correction
+description: Report wrong, outdated or missing content (terminals, routes, equipment, glossary, documents)
+labels: [content, needs-review]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current content
+    validations:
+      required: true
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed correction
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source or evidence
+      description: Where the correct information comes from. Scenario decisions need owner approval.
+    validations:
+      required: true
