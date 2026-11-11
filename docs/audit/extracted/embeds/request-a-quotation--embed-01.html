@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PVL PIN CODE Verification</title>
+  <style>
+    :root {
+      --primary: #004aad;
+      --accent: #2c7dfa;
+      --success: #20c997;
+      --error: #dc3545;
+      --bg-light: #f9fafc;
+      --secondary: #6c757d;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+      width: 90%;
+      max-width: 420px;
+      animation: fadeIn 0.8s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 0 auto 20px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 25px;
+    }
+    .code-input-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    .code-input {
+      width: 55px;
+      height: 65px;
+      font-size: 26px;
+      text-align: center;
+      border-radius: 10px;
+      border: 2px solid #dce3ec;
+      transition: all 0.25s ease;
+      font-weight: 600;
+    }
+    .code-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(44, 125, 250, 0.2);
+      transform: scale(1.05);
+    }
+    .code-input.filled {
+      border-color: var(--success);
+      background: #f8fff9;
+    }
+    .code-input.error {
+      border-color: var(--error);
+      background: #fff8f8;
+      animation: shake 0.5s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    .submit-btn {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      padding: 14px 0;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(44, 125, 250, 0.3);
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .dashboard-btn {
+      background: linear-gradient(135deg, var(--success), #28a745);
+      color: white;
+      border: none;
+      padding: 12px 0;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+      display: none;
+      text-align: center;
+      text-decoration: none;
+    }
+    .dashboard-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(32, 201, 151, 0.3);
+    }
+    .message {
+      margin-top: 20px;
+      font-weight: 600;
+      display: none;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .loading {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #666;
+      margin-top: 20px;
+    }
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @media (max-width: 480px) {
+      .code-input {
+        width: 45px;
+        height: 55px;
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">🔒</div>
+    <h1>PVL PIN CODE</h1>
+    <p class="subtitle">Enter your 4-digit access code to continue</p>
+    <div class="code-input-container" id="inputs"></div>
+    <button class="submit-btn" id="verifyBtn" disabled>Verify Access</button>
+    <a class="dashboard-btn" id="dashboardBtn" href="https://sites.google.com/escolaeuropea.eu/sdgrailway/request-a-quotation/railway-dashboard" target="_blank">🎉 Continue to Dashboard</a>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <span>Verifying code...</span>
+    </div>
+    <div class="message" id="message"></div>
+  </div>
+<script>
+  // 🌐 CONFIGURACIÓN
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGDEMJiUw7bicZoSakXAemfQhn2bKqmp9NSrNMBys0Ud1xgMZM2KiBNsvp03L_LxrWZg/exec';
+  const DASHBOARD_URL = 'https://sites.google.com/escolaeuropea.eu/sdgrailway/request-a-quotation/railway-dashboard';
+
+  // 🔢 Crear dinámicamente inputs
+  const inputsContainer = document.getElementById('inputs');
+  for (let i = 0; i < 4; i++) {
+    const input = document.createElement('input');
+    input.className = 'code-input';
+    input.maxLength = 1;
+    input.type = 'text';
+    inputsContainer.appendChild(input);
+  }
+  const inputs = document.querySelectorAll('.code-input');
+  const verifyBtn = document.getElementById('verifyBtn');
+  const dashboardBtn = document.getElementById('dashboardBtn');
+  const message = document.getElementById('message');
+  const loading = document.getElementById('loading');
+
+  // Lógica de los inputs
+  inputs.forEach((input, i) => {
+    input.addEventListener('input', () => {
+      if (!/^\d$/.test(input.value)) input.value = '';
+      if (input.value) {
+        input.classList.add('filled');
+        input.classList.remove('error');
+        if (i < 3) inputs[i + 1].focus();
+      } else {
+        input.classList.remove('filled');
+      }
+      verifyBtn.disabled = !Array.from(inputs).every(x => x.value);
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !input.value && i > 0) inputs[i - 1].focus();
+      if (e.key === 'Enter' && !verifyBtn.disabled) verifyBtn.click();
+    });
+    input.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const pastedData = e.clipboardData.getData('text').replace(/\D/g, '');
+      if (pastedData.length === 4) {
+        inputs.forEach((inp, j) => {
+          inp.value = pastedData[j] || '';
+          if (inp.value) inp.classList.add('filled');
+          else inp.classList.remove('filled');
+        });
+        verifyBtn.disabled = !Array.from(inputs).every(x => x.value);
+      }
+    });
+  });
+
+  // Lógica del botón de verificación
+  verifyBtn.addEventListener('click', async () => {
+    const code = Array.from(inputs).map(i => i.value).join('');
+    message.textContent = 'Verifying your PVL PIN CODE...';
+    message.style.display = 'block';
+    message.className = 'message';
+    loading.style.display = 'flex';
+    verifyBtn.disabled = true;
+    try {
+      const res = await fetch(`${APPS_SCRIPT_URL}?code=${code}`);
+      const data = await res.json();
+      if (data.valid) {
+        message.textContent = '✅ Valid code! Click "Continue to Dashboard" to proceed.';
+        message.className = 'message success';
+        verifyBtn.style.display = 'none'; // Ocultar botón de verificación
+        dashboardBtn.style.display = 'block'; // Mostrar botón de dashboard
+      } else {
+        message.textContent = '❌ Invalid PVL PIN CODE. Please try again.';
+        message.className = 'message error';
+        inputs.forEach(input => {
+          input.classList.add('error');
+          setTimeout(() => input.classList.remove('error'), 500);
+        });
+      }
+    } catch {
+      message.textContent = '⚠️ Connection error. Please try again.';
+      message.className = 'message error';
+      inputs.forEach(input => {
+        input.classList.add('error');
+        setTimeout(() => input.classList.remove('error'), 500);
+      });
+    } finally {
+      loading.style.display = 'none';
+      verifyBtn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

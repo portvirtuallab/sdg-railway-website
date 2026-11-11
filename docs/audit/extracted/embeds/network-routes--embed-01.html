@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAST Rail Services</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #ffffff;
+    color: #111;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 4rem 1.5rem 2.5rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    color: #666;
+    border: 0.5px solid rgba(0,0,0,0.15);
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -.5px;
+    color: #111;
+    margin-bottom: .5rem;
+  }
+  .hero p {
+    font-size: 15px;
+    color: #777;
+    line-height: 1.6;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-n { font-size: 24px; font-weight: 600; color: #111; }
+  .stat-l { font-size: 11px; color: #999; letter-spacing: .5px; text-transform: uppercase; margin-top: 3px; }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    width: 48px;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 2.5rem auto;
+  }
+
+  /* ── FILTERS ── */
+  .filters-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 2rem;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+  }
+  .fbtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 0.5px solid rgba(0,0,0,0.15);
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #555;
+    transition: all .2s ease;
+    letter-spacing: .2px;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .fbtn:hover {
+    border-color: rgba(0,0,0,0.3);
+    color: #111;
+    background: #fafafa;
+  }
+  .fbtn.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+  .results-bar {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .results-count { font-size: 12px; color: #999; }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 16px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.10);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+    display: flex;
+    flex-direction: column;
+    outline: none;
+  }
+  .card:hover {
+    border-color: rgba(0,0,0,0.22);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .card:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.18);
+  }
+  .card.selected {
+    border-color: rgba(0,0,0,0.35);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+  }
+  .card.hidden { display: none; }
+
+  .card-accent { height: 3px; width: 100%; }
+
+  .card-head {
+    padding: 14px 16px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.07);
+  }
+  .flag {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    flex-shrink: 0;
+    font-family: 'Courier New', monospace;
+  }
+  .card-info { flex: 1; min-width: 0; }
+  .card-name { font-size: 13px; font-weight: 600; color: #111; line-height: 1.35; margin-bottom: 3px; }
+  .card-sub { font-size: 11px; color: #999; }
+
+  .card-body {
+    padding: 12px 16px 14px;
+    flex: 1;
+  }
+  .stop-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+  }
+  .stop-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 16px;
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+  .stop-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid;
+  }
+  .stop-connector {
+    width: 1px;
+    height: 10px;
+    background: rgba(0,0,0,0.12);
+    margin: 1px 0;
+  }
+  .stop-name {
+    font-size: 12px;
+    color: #888;
+    padding: 4px 0;
+    line-height: 1;
+  }
+  .stop-row.first .stop-name,
+  .stop-row.last .stop-name {
+    font-weight: 600;
+    color: #111;
+    font-size: 12px;
+  }
+
+  .card-footer {
+    padding: 9px 16px;
+    border-top: 0.5px solid rgba(0,0,0,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fafafa;
+  }
+  .stops-badge {
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .arrow-icon { font-size: 14px; color: #ccc; }
+
+  /* ── EMPTY ── */
+  .empty {
+    grid-column: 1 / -1;
+    padding: 3.5rem;
+    text-align: center;
+    color: #bbb;
+    font-size: 13px;
+    border: 0.5px dashed rgba(0,0,0,0.12);
+    border-radius: 14px;
+  }
+  .empty i { font-size: 26px; display: block; margin-bottom: 10px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .hero h1 { font-size: 24px; }
+    .stats-row { gap: 1.75rem; }
+    .grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 1rem 3rem; }
+    .card-name { font-size: 12px; }
+  }
+  @media (max-width: 380px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">
+    <i class="ti ti-train" style="font-size:13px"></i>
+    Freight rail network
+  </div>
+  <h1>FAST Rail Services</h1>
+  <p>Multi-country intermodal rail corridors across Europe &amp; MENA</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-n">13</div><div class="stat-l">Corridors</div></div>
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">Countries</div></div>
+    <div class="stat"><div class="stat-n">38</div><div class="stat-l">Terminals</div></div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- FILTERS -->
+<div class="filters-wrap">
+  <div class="filters" role="tablist" aria-label="Filter by country">
+    <button class="fbtn active" data-f="all" type="button"><i class="ti ti-world" style="font-size:13px;vertical-align:-2px"></i> All corridors</button>
+    <button class="fbtn" data-f="FR" type="button">🇫🇷 France</button>
+    <button class="fbtn" data-f="ES" type="button">🇪🇸 Spain</button>
+    <button class="fbtn" data-f="IT" type="button">🇮🇹 Italy</button>
+    <button class="fbtn" data-f="PT" type="button">🇵🇹 Portugal</button>
+    <button class="fbtn" data-f="JO" type="button">🇯🇴 Jordan</button>
+    <button class="fbtn" data-f="EG" type="button">🇪🇬 Egypt</button>
+  </div>
+</div>
+
+<div class="results-bar">
+  <span class="results-count" id="count">Showing 13 corridors</span>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid">
+
+  <!-- FRANCE -->
+  <article class="card" data-c="FR" tabindex="0">
+    <div class="card-accent" style="background:#378ADD"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#E6F1FB;color:#0C447C">FR</div>
+      <div class="card-info">
+        <div class="card-name">Mediterranean Corridor</div>
+        <div class="card-sub">FAST France</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#378ADD;border-color:#378ADD"></div><div class="stop-connector"></div></div><span class="stop-name">Barcelona</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#378ADD"></div><div class="stop-connector"></div></div><span class="stop-name">Perpignan</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#378ADD"></div><div class="stop-connector"></div></div><span class="stop-name">Lyon</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#378ADD;border-color:#378ADD"></div></div><span class="stop-name">Paris</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">4 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <article class="card" data-c="FR" tabindex="0">
+    <div class="card-accent" style="background:#378ADD"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#E6F1FB;color:#0C447C">FR</div>
+      <div class="card-info">
+        <div class="card-name">Atlantic Branch</div>
+        <div class="card-sub">FAST France</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#378ADD;border-color:#378ADD"></div><div class="stop-connector"></div></div><span class="stop-name">Perpignan</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#378ADD"></div><div class="stop-connector"></div></div><span class="stop-name">Toulouse</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#378ADD;border-color:#378ADD"></div></div><span class="stop-name">Bordeaux</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">3 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <article class="card" data-c="FR" tabindex="0">
+    <div class="card-accent" style="background:#378ADD"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#E6F1FB;color:#0C447C">FR</div>
+      <div class="card-info">
+        <div class="card-name">Southern Branch</div>
+        <div class="card-sub">FAST France</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#378ADD;border-color:#378ADD"></div><div class="stop-connector"></div></div><span class="stop-name">Lyon</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#378ADD;border-color:#378ADD"></div></div><span class="stop-name">Marseille</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">2 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <!-- SPAIN -->
+  <article class="card" data-c="ES" tabindex="0">
+    <div class="card-accent" style="background:#EF9F27"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#FAEEDA;color:#633806">ES</div>
+      <div class="card-info">
+        <div class="card-name">Northern Corridor</div>
+        <div class="card-sub">FAST Spain</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#EF9F27;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Barcelona</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Zaragoza</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Pamplona</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#EF9F27;border-color:#EF9F27"></div></div><span class="stop-name">Bilbao</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">4 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <article class="card" data-c="ES" tabindex="0">
+    <div class="card-accent" style="background:#EF9F27"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#FAEEDA;color:#633806">ES</div>
+      <div class="card-info">
+        <div class="card-name">Central Corridor</div>
+        <div class="card-sub">FAST Spain</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#EF9F27;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Barcelona</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Zaragoza</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Madrid</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#EF9F27;border-color:#EF9F27"></div></div><span class="stop-name">Valladolid</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">4 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <article class="card" data-c="ES" tabindex="0">
+    <div class="card-accent" style="background:#EF9F27"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#FAEEDA;color:#633806">ES</div>
+      <div class="card-info">
+        <div class="card-name">Mediterranean Corridor</div>
+        <div class="card-sub">FAST Spain</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#EF9F27;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Barcelona</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#EF9F27;border-color:#EF9F27"></div></div><span class="stop-name">Tarragona</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">2 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <article class="card" data-c="ES" tabindex="0">
+    <div class="card-accent" style="background:#EF9F27"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#FAEEDA;color:#633806">ES</div>
+      <div class="card-info">
+        <div class="card-name">Eastern Corridor</div>
+        <div class="card-sub">FAST Spain</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#EF9F27;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Valencia</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#EF9F27"></div><div class="stop-connector"></div></div><span class="stop-name">Madrid</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#EF9F27;border-color:#EF9F27"></div></div><span class="stop-name">Zaragoza</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">3 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <!-- ITALY -->
+  <article class="card" data-c="IT" tabindex="0">
+    <div class="card-accent" style="background:#1D9E75"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#E1F5EE;color:#085041">IT</div>
+      <div class="card-info">
+        <div class="card-name">Adriatic Corridor</div>
+        <div class="card-sub">FAST Italy</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#1D9E75;border-color:#1D9E75"></div><div class="stop-connector"></div></div><span class="stop-name">Verona</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#1D9E75"></div><div class="stop-connector"></div></div><span class="stop-name">Pescara</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#1D9E75;border-color:#1D9E75"></div></div><span class="stop-name">Bari</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">3 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <article class="card" data-c="IT" tabindex="0">
+    <div class="card-accent" style="background:#1D9E75"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#E1F5EE;color:#085041">IT</div>
+      <div class="card-info">
+        <div class="card-name">Tyrrhenian Corridor</div>
+        <div class="card-sub">FAST Italy</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#1D9E75;border-color:#1D9E75"></div><div class="stop-connector"></div></div><span class="stop-name">Civitavecchia</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#1D9E75"></div><div class="stop-connector"></div></div><span class="stop-name">Santa Palomba</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#1D9E75;border-color:#1D9E75"></div></div><span class="stop-name">Verona</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">3 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <article class="card" data-c="IT" tabindex="0">
+    <div class="card-accent" style="background:#1D9E75"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#E1F5EE;color:#085041">IT</div>
+      <div class="card-info">
+        <div class="card-name">Central Logistics Line</div>
+        <div class="card-sub">FAST Italy</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#1D9E75;border-color:#1D9E75"></div><div class="stop-connector"></div></div><span class="stop-name">Santa Palomba</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#1D9E75"></div><div class="stop-connector"></div></div><span class="stop-name">Pescara</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#1D9E75;border-color:#1D9E75"></div></div><span class="stop-name">Bari</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">3 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <!-- PORTUGAL -->
+  <article class="card" data-c="PT" tabindex="0">
+    <div class="card-accent" style="background:#639922"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#EAF3DE;color:#27500A">PT</div>
+      <div class="card-info">
+        <div class="card-name">Portugal Freight Network</div>
+        <div class="card-sub">FAST Portugal</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#639922;border-color:#639922"></div><div class="stop-connector"></div></div><span class="stop-name">Aveiro</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#639922"></div><div class="stop-connector"></div></div><span class="stop-name">Porto</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#639922"></div><div class="stop-connector"></div></div><span class="stop-name">Entroncamento</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#639922"></div><div class="stop-connector"></div></div><span class="stop-name">Lisbon</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#639922"></div><div class="stop-connector"></div></div><span class="stop-name">Poceirão</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#639922"></div><div class="stop-connector"></div></div><span class="stop-name">Setúbal</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#639922"></div><div class="stop-connector"></div></div><span class="stop-name">Ermidas do Sado</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#639922;border-color:#639922"></div></div><span class="stop-name">Sines</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">8 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <!-- JORDAN -->
+  <article class="card" data-c="JO" tabindex="0">
+    <div class="card-accent" style="background:#D4537E"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#FBEAF0;color:#72243E">JO</div>
+      <div class="card-info">
+        <div class="card-name">Red Sea Corridor</div>
+        <div class="card-sub">FAST Jordan</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#D4537E;border-color:#D4537E"></div><div class="stop-connector"></div></div><span class="stop-name">Aqaba</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#D4537E"></div><div class="stop-connector"></div></div><span class="stop-name">Amman</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#D4537E;border-color:#D4537E"></div></div><span class="stop-name">Ramallah</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">3 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <!-- EGYPT -->
+  <article class="card" data-c="EG" tabindex="0">
+    <div class="card-accent" style="background:#7F77DD"></div>
+    <div class="card-head">
+      <div class="flag" style="background:#EEEDFE;color:#3C3489">EG</div>
+      <div class="card-info">
+        <div class="card-name">Delta Corridor</div>
+        <div class="card-sub">FAST Egypt</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="stop-row first"><div class="stop-line"><div class="stop-dot" style="background:#7F77DD;border-color:#7F77DD"></div><div class="stop-connector"></div></div><span class="stop-name">Alexandria</span></div>
+      <div class="stop-row"><div class="stop-line"><div class="stop-dot" style="background:#fff;border-color:#7F77DD"></div><div class="stop-connector"></div></div><span class="stop-name">Cairo</span></div>
+      <div class="stop-row last"><div class="stop-line"><div class="stop-dot" style="background:#7F77DD;border-color:#7F77DD"></div></div><span class="stop-name">Damietta</span></div>
+    </div>
+    <div class="card-footer"><span class="stops-badge">3 stops</span><i class="ti ti-arrow-right arrow-icon"></i></div>
+  </article>
+
+  <div class="empty" id="empty" style="display:none">
+    <i class="ti ti-train-off"></i>
+    No corridors found for this filter
+  </div>
+
+</div>
+
+<script>
+  const btns = document.querySelectorAll('.fbtn');
+  const cards = document.querySelectorAll('.card[data-c]');
+  const empty = document.getElementById('empty');
+  const countEl = document.getElementById('count');
+
+  btns.forEach(b => {
+    b.addEventListener('click', () => {
+      btns.forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      const f = b.dataset.f;
+      let n = 0;
+      cards.forEach(c => {
+        const show = f === 'all' || c.dataset.c === f;
+        c.classList.toggle('hidden', !show);
+        if (show) n++;
+      });
+      empty.style.display = n === 0 ? 'block' : 'none';
+      countEl.textContent = n === 0 ? 'No results' : `Showing ${n} corridor${n === 1 ? '' : 's'}`;
+    });
+  });
+
+  cards.forEach(c => {
+    c.addEventListener('click', () => {
+      cards.forEach(x => x.classList.remove('selected'));
+      c.classList.add('selected');
+    });
+    c.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); }
+    });
+  });
+</script>
+
+</body>
+</html>

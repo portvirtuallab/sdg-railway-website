@@ -1,0 +1,17 @@
+<section style="background-color:#062659; color:white; text-align:center; padding:18px 20px; border-radius:12px; max-width:900px; margin:40px auto; box-shadow:0 4px 12px rgba(0,0,0,0.2); font-family:'Montserrat',sans-serif;">
+  <h3 style="font-size:22px; margin-bottom:10px;">Don't know the technical terms?</h3>
+  <p style="font-size:15px; margin-bottom:20px;">Check their meanings and definitions in our interactive glossary.</p>
+  <a href="https://sites.google.com/escolaeuropea.eu/sdgrailway/resources" 
+     style="background-color:#37a053; color:white; text-decoration:none; padding:12px 25px; border-radius:6px; font-weight:600; transition:all 0.3s ease;">
+     Go to Glossary →
+  </a>
+</section>
+
+<script>
+  // Small hover effect for button
+  const btn = document.querySelector('a[href="YOUR_GLOSSARY_PAGE_URL"]');
+  if(btn){
+    btn.addEventListener('mouseover', ()=> btn.style.backgroundColor='#2d8644');
+    btn.addEventListener('mouseout', ()=> btn.style.backgroundColor='#37a053');
+  }
+</script>

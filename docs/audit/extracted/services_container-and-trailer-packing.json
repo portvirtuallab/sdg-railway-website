@@ -1,0 +1,305 @@
+{
+  "slug": "services/container-and-trailer-packing",
+  "url": "https://sites.google.com/escolaeuropea.eu/sdgrailway/services/container-and-trailer-packing",
+  "title": "SDG Railway - Container and Trailer Packing",
+  "sections": [
+    {
+      "index": 0,
+      "text": "# Container and Trailer Packing",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 1,
+      "text": "Our container and trailer packing operations follow strict intermodal safety standards to ensure secure, efficient, and traceable handling of all cargo.\n\nOur loading processes comply with European railway regulations (UIC, EN 12195, and RID), and are designed to optimize both stability and sustainability across every journey.",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 2,
+      "text": "Pre-Loading Inspection",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 3,
+      "text": "Before each unit is loaded:\n\nThe container or semi-trailer is checked for structural integrity and cleanliness.\n\nWeight and Verified Gross Mass (VGM) are confirmed according to SOLAS regulations.\n\nDangerous goods, if applicable, are verified according to RID classification and documentation.\n\nEvery inspection is digitally logged through SDG Railway’s Operational ERP, ensuring full traceability and compliance.",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 4,
+      "text": "Loading Process",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 5,
+      "text": "",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 6,
+      "text": "##\n\nContainerized cargo\n\nContainers are handled using gantry cranes or reach stackers in accordance with UIC 592 standards. Each unit is lifted vertically and placed precisely on the wagon’s twist locks, ensuring full alignment.\n\nOperators verify that all four corners are securely locked before train dispatch. This process is mainly used for 20’, 40’, and 45’ containers and ensures maximum accuracy and efficiency in intermodal handling.\n\n##\n\nPocket Wagon System -T3000e System\n\nSemi-trailers compliant with the P400 profile are loaded vertically onto pocket wagons (type T3000e) using a Lift-on/Lift-off (Lo-Lo) system.\n\nThe trailer is lifted by crane and positioned so that the wheels rest in the wagon’s lower pockets, while the kingpin is locked into a front support mechanism.\n\nThis unaccompanied intermodal loading method allows only the trailer to travel by rail, while the tractor unit and driver remain at the terminal. The system ensures efficient terminal operations, safe load securing, and full compatibility across European intermodal rail corridors.\n\n##\n\nSwap bodies\n\nThe swap body is lifted from the truck chassis and carefully positioned onto dedicated wagon supports, which are designed to accommodate its foldable legs and structural frame. Once in place, the unit is secured using locking and support systems that ensure stability during rail transport.\n\nThis Lift-on/Lift-off (Lo-Lo) loading method enables efficient and flexible unaccompanied intermodal transport, allowing the swap body to move independently of the road vehicle. The system ensures fast terminal operations, optimal weight distribution, and high compatibility with European rail networks and intermodal corridors.",
+      "embeds": [],
+      "links": [
+        {
+          "t": "",
+          "h": "#h.6cwbdt2u4vdb"
+        },
+        {
+          "t": "",
+          "h": "#h.ancc0n7nokhh"
+        },
+        {
+          "t": "",
+          "h": "#h.isp4lf1xzi4n"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "text": "",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 8,
+      "text": "##\n\nVehicles (Car Transport)\n\nVehicles are loaded onto specialized rail wagons (autorack wagons) using a Roll-on/Roll-off (Ro-Ro) system.\n\nCars, vans, or light commercial vehicles are driven directly onto the wagons via ramps, where they are positioned on single or multi-level decks. Once in place, the vehicles are secured using wheel chocks and lashing systems to prevent movement during rail transport.\n\nThis Ro-Ro loading method enables fast and efficient terminal operations, minimizes handling risks, and is widely used in the automotive industry for large-scale vehicle distribution across European rail corridors.\n\n##\n\nRolling Highway\n\nThe Rolling Highway (Ro-La) system allows complete trucks—tractor unit and semi-trailer—to be loaded horizontally onto low-floor rail wagons using a Roll-on/Roll-off (Ro-Ro) method.\n\nThe driver steers the truck onto the train via a ramp, and the vehicle is secured on specially designed wagons with very low deck heights.\n\nThis system enables accompanied or semi-accompanied intermodal transport, as drivers may travel with the train or return separately. Ro-La is mainly used on environmentally sensitive corridors, such as Alpine routes, to reduce road congestion, emissions, and driving restrictions while ensuring seamless cross-border freight movement.",
+      "embeds": [],
+      "links": [
+        {
+          "t": "",
+          "h": "#h.pvxgtzdoisen"
+        },
+        {
+          "t": "",
+          "h": "#h.ua22lakx3wcc"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "text": "Weight Distribution & Safety",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 10,
+      "text": "Cargo must be evenly distributed to maintain wagon balance and safe braking performance.\n\nHeavy containers are placed toward the center of the train; lighter units are arranged on the outer wagons.\n\nLoad securing follows EN 12195-1 (Lashing & Securing of Cargo) standards, guaranteeing optimal safety during rail transport.\n\nTo reinforce compliance and packaging efficiency, SDG Railway collaborates with PlayPackaging, our trusted partner specialized in sustainable and certified cargo packaging solutions designed for intermodal transport.\n\nOur digital Load Planner Tool automatically verifies axle load limits and overall stability before train departure, optimizing operational reliability and environmental performance.",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 11,
+      "text": "",
+      "embeds": [
+        {
+          "file": "embeds/services_container-and-trailer-packing--embed-01.html",
+          "bytes": 7924,
+          "iframes": [],
+          "forms": [],
+          "inputs": 2,
+          "scripts": 1,
+          "imgs": [],
+          "links": [],
+          "text": ""
+        },
+        {
+          "iframe": "https://1063734115-atari-embeds.googleusercontent.com/embeds/519e65e0e56fcef24f03f43ae5831795/inner-frame-minified.html"
+        }
+      ],
+      "links": []
+    },
+    {
+      "index": 12,
+      "text": "Securing the Load",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 13,
+      "text": "All units are secured using:",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 14,
+      "text": "Twist locks\n\nKingpin locks\n\nAdditional lashings\n\nAnti-slip mats and shock absorbers",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 15,
+      "text": "",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 16,
+      "text": "PortVirtualLab © Escola Europea Short Sea Shipping, Spain. Notice of Copyright Protection: All rights reserved. Unauthorized use, reproduction, or distribution is prohibited and may result in legal action.\n\nThe Port Virtual Lab® name and mark, along with SDG Lines®, SDG Airlines®, MEDtrade®, and Playforwarding®, are owned by Escola Europea de Short Sea Shipping AEIE.",
+      "embeds": [
+        {
+          "file": "embeds/services_container-and-trailer-packing--embed-02.html",
+          "bytes": 956,
+          "iframes": [],
+          "forms": [],
+          "inputs": 0,
+          "scripts": 0,
+          "imgs": [
+            "https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"
+          ],
+          "links": [
+            {
+              "t": "",
+              "h": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+            },
+            {
+              "t": "Escola Europea - Intermodal Transport",
+              "h": "https://escolaeuropea.eu"
+            },
+            {
+              "t": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Licen",
+              "h": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+            },
+            {
+              "t": "pvl.one",
+              "h": "https://pvl.one"
+            }
+          ],
+          "text": ""
+        },
+        {
+          "iframe": "https://1063734115-atari-embeds.googleusercontent.com/embeds/519e65e0e56fcef24f03f43ae5831795/inner-frame-minified.html"
+        }
+      ],
+      "links": [
+        {
+          "t": "",
+          "h": "https://www.google.com/url?q=https%3A%2F%2Fwww.pvl.one%2F&sa=D&sntz=1&usg=AOvVaw0atKRfT2nJYNXjWsaY68Nk"
+        },
+        {
+          "t": "",
+          "h": "http://www.google.com/url?q=http%3A%2F%2Fwww.escolaeuropea.eu&sa=D&sntz=1&usg=AOvVaw3vh41eSAEVtDaN2c1QFxcp"
+        },
+        {
+          "t": "",
+          "h": "https://www.google.com/url?q=https%3A%2F%2Fes.linkedin.com%2Fshowcase%2Fpvl-one%2F&sa=D&sntz=1&usg=AOvVaw1P3183b54wC0ZP0CMg6FKi"
+        },
+        {
+          "t": "",
+          "h": "https://www.google.com/url?q=https%3A%2F%2Fwww.instagram.com%2Fescolaeuropeaeu%2F%3Fhl%3Den&sa=D&sntz=1&usg=AOvVaw0qAhCYNvkUvsn7UaR48hFh"
+        },
+        {
+          "t": "",
+          "h": "https://www.google.com/url?q=https%3A%2F%2Fwww.facebook.com%2FESCOLAEUROPEA&sa=D&sntz=1&usg=AOvVaw1VU8lSGIT_cmHVfmNzQrHe"
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "section": 0,
+      "kind": "background",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQfxTPb_Nn5m9oDPKsPRVfocnn5sYIObh0kiFkoiaVFLlRzKH7QvublOHt47ftsgt40yp2TC-wk9jaizQxBVqwC9RZYi5E9uDPNj8k7_loTnNq1HyAe6_58XE8C1AEAb3tTcJQBhT48wai4fpZBFejgx-q7S5x1wuV6ATO6abh3-jQiogfhJSEfq7ovIN04=w16383"
+    },
+    {
+      "section": 5,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcMLTVFgowqO4C2E0tzl0bxrFmQ-sztn6848ais-KwDE6YRSvu8s5m2h1bMgopnuAyElqahXq9J0JZmEBK6satCwToUWmoTemR8ZquJyEMZnYkYQzsQOKK9lm_i9ThD32vPe0mHiiwGngAtoPWJ_fiNyZBCYSneb3wXUkG57U8adko2HkeOtZMqcx6HiK42d6gpyQl-ToBY1fON6WNEnOmR6yJVKZGVMnww5w2rI74=w1280"
+    },
+    {
+      "section": 5,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQdlcRRYKbGpbkzbQt9kEonaOcdETCH9qoKYU5gA9nJZa-B4L7YRRZvwu68El4YRHek8rVg3Wqtr1bW-1FdR_uzTLtn7ecLOJZjLXVWXT1RSoGWPyoudKL_oFMdndAcuZ2NFupoezV3FlxHo32-n5HJYrbjCtncTeilGSJaQt4VEr7Blv4xYO3OAq5N6Uq6f1yZD18Dty1tUAKcB2X8qGRVTgvG88Hoa8NBH8RrI7nY=w1280"
+    },
+    {
+      "section": 5,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcpIc9yWdOzINvL0jAgCkzUtEHniPbL7pCDFZH_Q5HLLXMWH1Fjospu6-uvgHCWS38T-W7P6u2c-9VQF7fXIMy4uwMnJGfnqYVsZilRYLY825PrG3qM30fdjWsb3SCKTnHSm0E74HoHXZcYpmGWCGSc1M7gh-3n_CyGzq-kq0jT6hwxlTOcoHrS8aptHIb82Nugng0smdqz0XRTlOW0BKsDeRztgMVG72RsEdOqcNg=w1280"
+    },
+    {
+      "section": 7,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQeP0qisFjtT0M5Au75gYpFX_uftDYp9kQ4eUZZq8tLSGnt530HJ9hwiSSA5aHXxbQSh0PJ9QIQRYW8oQ4u5MAnROt9TM6qo9_0mf95bCGjxrM6C8PmhqKYtkWi0KAniqUgqEk8W6kZmUf8IZ2_1mdHF2vd4vdVJDoOlzW7PrFJMV6nB1-RYbDsnzAMFVAcNQo84z2OUSuN5meFdJh7pXZOX3B6Q482PPGmYJ8-N=w1280"
+    },
+    {
+      "section": 7,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQdF_O7lv8eUcFIiw3rVb9Goik3JmmyIEunanhIaeva5r0FNDDkAuap2cnzi6ZNAyhEakvrWR_EOgnmvKHCBF3sQmXAS3Wcf6-vf7Qwvh-der3vg6wEHVDLKb4BJ8teqKzlUJi1GvZDLcCk8EK7feZjL_T4aCa8jiOdgASrPfsjGUgwADzD_vTKpmRYWnTim4IORminL3PztIYu658klpNBAqzdHhhDEDKlqI7mj=w1280"
+    },
+    {
+      "section": 10,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcOTLzmBPA503tij4pCF7eKW3xhrscH4Xa2B5l65PA3i8fy_3djcs0Z-XJna6JHw4VZ-On8U2OmuKlwitO0RFr53nrjSIr5HnUNoPh8DrnWIXY_TMTw4bMedByTsrHG6yANh112d4V7-mtC6nnrPNUvBnGgI7DpqlK6u5Y_7uQIF1hWCXZXzZqZG00tF0wMMLghCNwvb-Lm13ujkaAm5HIZWqovgzD9AALJ_Lt1=w1280"
+    },
+    {
+      "section": 14,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQezasCHfcdlxl2mnivnUc-o8uCB-VXph-Mhn_jHLC1gJDXm7U3bJOv-XZm1NtKrhulS4qKZiBC2htz3Q4_bhGa-ToJuNXWN2ZMsaq1rxXERSfUvstoMqEp0vPCJO4I5XM1TVLpfGR8wZ0L75pWEWyJbr_Gv5-0oNwiX8TRFMV2im5CL1y8EM4tUOHnPadDRXlexpKoVJUJ7Vdujzl2hRaqKy6RJMnIwWI48fCrsKfQ=w1280"
+    },
+    {
+      "section": 14,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQdHeZ9POlUIsfsfMGIk5Z8oVKJpgjlTbg-7fMVo1udv5XclYLweqNm_c1Sk-UlhHWzmwF_Syfg5TI8zrMqEUL5SQxdzJI_HbQwDg30zAoJWaC3a9cE8l8Furr093jpeX4NScN77J2fR4HN9H7_PQMB68F1ajBkUhTtBO8dhsCN3JSA96cc2IErDKZDX=w1280"
+    },
+    {
+      "section": 14,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQccpQXeGWXNgrLmbrQ4rwBrhPOWXQ6dloZHRcFzsOf5Uf3Q6hgUbWMvl8jkScEZT90SNf3FoEnPcBmasUhsCqVwGGSgQRvrIeTCvz7plrREIYw03bfOZivFJ0oNHEodRi_9aZA5mic7NIHslPUjRh4NuQbbwSsEIc-t7OZIR0ZfG6pbTQs0UI34m1AQDRrL95tgQpdHMYtwsy_5gtmPyt1vFp3dNLzy4Ll5B0Ssv68=w1280"
+    },
+    {
+      "section": 14,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQdZ6tcVxU_KzKRe9pNdZbEebrnGZr51gN4VWpVv4t1uj8FFxsUARXtcYKPJ76KiFTq9QtMcQ0WssLwuRUs-6UrKIXRtvj4dv7SF6nx6z1aoC7htRgDZHKSHCmI3j-Xlx6HEOk4lsbwXcaRv73EdDAXkgarMXWpwz11TPSZf9csJUkSVo3WpvnqS0AjuZkA=w1280"
+    },
+    {
+      "section": 16,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQeCM9NBxXCqPYOH_ovB-0JnssOcUyEhAMcG9LLczO_raIBZmCJT8bACPtaH-cNjDUDQ30ayA910vsZI9vS3wT6wC7fT-ujhTLU41_NH3SVnpCRD2qdPYvKCXMOsybfM2WrsrAVdNvBbgjhHTzZD_5eAww4HT0aZSWXJghwagQ5-Zl-PQHEiymfkFZUS8CiGazjrFdry6Rvc69tnInSeL4O3F3vK3HUNFJ-MSiul42k=w1280"
+    },
+    {
+      "section": 16,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQdoSgS4JiLXr-C-xv0cbsMeeEFyJhWcrSFC8lpPSS993IdfM0ZAQ0_KKwGteHwodDkdON85z1bp1pcTqhADgYRRUzwzeQGYuUiCFRU8IAJi5ipgRtd0UY8pdA_RZrRpmF8AoHY3bfupp3WaPZytV7I-v8LlWTlYADiAdiWGPH38aCYe02NApyfpyFFX=w1280"
+    },
+    {
+      "section": 16,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcVKkn2dHoNgs5D1i84Bh5yfzVei51ODnFK7QClU6SqXf2Wfg-zvVQke4yPTNKq3y9W2dwZ3xo3n2bj6jkDroIbEvYvanE6Ua8RMOtJCT532aSKkAcvGazcvZ_Bs6eerkMMgMX11CcwC4mK119HT9kJVcoM2Lk6miUZIz50oVeJi12H4hlc2oY3N4Lw=w1280"
+    },
+    {
+      "section": 16,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQem9p5OLye1F_IpzvV9lAgyjhe2bEMQ1l6G0O88Qi2dMbernF3UQf58EqeyckNrns7FmKddUOG5G8hX2mT1KKMEGadPElQyQ2sC-UlSuKft97smYxSUA2UvE0wynVJMsuEgrBvAIXTIcqhqIr_YmJOXx1bPvpLHdXklRODrKeDQ8U8KUpi_0VZouTTVKxo=w1280"
+    },
+    {
+      "section": 16,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcLE9lDlb4EKU7brHPdSeA-pLHqCFfPMdk5z01db9dXz_F4zrMpC3Q70jr-tZ3vFdSNKIGLNMuET3DvzRs3Qke17Qp1tFW78vjfkuB6VIYqmuUSe5SXMUSa-UE2KPKWoe1D1qr9DsKoyhXzdaOPgvW5zTEnV6kMd_xhknP-VHcovPeInGxl3j4INMWRHMk=w1280"
+    },
+    {
+      "section": -1,
+      "kind": "header-img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcy4y8dd6TW25i6hqNvOVR6ujPbX-onW0JxamsyStWx1kvBQQr9AOxEUZ2D3PNc_MfRYXgk0PWguJlkrDDbdKbsyyBxuCMUMvzqhQGYKZgj3rUJBuXvCQJPIEGlYnXUsAHvXnMkUYrvQMTUDKzZz9xNZU5M9s31ckI4Ou-cbFKV_o7BZ5M8_OhQh7Xb0dU=w16383"
+    }
+  ]
+}

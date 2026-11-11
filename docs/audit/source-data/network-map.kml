@@ -1,0 +1,1349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>SDG Railway – Intermodal Network</name>
+    <description>Fast routes connecting ports and inland terminals across Spain and France.</description>
+    <Style id="icon-1716-006064-normal">
+      <IconStyle>
+        <color>ff646000</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-006064-highlight">
+      <IconStyle>
+        <color>ff646000</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-006064">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-006064-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-006064-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-0097A7-normal">
+      <IconStyle>
+        <color>ffa79700</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-0097A7-highlight">
+      <IconStyle>
+        <color>ffa79700</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-0097A7">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-0097A7-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-0097A7-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-3949AB-normal">
+      <IconStyle>
+        <color>ffab4939</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-3949AB-highlight">
+      <IconStyle>
+        <color>ffab4939</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-3949AB">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-3949AB-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-3949AB-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-558B2F-normal">
+      <IconStyle>
+        <color>ff2f8b55</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-558B2F-highlight">
+      <IconStyle>
+        <color>ff2f8b55</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-558B2F">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-558B2F-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-558B2F-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-7CB342-normal">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-7CB342-highlight">
+      <IconStyle>
+        <color>ff42b37c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-7CB342">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-7CB342-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-7CB342-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-880E4F-normal">
+      <IconStyle>
+        <color>ff4f0e88</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-880E4F-highlight">
+      <IconStyle>
+        <color>ff4f0e88</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-880E4F">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-880E4F-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-880E4F-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-9C27B0-normal">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-9C27B0-highlight">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-9C27B0">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-9C27B0-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-9C27B0-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-F57C00-normal">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-F57C00-highlight">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-F57C00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-F57C00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-F57C00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-FBC02D-normal">
+      <IconStyle>
+        <color>ff2dc0fb</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-FBC02D-highlight">
+      <IconStyle>
+        <color>ff2dc0fb</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-FBC02D">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-FBC02D-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-FBC02D-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1716-FF5252-normal">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1716-FF5252-highlight">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1716-FF5252">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1716-FF5252-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1716-FF5252-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-006064-5069-normal">
+      <LineStyle>
+        <color>ff646000</color>
+        <width>5.069</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-006064-5069-highlight">
+      <LineStyle>
+        <color>ff646000</color>
+        <width>7.6035</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-006064-5069">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-006064-5069-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-006064-5069-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-0097A7-5000-normal">
+      <LineStyle>
+        <color>ffa79700</color>
+        <width>5</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-0097A7-5000-highlight">
+      <LineStyle>
+        <color>ffa79700</color>
+        <width>7.5</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-0097A7-5000">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0097A7-5000-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0097A7-5000-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-0288D1-5069-normal">
+      <LineStyle>
+        <color>ffd18802</color>
+        <width>5.069</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-0288D1-5069-highlight">
+      <LineStyle>
+        <color>ffd18802</color>
+        <width>7.6035</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-0288D1-5069">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0288D1-5069-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0288D1-5069-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-3949AB-4681-normal">
+      <LineStyle>
+        <color>ffab4939</color>
+        <width>4.681</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-3949AB-4681-highlight">
+      <LineStyle>
+        <color>ffab4939</color>
+        <width>7.0215</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-3949AB-4681">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-3949AB-4681-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-3949AB-4681-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-558B2F-3713-nodesc-normal">
+      <LineStyle>
+        <color>ff2f8b55</color>
+        <width>3.713</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-558B2F-3713-nodesc-highlight">
+      <LineStyle>
+        <color>ff2f8b55</color>
+        <width>5.5695</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-558B2F-3713-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-558B2F-3713-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-558B2F-3713-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-558B2F-3906-nodesc-normal">
+      <LineStyle>
+        <color>ff2f8b55</color>
+        <width>3.906</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-558B2F-3906-nodesc-highlight">
+      <LineStyle>
+        <color>ff2f8b55</color>
+        <width>5.859</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-558B2F-3906-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-558B2F-3906-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-558B2F-3906-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-558B2F-5263-nodesc-normal">
+      <LineStyle>
+        <color>ff2f8b55</color>
+        <width>5.263</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-558B2F-5263-nodesc-highlight">
+      <LineStyle>
+        <color>ff2f8b55</color>
+        <width>7.8945</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-558B2F-5263-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-558B2F-5263-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-558B2F-5263-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-7CB342-4875-nodesc-normal">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>4.875</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-7CB342-4875-nodesc-highlight">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>7.3125</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-7CB342-4875-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-7CB342-4875-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-7CB342-4875-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-7CB342-5000-normal">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>5</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-7CB342-5000-highlight">
+      <LineStyle>
+        <color>ff42b37c</color>
+        <width>7.5</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-7CB342-5000">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-7CB342-5000-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-7CB342-5000-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-880E4F-6038-normal">
+      <LineStyle>
+        <color>ff4f0e88</color>
+        <width>6.038</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-880E4F-6038-highlight">
+      <LineStyle>
+        <color>ff4f0e88</color>
+        <width>9.057</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-880E4F-6038">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-880E4F-6038-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-880E4F-6038-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-CE93D8-5069-normal">
+      <LineStyle>
+        <color>ffd893ce</color>
+        <width>5.069</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-CE93D8-5069-highlight">
+      <LineStyle>
+        <color>ffd893ce</color>
+        <width>7.6035</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-CE93D8-5069">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-CE93D8-5069-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-CE93D8-5069-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-F57C00-4681-normal">
+      <LineStyle>
+        <color>ff007cf5</color>
+        <width>4.681</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-F57C00-4681-highlight">
+      <LineStyle>
+        <color>ff007cf5</color>
+        <width>7.0215</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-F57C00-4681">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-F57C00-4681-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-F57C00-4681-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FBC02D-5000-normal">
+      <LineStyle>
+        <color>ff2dc0fb</color>
+        <width>5</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-FBC02D-5000-highlight">
+      <LineStyle>
+        <color>ff2dc0fb</color>
+        <width>7.5</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-FBC02D-5000">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FBC02D-5000-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FBC02D-5000-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FF5252-6000-normal">
+      <LineStyle>
+        <color>ff5252ff</color>
+        <width>6</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-FF5252-6000-highlight">
+      <LineStyle>
+        <color>ff5252ff</color>
+        <width>9</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-FF5252-6000">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FF5252-6000-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FF5252-6000-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>FAST FRANCE - Mediterranean Corridor</name>
+      <Placemark>
+        <name>FAST FRANCE - Mediterranean Corridor</name>
+        <description>Can Tunis Freight Terminal - Rail access to port and international routes.</description>
+        <styleUrl>#icon-1716-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            2.168417,41.361739,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE - Mediterranean Corridor</name>
+        <description>Saint-Charles International Terminal (Le Boulou) - Key intermodal freight hub in southern France.</description>
+        <styleUrl>#icon-1716-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            2.846163,42.684859,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE -  Mediterranean Corridor</name>
+        <description>Lyon-Vénissieux / Saint-Priest Intermodal Terminal</description>
+        <styleUrl>#icon-1716-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            4.8100406,45.7667953,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE - Mediterranean Corridor</name>
+        <description>Valenton Intermodal Terminal (Plateforme Multimodale de Valenton) </description>
+        <styleUrl>#icon-1716-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            2.3455943,48.8602879,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE - Mediterranean Corridor</name>
+        <description>Barcelona – Perpignan – Lyon – Paris</description>
+        <styleUrl>#line-0097A7-5000</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            2.168417,41.361739,0
+            2.846163,42.684859,0
+            4.830723,45.7706263,0
+            2.3455943,48.8602879,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Eastern Corridor (ES–E)</name>
+        <description>Valencia Fuente San Luis Terminal </description>
+        <styleUrl>#icon-1716-3949AB</styleUrl>
+        <Point>
+          <coordinates>
+            -0.3714015,39.4415972,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Eastern Corridor (ES–E)</name>
+        <description>Madrid Abroñigal Terminal</description>
+        <styleUrl>#icon-1716-3949AB</styleUrl>
+        <Point>
+          <coordinates>
+            -3.6764042,40.3901816,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Eastern Corridor (ES–E)</name>
+        <description>Valencia → Madrid → Zaragoza</description>
+        <styleUrl>#line-3949AB-4681</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -0.3714015,39.4415972,0
+            -3.6764042,40.3901816,0
+            -1.005008,41.638802,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST SPAIN – Northern Corridor </name>
+      <Placemark>
+        <name>FAST SPAIN – Northern Corridor </name>
+        <description>Can Tunis Freight Terminal - Rail access to port and international routes.</description>
+        <styleUrl>#icon-1716-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            2.168417,41.361739,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Northern Corridor </name>
+        <description>Plaza Intermodal Freight Terminal (tmZ) - High-volume intermodal terminal operated by ADIF.</description>
+        <styleUrl>#icon-1716-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -1.005008,41.638802,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Northern Corridor </name>
+        <description>Noáin Freight Terminal - Main cargo rail terminal in Navarra.</description>
+        <styleUrl>#icon-1716-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -1.644551,42.757609,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Northern Corridor </name>
+        <description>Bilbao Port Rail Terminal (Olabeaga / ADIF) - Connects directly to the Port of Bilbao.</description>
+        <styleUrl>#icon-1716-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -2.928554,43.259956,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Northern Corridor </name>
+        <description>Barcelona – Zaragoza – Pamplona – Bilbao</description>
+        <styleUrl>#line-FBC02D-5000</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            2.168417,41.361739,0
+            -1.005008,41.638802,0
+            -1.644551,42.757609,0
+            -2.928554,43.259956,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Eastern Corridor (ES–E)</name>
+        <description>Zaragoza PLAZA Intermodal Terminal</description>
+        <styleUrl>#icon-1716-3949AB</styleUrl>
+        <Point>
+          <coordinates>
+            -1.005008,41.638802,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST FRANCE – Atlantic Branch</name>
+      <Placemark>
+        <name>FAST FRANCE – Atlantic Branch</name>
+        <description>Le Boulou Terminal Intermodal (Plateforme Multimodale du Boulou) </description>
+        <styleUrl>#icon-1716-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            2.846163,42.684859,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE – Atlantic Branch</name>
+        <description>Toulouse Saint-Jory (Terminal Fret de Saint-Jory) </description>
+        <styleUrl>#icon-1716-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            1.4003201,43.5795331,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE – Atlantic Branch</name>
+        <description>Bordeaux-Bruges Freight Yard (Triages de Bordeaux-Bruges) </description>
+        <styleUrl>#icon-1716-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -0.6020006,44.8434207,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE – Atlantic Branch</name>
+        <description>Perpignan – Toulouse – Bordeaux</description>
+        <styleUrl>#line-F57C00-4681</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            2.846163,42.684859,0
+            1.4003201,43.5795331,0
+            -0.6020006,44.8434207,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST SPAIN – Central Corridor</name>
+      <Placemark>
+        <name>FAST SPAIN – Central Corridor</name>
+        <description>Can Tunis Freight Terminal - Rail access to port and international routes.</description>
+        <styleUrl>#icon-1716-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            2.168417,41.361739,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Central Corridor</name>
+        <description>Plaza Intermodal Freight Terminal (tmZ) - High-volume intermodal terminal operated by ADIF.</description>
+        <styleUrl>#icon-1716-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            -1.005008,41.638802,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Central Corridor</name>
+        <description>Abroñigal Freight Terminal - Main container logistics hub in central Spain.</description>
+        <styleUrl>#icon-1716-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            -3.676438,40.390373,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Central Corridor</name>
+        <description>Valladolid–Campo Grande Freight Terminal - Northern Spain’s key inland rail freight terminal.</description>
+        <styleUrl>#icon-1716-7CB342</styleUrl>
+        <Point>
+          <coordinates>
+            -4.726913,41.642056,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Central Corridor</name>
+        <description>Barcelona – Zaragoza – Madrid – Valladolid</description>
+        <styleUrl>#line-7CB342-5000</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            2.168417,41.361739,0
+            -1.005008,41.638802,0
+            -3.676438,40.390373,0
+            -4.726913,41.642056,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST SOUTH - Mediterranean Corridor</name>
+      <Placemark>
+        <name>FAST SPAIN – Mediterranean Corridor</name>
+        <description>Can Tunis Freight Terminal - Rail access to port and international routes.</description>
+        <styleUrl>#icon-1716-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            2.168417,41.361739,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Mediterranean Corridor</name>
+        <description>La Boella Intermodal Terminal - Located near the Port of Tarragona; handles chemicals, containers, and bulk cargo.</description>
+        <styleUrl>#icon-1716-FF5252</styleUrl>
+        <Point>
+          <coordinates>
+            1.204245,41.097745,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST SPAIN – Mediterranean Corridor</name>
+        <description>Barcelona – Tarragona</description>
+        <styleUrl>#line-FF5252-6000</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            2.168417,41.361739,0
+            1.204245,41.097745,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST FRANCE – Southern Branch</name>
+      <Placemark>
+        <name>FAST FRANCE – Southern Branch</name>
+        <description>Lyon-Vénissieux / Saint-Priest Intermodal Terminal </description>
+        <styleUrl>#icon-1716-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            4.8100378,45.7667945,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE – Southern Branch</name>
+        <description>Marseille–Canet Freight Terminal (Terminal de Marseille-Canet) </description>
+        <styleUrl>#icon-1716-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            5.3766257,43.3090894,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST FRANCE – Southern Branch</name>
+        <description>Lyon – Marseille</description>
+        <styleUrl>#line-CE93D8-5069</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            4.810467,45.7664353,0
+            5.3766257,43.3090894,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST ITALY – Adriatic Corridor</name>
+      <Placemark>
+        <name>FAST ITALY – Adriatic Corridor</name>
+        <description>Quadrante Europa Intermodal Terminal (Interporto Quadrante Europa – Verona) </description>
+        <styleUrl>#icon-1716-006064</styleUrl>
+        <Point>
+          <coordinates>
+            10.9903405,45.4325839,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Adriatic Corridor</name>
+        <description>Pescara Porta Nuova Freight Yard (Scalo Merci di Pescara Porta Nuova) </description>
+        <styleUrl>#icon-1716-006064</styleUrl>
+        <Point>
+          <coordinates>
+            14.2025892,42.4478359,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Adriatic Corridor</name>
+        <description>Bari Lamasinata Freight Terminal (Interporto Regionale della Puglia – Bari Lamasinata) </description>
+        <styleUrl>#icon-1716-006064</styleUrl>
+        <Point>
+          <coordinates>
+            16.8667738,41.1249392,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Adriatic Corridor</name>
+        <description>Verona – Pescara – Bari</description>
+        <styleUrl>#line-006064-5069</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            10.9903405,45.4325839,0
+            12.5238218,43.9022065,0
+            14.2025892,42.4478359,0
+            15.3067285,41.4367918,0
+            16.8667738,41.1249392,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST ITALY – Tyrrhenian Corridor</name>
+      <Placemark>
+        <name>FAST ITALY – Tyrrhenian Corridor</name>
+        <description>Santa Palomba Intermodal Terminal (Terminal Intermodale di Santa Palomba) </description>
+        <styleUrl>#icon-1716-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            12.571646,41.710121,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Tyrrhenian Corridor</name>
+        <description>Civitavecchia Port Rail Terminal (Terminal Ferroviario del Porto di Civitavecchia) </description>
+        <styleUrl>#icon-1716-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            11.7972083,42.0943437,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Tyrrhenian Corridor</name>
+        <description>Quadrante Europa Intermodal Terminal (Interporto Quadrante Europa – Verona) </description>
+        <styleUrl>#icon-1716-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            10.9903405,45.4325839,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Tyrrhenian Corridor</name>
+        <description>Civitavecchia – Santa Palomba – Verona</description>
+        <styleUrl>#line-0288D1-5069</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            12.5717444,41.710028,0
+            12.1993747,41.9304275,0
+            12.0081637,42.0237839,0
+            11.7972083,42.0943437,0
+            10.9903405,45.4325839,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST ITALY – Central Logistics Line</name>
+      <Placemark>
+        <name>FAST ITALY – Central Logistics Line</name>
+        <description>Santa Palomba Intermodal Terminal (Terminal Intermodale di Santa Palomba) </description>
+        <styleUrl>#icon-1716-880E4F</styleUrl>
+        <Point>
+          <coordinates>
+            12.5717444,41.710028,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Central Logistics Line</name>
+        <description>Pescara Porta Nuova Freight Yard (Scalo Merci di Pescara Porta Nuova) </description>
+        <styleUrl>#icon-1716-880E4F</styleUrl>
+        <Point>
+          <coordinates>
+            14.2025892,42.4478359,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Central Logistics Line</name>
+        <description>Bari Lamasinata Freight Terminal (Interporto Regionale della Puglia – Bari Lamasinata) </description>
+        <styleUrl>#icon-1716-880E4F</styleUrl>
+        <Point>
+          <coordinates>
+            16.8667738,41.1249392,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST ITALY – Central Logistics Line</name>
+        <description>Santa Palomba – Pescara – Bari</description>
+        <styleUrl>#line-880E4F-6038</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            12.5717444,41.710028,0
+            12.7227337,41.7362665,0
+            13.4867961,41.9838956,0
+            14.2025892,42.4478359,0
+            14.6583221,42.0874897,0
+            15.2188379,41.8145552,0
+            15.8384484,41.3944384,0
+            16.8667738,41.1249392,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>FAST PORTUGAL</name>
+      <Placemark>
+        <name>Aveiro Canal Industrial Terminal</name>
+        <description>Aveiro</description>
+      </Placemark>
+      <Placemark>
+        <name>Bobadela Freight Station</name>
+        <description>Lisbon</description>
+      </Placemark>
+      <Placemark>
+        <name>Leixões Port Rail Terminal</name>
+        <description>Porto</description>
+      </Placemark>
+      <Placemark>
+        <name>Poceirão Intermodal Platform</name>
+        <description>Lisbon</description>
+      </Placemark>
+      <Placemark>
+        <name>Setúbal Sadoport Rail Terminal</name>
+        <description>Setúbal</description>
+      </Placemark>
+      <Placemark>
+        <name>Sines Port Freight Yard</name>
+        <description>Sines</description>
+      </Placemark>
+      <Placemark>
+        <name>Entroncamento Freight Hub</name>
+        <description>Entroncamento</description>
+      </Placemark>
+      <Placemark>
+        <name>Aveiro Canal Industrial Terminal</name>
+        <description>Fast Portugal</description>
+        <styleUrl>#icon-1716-558B2F</styleUrl>
+        <Point>
+          <coordinates>
+            -8.6385886,40.6437273,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Bobadela Freight Station</name>
+        <description>Fast Portugal</description>
+        <styleUrl>#icon-1716-558B2F</styleUrl>
+        <Point>
+          <coordinates>
+            -9.087601,38.817294,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Entroncamento Freight Hub</name>
+        <description>Fast Portugal</description>
+        <styleUrl>#icon-1716-558B2F</styleUrl>
+        <Point>
+          <coordinates>
+            -8.473775,39.4612966,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ermidas do Sado Freight Station</name>
+        <description>Fast Portugal</description>
+        <styleUrl>#icon-1716-558B2F</styleUrl>
+        <Point>
+          <coordinates>
+            -8.4141397,38.0027221,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Leixões Port Rail Terminal</name>
+        <description>Fast Portugal</description>
+        <styleUrl>#icon-1716-558B2F</styleUrl>
+        <Point>
+          <coordinates>
+            -8.6847399,41.1895838,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Poceirão Intermodal Platform</name>
+        <description>Fast Portugal</description>
+        <styleUrl>#icon-1716-558B2F</styleUrl>
+        <Point>
+          <coordinates>
+            -8.7434022,38.6344506,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Setúbal Sadoport Rail Terminal</name>
+        <description>Fast Portugal</description>
+        <styleUrl>#icon-1716-558B2F</styleUrl>
+        <Point>
+          <coordinates>
+            -8.869224,38.5156426,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Sines Port Freight Yard</name>
+        <description>Fast Portugal</description>
+        <styleUrl>#icon-1716-558B2F</styleUrl>
+        <Point>
+          <coordinates>
+            -8.8455241,37.9399633,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FAST PORTUGAL</name>
+        <styleUrl>#line-558B2F-3906-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -8.6847399,41.1895838,0
+            -8.6385867,40.6437015,0
+            -8.473775,39.4612966,0
+            -9.087601,38.817294,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>FAST PORTUGAL</name>
+        <styleUrl>#line-558B2F-3713-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -8.473775,39.4612966,0
+            -8.7434022,38.6344506,0
+            -8.869224,38.5156426,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>FAST PORTUGAL</name>
+        <styleUrl>#line-558B2F-5263-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -8.7434022,38.6344506,0
+            -8.4141397,38.0027221,0
+            -8.8455241,37.9399633,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Iberian Route</name>
+        <styleUrl>#line-7CB342-4875-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -3.6764042,40.3901816,0
+            -9.087601,38.817294,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

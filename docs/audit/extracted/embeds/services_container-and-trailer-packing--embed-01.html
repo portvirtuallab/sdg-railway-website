@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SDG Railway Load Planner – Visual Simulation</title>
+
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: #062659;
+    text-align: center;
+    padding: 30px;
+  }
+  h1 { color: #36a052; }
+
+  /* Train & wagons */
+  .train {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .wagon {
+    width: 140px;
+    height: 60px;
+    border: 2px solid #062659;
+    border-radius: 8px;
+    background-color: #fff;
+    margin: 10px;
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Head of train */
+  .wagon.head {
+    border: 3px solid #062659;
+  }
+  .wagon.head::before {
+    content: "HEAD";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 700;
+    color: #062659;
+  }
+
+  .wagon.ok { background-color: #e7f7eb; }
+  .wagon.warn { background-color: #fff5e0; }
+  .wagon.over { background-color: #fde2e2; }
+
+  /* Containers */
+  .container {
+    width: 100px;
+    height: 40px;
+    border-radius: 6px;
+    cursor: grab;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .container::after {
+    content: attr(data-info);
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .container:hover::after { opacity: 1; }
+
+  .c20 { background-color: #007bff; }
+  .c40 { background-color: #28a745; }
+  .c45 { background-color: #ff9800; }
+  .ctrailer { background-color: #9c27b0; }
+
+  /* Controls */
+  .controls { margin-top: 20px; }
+  button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 4px;
+    background: #062659;
+    color: #fff;
+  }
+  select, input[type="number"] {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+  }
+
+  /* Feedback */
+  #feedback {
+    margin-top: 20px;
+    font-weight: 600;
+  }
+  #feedback.ok {
+    background: #e7f7eb;
+    border: 2px solid #37a053;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  #feedback.warn {
+    background: #fff5e0;
+    border: 2px solid #f5a623;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  #feedback.over {
+    background: #fde2e2;
+    border: 2px solid #d0021b;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  /* Legends */
+  .legend {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #333;
+  }
+  .legend span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    border-radius: 3px;
+  }
+  .legend .green { background: #5d9f10; }
+  .legend .yellow { background: #fed527; }
+  .legend .red { background: #cc0026; }
+
+  /* Source */
+  .source {
+    margin: 18px auto 0;
+    max-width: 820px;
+    font-size: 12px;
+    color: #555;
+    text-align: justify;
+    line-height: 1.5;
+    border-top: 1px solid rgba(6,38,89,0.15);
+    padding-top: 10px;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>SDG Railway Load Planner – Visual Simulation</h1>
+<p>
+  Drag and drop ITUs into wagons. Check load balance and estimated CO₂e savings.
+  Hover over each unit to view details.
+</p>
+
+<div class="controls">
+  <select id="ituSelect">
+    <option value="20">20' Container</option>
+    <option value="40">40' Container</option>
+    <option value="45">45' Container</option>
+    <option value="trailer">P400 Trailer</option>
+  </select>
+  <button onclick="addContainer()">Add ITU</button>
+  <button onclick="checkBalance()">Check Load Balance</button>
+
+  <div style="margin-top:10px;font-size:13px;">
+    <strong>Reference distance (km):</strong>
+    <input id="distanceKm" type="number" value="300" min="50" step="10">
+  </div>
+</div>
+
+<div class="train" id="train"></div>
+<div id="feedback"></div>
+
+<div class="legend">
+  <span class="green"></span> Balanced |
+  <span class="yellow"></span> Near limit |
+  <span class="red"></span> Overloaded
+</div>
+
+<div class="legend" style="margin-top:10px;">
+  <strong>Reference ITU weights (typical gross):</strong><br>
+  20’ ≈ <strong>22 t</strong> |
+  40’ ≈ <strong>30 t</strong> |
+  45’ ≈ <strong>32 t</strong> |
+  P400 Trailer ≈ <strong>34 t</strong>
+</div>
+
+<div class="source">
+  <strong>Simulation basis & sources:</strong><br>
+  Typical ITU gross weights and wagon thresholds are used for educational purposes
+  and reflect common European intermodal practices (ISO 668 context, UIC/EcoTransIT-style methodologies).
+  CO₂e savings are estimated using average European emission factors and a fixed reference distance.
+  This tool is intended for training and visual simulation only and does not represent certified operational limits.
+</div>
+
+<script>
+  const train = document.getElementById('train');
+  const feedback = document.getElementById('feedback');
+
+  const ITU_WEIGHTS = { "20":22, "40":30, "45":32, "trailer":34 };
+  const WAGON_OK = 28;
+  const WAGON_WARN = 32;
+
+  const ROAD_CO2 = 75;   // g CO2e / t-km
+  const RAIL_CO2 = 18;   // g CO2e / t-km
+
+  // Create wagons
+  for (let i = 0; i < 8; i++) {
+    const wagon = document.createElement('div');
+    wagon.classList.add('wagon');
+    if (i === 0) wagon.classList.add('head');
+    wagon.ondragover = e => e.preventDefault();
+    wagon.ondrop = drop;
+    train.appendChild(wagon);
+  }
+
+  function addContainer() {
+    const type = document.getElementById('ituSelect').value;
+    const cont = document.createElement('div');
+    cont.classList.add('container');
+    cont.classList.add(type === '20' ? 'c20' :
+                        type === '40' ? 'c40' :
+                        type === '45' ? 'c45' : 'ctrailer');
+    cont.draggable = true;
+    cont.ondragstart = drag;
+    cont.innerText = type === 'trailer' ? 'Trailer' : type + "'";
+    cont.dataset.weight = ITU_WEIGHTS[type];
+    cont.dataset.info =
+      `${type === 'trailer' ? 'P400 Trailer' : type + "' Container"} – ${ITU_WEIGHTS[type]} t`;
+    document.body.appendChild(cont);
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData('text', ev.target.dataset.weight);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    const cont = document.querySelector('.container[draggable="true"]:hover');
+    if (cont) {
+      ev.target.appendChild(cont);
+      cont.style.position = 'absolute';
+      cont.style.bottom = '10px';
+      cont.style.left = '10px';
+    }
+  }
+
+  function checkBalance() {
+    let total = 0;
+    let loaded = 0;
+
+    document.querySelectorAll('.wagon').forEach(w => {
+      w.classList.remove('ok','warn','over');
+      if (w.children.length) {
+        const wgt = parseFloat(w.children[0].dataset.weight);
+        total += wgt;
+        loaded++;
+        if (wgt <= WAGON_OK) w.classList.add('ok');
+        else if (wgt <= WAGON_WARN) w.classList.add('warn');
+        else w.classList.add('over');
+      }
+    });
+
+    if (!loaded) {
+      feedback.className = 'warn';
+      feedback.textContent = 'No ITUs loaded.';
+      return;
+    }
+
+    const avg = total / loaded;
+    const dist = parseFloat(document.getElementById('distanceKm').value);
+    const co2e = (total * dist * (ROAD_CO2 - RAIL_CO2) / 1000).toFixed(1);
+
+    let cls = 'ok';
+    let msg = 'Load balanced';
+    if (avg > 35) { cls = 'over'; msg = 'Overloaded'; }
+    else if (avg > 30) { cls = 'warn'; msg = 'Near limit'; }
+
+    feedback.className = cls;
+    feedback.innerHTML =
+      `Total: ${total.toFixed(1)} t | Avg per wagon: ${avg.toFixed(1)} t |
+       ${msg} | Est. CO₂e savings vs road: <strong>${co2e} kg</strong>`;
+  }
+</script>
+
+</body>
+</html>
+

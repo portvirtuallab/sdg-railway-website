@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDG Railway — Departures Board</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ffffff; font-family: 'DM Sans', system-ui, sans-serif; color: #111; min-height: 100vh; padding: 2rem; }
+
+  .board { background: #ffffff; border: 1px solid #e8e6e0; border-radius: 14px; padding: 1.75rem; max-width: 1100px; margin: 0 auto; }
+
+  .board-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; border-bottom: 1px solid #efefef; padding-bottom: 1.1rem; flex-wrap: wrap; gap: 10px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { background: #111; color: #fff; font-size: 10px; font-weight: 600; padding: 5px 11px; border-radius: 5px; letter-spacing: .1em; text-transform: uppercase; }
+  .brand-name { font-size: 18px; font-weight: 500; letter-spacing: -.02em; color: #111; }
+  .brand-sub { font-size: 12px; color: #bbb; margin-top: 1px; font-weight: 300; }
+  .clock-wrap { text-align: right; }
+  .clock-time { font-family: 'DM Mono', monospace; font-size: 13px; color: #888; }
+  .clock-date { font-size: 11px; color: #ccc; margin-top: 2px; font-weight: 300; }
+
+  .filter-bar { display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .f-btn { background: #f5f4f0; border: 1px solid #e8e6e0; color: #888; font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; padding: 5px 14px; border-radius: 99px; cursor: pointer; transition: all .15s; }
+  .f-btn:hover { border-color: #ccc; color: #444; }
+  .f-btn.active { background: #111; border-color: #111; color: #fff; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th { font-size: 10px; color: #c0bdb5; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 6px 10px; border-bottom: 1px solid #f0ede8; text-align: left; }
+  tbody td { padding: 9px 10px; border-bottom: 1px solid #f7f6f3; font-size: 13px; vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #fafaf8; }
+
+  .svc-pill { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 4px; letter-spacing: .02em; }
+  .svc-STD { background: #e8f0fb; color: #1a4a8a; }
+  .svc-EXP { background: #fbe8e8; color: #8a1a1a; }
+  .svc-GRN { background: #e8f5ec; color: #1a6b30; }
+
+  .svc-id { font-size: 10px; color: #ccc; margin-top: 3px; font-family: 'DM Mono', monospace; }
+  .route-main { font-size: 13px; color: #222; font-weight: 500; }
+  .route-sub { font-size: 11px; color: #bbb; margin-top: 2px; font-family: 'DM Mono', monospace; }
+  .date-num { font-size: 14px; font-weight: 500; color: #222; }
+  .date-day { font-size: 11px; color: #bbb; margin-top: 1px; font-weight: 300; }
+
+  .status-badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 4px; }
+  .s-sched { background: #e8f5ec; color: #1a6b30; }
+  .s-blocked { background: #fbe8e8; color: #8a1a1a; }
+  .s-today { background: #fef7e0; color: #7a5800; }
+
+  .day-sep td { background: #fafaf8; color: #ccc; font-size: 10px; letter-spacing: .09em; padding: 5px 10px; text-transform: uppercase; font-weight: 600; border-top: 1px solid #f0ede8; border-bottom: 1px solid #f0ede8; }
+  .day-sep.is-today td { background: #fffdf2; color: #c8960a; border-color: #f5e8b0; }
+
+  .speed-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .sd-STD { background: #4a90d9; }
+  .sd-EXP { background: #d94a4a; }
+  .sd-GRN { background: #4aaa66; }
+
+  .time-main { font-family: 'DM Mono', monospace; font-size: 13px; color: #222; font-weight: 500; }
+  .time-until { font-size: 10px; color: #ccc; margin-top: 2px; }
+  .speed-cell { font-family: 'DM Mono', monospace; font-size: 12px; color: #aaa; }
+  .dg-yes { color: #2a7a40; font-size: 12px; font-weight: 500; }
+  .dg-no { color: #ddd; font-size: 12px; }
+  .empty-msg { text-align: center; padding: 2.5rem; color: #ccc; font-size: 13px; }
+
+  @media (max-width: 700px) {
+    body { padding: .75rem; }
+    .board { padding: 1rem; }
+    thead th:nth-child(5), tbody td:nth-child(5),
+    thead th:nth-child(6), tbody td:nth-child(6) { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="board-header">
+    <div class="brand">
+      <span class="brand-mark">SDG Railway</span>
+      <div>
+        <div class="brand-name">Departures Board</div>
+        <div class="brand-sub">Next 7 days · Live schedule</div>
+      </div>
+    </div>
+    <div class="clock-wrap">
+      <div class="clock-time" id="clock-time">--:--:--</div>
+      <div class="clock-date" id="clock-date">Loading...</div>
+    </div>
+  </div>
+  <div class="filter-bar" id="filter-bar">
+    <button class="f-btn active" data-svc="ALL">All services</button>
+    <button class="f-btn" data-svc="STD-RAIL">Standard Rail</button>
+    <button class="f-btn" data-svc="EXP-RAIL">Express Rail</button>
+    <button class="f-btn" data-svc="GRN-RAIL">EcoRail</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Dep. time</th>
+        <th>Service</th>
+        <th>Route</th>
+        <th>Speed</th>
+        <th>DG</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <tr><td colspan="7" class="empty-msg">Loading schedule...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+const SERVICES = {
+  'STD-RAIL':{ name:'Standard Rail', level:'STD', speedKmh:80, dg:true, days:['Mon','Tue','Wed','Thu','Fri'], time:'08:00', blocked:['2026-07-14','2026-07-15','2026-08-03','2026-08-04','2026-08-05'] },
+  'EXP-RAIL':{ name:'Express Rail', level:'EXP', speedKmh:100, dg:false, days:['Mon','Wed','Fri','Sat'], time:'14:00', blocked:['2026-06-29','2026-06-30','2026-11-02','2026-11-03'] },
+  'GRN-RAIL':{ name:'Green Rail', level:'GRN', speedKmh:70, dg:false, days:['Mon','Wed'], time:'10:00', blocked:['2026-07-06','2026-07-07','2026-07-08','2026-07-09','2026-07-10'] }
+};
+const GLOBAL_BLOCKED=['2026-01-01','2026-01-06','2026-04-03','2026-04-06','2026-05-01','2026-07-04','2026-08-15','2026-10-12','2026-11-01','2026-12-08','2026-12-25','2026-12-26'];
+const ROUTES={
+  'STD-RAIL':[
+    {from:'BCN-MORROT',to:'ZAR-PLAZA',label:'Barcelona → Zaragoza',km:315},
+    {from:'ZAR-PLAZA',to:'MAD-ABRONIGAL',label:'Zaragoza → Madrid',km:315},
+    {from:'PERP-STCHARLES',to:'LYO-VENISSIEUX',label:'Perpignan → Lyon',km:480},
+    {from:'RTM-MAASVLAKTE',to:'ANT-COMBINANT',label:'Rotterdam → Antwerp',km:110},
+    {from:'PAR-VALENTON',to:'ANT-COMBINANT',label:'Paris → Antwerp',km:300},
+  ],
+  'EXP-RAIL':[
+    {from:'BCN-MORROT',to:'VER-QUADRANTE',label:'Barcelona → Verona',km:1150},
+    {from:'LYO-VENISSIEUX',to:'PAR-VALENTON',label:'Lyon → Paris',km:460},
+    {from:'ANT-COMBINANT',to:'RTM-MAASVLAKTE',label:'Antwerp → Rotterdam',km:110},
+  ],
+  'GRN-RAIL':[
+    {from:'MAD-ABRONIGAL',to:'LIS-POCEIRAO',label:'Madrid → Lisboa área',km:620},
+    {from:'BCN-MORROT',to:'PERP-STCHARLES',label:'Barcelona → Perpignan',km:200},
+  ]
+};
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const toISO=d=>d.toISOString().split('T')[0];
+const isBlocked=(ds,id)=>GLOBAL_BLOCKED.includes(ds)||SERVICES[id].blocked.includes(ds);
+const isOp=(d,id)=>SERVICES[id].days.includes(DAYS[d.getDay()]);
+const eta=(km,spd)=>(Math.round(km/spd*10)/10)+'h';
+let filter='ALL';
+
+function build(){
+  const now=new Date(),todayStr=toISO(now),groups=[];
+  for(let d=0;d<7;d++){
+    const date=new Date(now); date.setDate(now.getDate()+d);
+    const ds=toISO(date),isToday=ds===todayStr,rows=[];
+    let keys=Object.keys(SERVICES); if(filter!=='ALL') keys=keys.filter(k=>k===filter);
+    let si=d;
+    for(const id of keys){
+      if(!isOp(date,id)) continue;
+      const s=SERVICES[id],bl=isBlocked(ds,id),r=ROUTES[id][si++%ROUTES[id].length];
+      rows.push({date,ds,isToday,id,s,bl,r,eta:eta(r.km,s.speedKmh),
+        sc:bl?'s-blocked':isToday?'s-today':'s-sched',
+        sl:bl?'Cancelled':isToday?'Today':'Scheduled'});
+    }
+    if(rows.length) groups.push({date,isToday,rows});
+  }
+  return groups;
+}
+
+function render(){
+  const groups=build();
+  const tb=document.getElementById('table-body');
+  if(!groups.length){tb.innerHTML='<tr><td colspan="7" class="empty-msg">No departures for selected filter.</td></tr>';return;}
+  let h='';
+  for(const g of groups){
+    const d=g.date;
+    const lbl=`${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}${g.isToday?' — Today':''}`;
+    h+=`<tr class="day-sep${g.isToday?' is-today':''}"><td colspan="7">${lbl}</td></tr>`;
+    for(const r of g.rows){
+      h+=`<tr>
+        <td><div class="date-num">${r.date.getDate()} ${MONTHS[r.date.getMonth()]}</div><div class="date-day">${DAYS[r.date.getDay()]}</div></td>
+        <td><div class="time-main">${r.s.time}</div><div class="time-until">ETA +${r.eta}</div></td>
+        <td><span class="svc-pill svc-${r.s.level}">${r.s.name}</span><div class="svc-id">${r.id}</div></td>
+        <td><div class="route-main">${r.r.label}</div><div class="route-sub">${r.r.km} km · ${r.r.from} → ${r.r.to}</div></td>
+        <td class="speed-cell"><span class="speed-dot sd-${r.s.level}"></span>${r.s.speedKmh} km/h</td>
+        <td class="${r.s.dg?'dg-yes':'dg-no'}">${r.s.dg?'Allowed':'—'}</td>
+        <td><span class="status-badge ${r.sc}">${r.sl}</span></td>
+      </tr>`;
+    }
+  }
+  tb.innerHTML=h;
+}
+
+function tick(){
+  const n=new Date(),p=x=>String(x).padStart(2,'0');
+  document.getElementById('clock-time').textContent=`${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+  document.getElementById('clock-date').textContent=`${DAYS[n.getDay()]} ${n.getDate()} ${MONTHS[n.getMonth()]} ${n.getFullYear()}`;
+}
+
+document.getElementById('filter-bar').addEventListener('click',e=>{
+  const b=e.target.closest('.f-btn'); if(!b) return;
+  document.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); filter=b.dataset.svc; render();
+});
+
+render(); tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>

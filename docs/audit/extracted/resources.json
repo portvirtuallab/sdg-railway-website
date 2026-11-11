@@ -1,0 +1,145 @@
+{
+  "slug": "resources",
+  "url": "https://sites.google.com/escolaeuropea.eu/sdgrailway/resources",
+  "title": "SDG Railway - Resources",
+  "sections": [
+    {
+      "index": 0,
+      "text": "# Resources",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 1,
+      "text": "SDG Railway Glossary",
+      "embeds": [],
+      "links": []
+    },
+    {
+      "index": 2,
+      "text": "",
+      "embeds": [
+        {
+          "file": "embeds/resources--embed-01.html",
+          "bytes": 10008,
+          "iframes": [],
+          "forms": [],
+          "inputs": 0,
+          "scripts": 1,
+          "imgs": [],
+          "links": [],
+          "text": ""
+        },
+        {
+          "iframe": "https://40272843-atari-embeds.googleusercontent.com/embeds/519e65e0e56fcef24f03f43ae5831795/inner-frame-minified.html"
+        }
+      ],
+      "links": []
+    },
+    {
+      "index": 3,
+      "text": "PortVirtualLab © Escola Europea Short Sea Shipping, Spain. Notice of Copyright Protection: All rights reserved. Unauthorized use, reproduction, or distribution is prohibited and may result in legal action.\n\nThe Port Virtual Lab® name and mark, along with SDG Lines®, SDG Airlines®, MEDtrade®, and Playforwarding®, are owned by Escola Europea de Short Sea Shipping AEIE.",
+      "embeds": [
+        {
+          "file": "embeds/resources--embed-02.html",
+          "bytes": 956,
+          "iframes": [],
+          "forms": [],
+          "inputs": 0,
+          "scripts": 0,
+          "imgs": [
+            "https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"
+          ],
+          "links": [
+            {
+              "t": "",
+              "h": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+            },
+            {
+              "t": "Escola Europea - Intermodal Transport",
+              "h": "https://escolaeuropea.eu"
+            },
+            {
+              "t": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Licen",
+              "h": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+            },
+            {
+              "t": "pvl.one",
+              "h": "https://pvl.one"
+            }
+          ],
+          "text": ""
+        },
+        {
+          "iframe": "https://40272843-atari-embeds.googleusercontent.com/embeds/519e65e0e56fcef24f03f43ae5831795/inner-frame-minified.html"
+        }
+      ],
+      "links": [
+        {
+          "t": "",
+          "h": "https://www.google.com/url?q=https%3A%2F%2Fwww.pvl.one%2F&sa=D&sntz=1&usg=AOvVaw0atKRfT2nJYNXjWsaY68Nk"
+        },
+        {
+          "t": "",
+          "h": "http://www.google.com/url?q=http%3A%2F%2Fwww.escolaeuropea.eu&sa=D&sntz=1&usg=AOvVaw3vh41eSAEVtDaN2c1QFxcp"
+        },
+        {
+          "t": "",
+          "h": "https://www.google.com/url?q=https%3A%2F%2Fes.linkedin.com%2Fshowcase%2Fpvl-one%2F&sa=D&sntz=1&usg=AOvVaw1P3183b54wC0ZP0CMg6FKi"
+        },
+        {
+          "t": "",
+          "h": "https://www.google.com/url?q=https%3A%2F%2Fwww.instagram.com%2Fescolaeuropeaeu%2F%3Fhl%3Den&sa=D&sntz=1&usg=AOvVaw0qAhCYNvkUvsn7UaR48hFh"
+        },
+        {
+          "t": "",
+          "h": "https://www.google.com/url?q=https%3A%2F%2Fwww.facebook.com%2FESCOLAEUROPEA&sa=D&sntz=1&usg=AOvVaw1VU8lSGIT_cmHVfmNzQrHe"
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "section": 0,
+      "kind": "background",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcCl-PxqYDrfAvRbRUEy8qkpOR6AgAVT0L9RcIQn1Bh7VZQxvtwLaB0RWcwYWxXAHAy9505MWzkUxjEZf4MnWr4Fa2BGIblvD7OmeCWfiZUInl5No_OqXR_DJwdNseXtgA53NmtHgPUA2CVRm5QZBuvX9utSButwe0h-YHBJ7Ac2eoeaQj524u1NdpnZBY=w16383"
+    },
+    {
+      "section": 3,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQeCM9NBxXCqPYOH_ovB-0JnssOcUyEhAMcG9LLczO_raIBZmCJT8bACPtaH-cNjDUDQ30ayA910vsZI9vS3wT6wC7fT-ujhTLU41_NH3SVnpCRD2qdPYvKCXMOsybfM2WrsrAVdNvBbgjhHTzZD_5eAww4HT0aZSWXJghwagQ5-Zl-PQHEiymfkFZUS8CiGazjrFdry6Rvc69tnInSeL4O3F3vK3HUNFJ-MSiul42k=w1280"
+    },
+    {
+      "section": 3,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcdBK_KtiMCCPuZRlRMCq8DHco08QbxrRFw-lClS5lO8t3t0s2ZEzTnSi9fYzrGOzbndHD8LasVvw3MSY7457Ip6hRJTgDs8kUK4uzIxJ3ed73hpFjC2N2bIiUq9EMGWOY2jPv2rKwC8xSiBixPOZDf8CC5_Pcc--bgjzzgHxPUR123HrqCAU63z-KJ=w1280"
+    },
+    {
+      "section": 3,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcVKkn2dHoNgs5D1i84Bh5yfzVei51ODnFK7QClU6SqXf2Wfg-zvVQke4yPTNKq3y9W2dwZ3xo3n2bj6jkDroIbEvYvanE6Ua8RMOtJCT532aSKkAcvGazcvZ_Bs6eerkMMgMX11CcwC4mK119HT9kJVcoM2Lk6miUZIz50oVeJi12H4hlc2oY3N4Lw=w1280"
+    },
+    {
+      "section": 3,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQem9p5OLye1F_IpzvV9lAgyjhe2bEMQ1l6G0O88Qi2dMbernF3UQf58EqeyckNrns7FmKddUOG5G8hX2mT1KKMEGadPElQyQ2sC-UlSuKft97smYxSUA2UvE0wynVJMsuEgrBvAIXTIcqhqIr_YmJOXx1bPvpLHdXklRODrKeDQ8U8KUpi_0VZouTTVKxo=w1280"
+    },
+    {
+      "section": 3,
+      "kind": "img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcLE9lDlb4EKU7brHPdSeA-pLHqCFfPMdk5z01db9dXz_F4zrMpC3Q70jr-tZ3vFdSNKIGLNMuET3DvzRs3Qke17Qp1tFW78vjfkuB6VIYqmuUSe5SXMUSa-UE2KPKWoe1D1qr9DsKoyhXzdaOPgvW5zTEnV6kMd_xhknP-VHcovPeInGxl3j4INMWRHMk=w1280"
+    },
+    {
+      "section": -1,
+      "kind": "header-img",
+      "alt": "",
+      "src": "https://sites.google.com/sitesv-images-rt/APXyLQcy4y8dd6TW25i6hqNvOVR6ujPbX-onW0JxamsyStWx1kvBQQr9AOxEUZ2D3PNc_MfRYXgk0PWguJlkrDDbdKbsyyBxuCMUMvzqhQGYKZgj3rUJBuXvCQJPIEGlYnXUsAHvXnMkUYrvQMTUDKzZz9xNZU5M9s31ckI4Ou-cbFKV_o7BZ5M8_OhQh7Xb0dU=w16383"
+    }
+  ]
+}

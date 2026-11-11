@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink:        #111827;
+    --ink-2:      #1F2937;
+    --ink-3:      #374151;
+    --ink-4:      #6B7280;
+    --ink-5:      #9CA3AF;
+
+    --paper:      #FFFFFF;
+    --paper-2:    #F9FAFB;
+    --paper-3:    #F3F4F6;
+    --paper-4:    #E5E7EB;
+    --paper-5:    #D1D5DB;
+
+    --accent:     #0F7B4E;
+    --accent-h:   #158A58;
+    --accent-bg:  #ECFDF5;
+    --accent-mid: #A7F3D0;
+    --accent-lite:#D1FAE5;
+
+    --red:        #DC2626;
+    --red-bg:     #FEF2F2;
+    --amber:      #B45309;
+    --amber-bg:   #FFFBEB;
+
+    --sidebar-w:  248px;
+    --sans:       'Plus Jakarta Sans', sans-serif;
+    --mono:       'JetBrains Mono', monospace;
+    --display:    'Sora', sans-serif;
+    --radius:     10px;
+    --radius-lg:  14px;
+    --shadow-sm:  0 1px 3px rgba(0,0,0,.07);
+    --shadow-md:  0 4px 20px rgba(0,0,0,.09), 0 1px 4px rgba(0,0,0,.04);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: var(--sans);
+    background: var(--paper-2);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+   
+  .topbar {
+    position: sticky; top: 0; z-index: 300;
+    height: 58px; background: var(--ink);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .topbar__brand { display: flex; align-items: center; gap: 11px; }
+  .logo-mark {
+    width: 34px; height: 34px; background: var(--accent);
+    border-radius: 8px; display: grid; place-items: center; flex-shrink: 0;
+  }
+  .topbar__text { display: flex; flex-direction: column; gap: 1px; }
+  .topbar__brand-name {
+    font-family: var(--display); font-size: 13px; font-weight: 700;
+    color: #fff; line-height: 1.2;
+  }
+  .topbar__company { font-size: 11px; color: rgba(255,255,255,.32); }
+  .currency-tag {
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    padding: 4px 11px; background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1); border-radius: 6px;
+    color: rgba(255,255,255,.55); letter-spacing: 1px;
+  }
+
+   
+  .layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    min-height: calc(100vh - 58px);
+  }
+
+   
+  .sidebar {
+    background: var(--paper); border-right: 1px solid var(--paper-4);
+    display: flex; flex-direction: column;
+    padding: 24px 0;
+    position: sticky; top: 58px;
+    height: calc(100vh - 58px); overflow-y: auto;
+  }
+  .step-nav { display: flex; flex-direction: column; flex: 1; }
+  .step-nav__item {
+    display: flex; align-items: center; gap: 13px;
+    padding: 13px 18px;
+    background: none; border: none; cursor: pointer;
+    text-align: left;
+    transition: background .15s;
+    border-left: 3px solid transparent;
+  }
+  .step-nav__item:hover { background: var(--paper-2); }
+  .step-nav__item.active { background: var(--accent-bg); border-left-color: var(--accent); }
+  .step-nav__item.done   { border-left-color: var(--accent); }
+  .step-nav__num {
+    font-family: var(--mono); font-size: 10px; font-weight: 500;
+    color: var(--ink-5); min-width: 20px; transition: color .15s;
+  }
+  .step-nav__item.active .step-nav__num,
+  .step-nav__item.done .step-nav__num { color: var(--accent); }
+  .step-nav__info { flex: 1; }
+  .step-nav__title {
+    font-size: 13.5px; font-weight: 700; color: var(--ink-4);
+    display: block; line-height: 1.2; transition: color .15s;
+  }
+  .step-nav__item.active .step-nav__title { color: var(--accent); }
+  .step-nav__item.done .step-nav__title   { color: var(--ink-3); }
+  .step-nav__sub { font-size: 11.5px; color: var(--ink-5); display: block; margin-top: 2px; }
+  .step-nav__check {
+    width: 19px; height: 19px; border-radius: 50%;
+    background: var(--paper-3); display: grid; place-items: center;
+    flex-shrink: 0; color: var(--ink-5); transition: background .15s, color .15s;
+  }
+  .step-nav__item.done .step-nav__check { background: var(--accent); color: #fff; }
+  .step-nav__item.active .step-nav__check {
+    background: var(--accent-bg); border: 1.5px solid var(--accent-mid); color: var(--accent);
+  }
+  .sidebar__footer {
+    padding: 18px 18px 0; border-top: 1px solid var(--paper-4); margin-top: auto;
+  }
+  .sidebar__footer-label { font-size: 11px; color: var(--ink-5); margin-bottom: 3px; }
+  .sidebar__footer-email {
+    font-size: 12.5px; font-weight: 600; color: var(--accent); text-decoration: none;
+  }
+  .sidebar__footer-email:hover { text-decoration: underline; }
+
+   
+  .content-area { padding: 38px 48px 80px; max-width: 780px; }
+
+   
+  .step-pane { display: none; }
+  .step-pane--active { display: block; animation: paneFadeIn .22s ease both; }
+  @keyframes paneFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .pane-header { margin-bottom: 30px; }
+  .pane-header__step {
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 1.8px; margin-bottom: 10px;
+  }
+  .pane-header__title {
+    font-family: var(--display); font-size: 30px; font-weight: 800;
+    color: var(--ink); letter-spacing: -0.4px; line-height: 1.1; margin-bottom: 9px;
+  }
+  .pane-header__desc { font-size: 14.5px; color: var(--ink-4); line-height: 1.55; max-width: 500px; }
+
+   
+  .form-section { margin-bottom: 26px; }
+  .form-section__label {
+    font-family: var(--mono); font-size: 10px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 1.4px; color: var(--ink-5);
+    margin-bottom: 13px; padding-bottom: 8px; border-bottom: 1px solid var(--paper-4);
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 2fr; gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field__label { font-size: 13px; font-weight: 700; color: var(--ink-3); }
+  .field__input, .field__select {
+    height: 46px; padding: 0 13px;
+    background: var(--paper); border: 1.5px solid var(--paper-4);
+    border-radius: var(--radius);
+    font-family: var(--sans); font-size: 14.5px; font-weight: 500;
+    color: var(--ink); outline: none; appearance: none; -webkit-appearance: none;
+    transition: border-color .13s, box-shadow .13s;
+  }
+  .field__select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239CA3AF' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 13px center;
+    padding-right: 36px; cursor: pointer;
+  }
+  .field__input::placeholder { color: var(--ink-5); font-weight: 400; }
+  .field__input:focus, .field__select:focus {
+    border-color: var(--accent); box-shadow: 0 0 0 3px rgba(15,123,78,.1); background: #fff;
+  }
+  .field__hint { font-size: 11.5px; color: var(--ink-5); margin-top: 3px; }
+
+   
+  .route-arrow {
+    display: flex; align-items: center; gap: 12px;
+    margin: 10px 0 18px; color: var(--accent);
+  }
+  .route-arrow__line { flex: 1; height: 1px; background: var(--accent-lite); }
+  .route-arrow__icon {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1.5px solid var(--accent-mid); background: var(--accent-bg);
+    display: grid; place-items: center; flex-shrink: 0; color: var(--accent);
+  }
+
+   
+  .radio-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .radio-card { cursor: pointer; }
+  .radio-card input { display: none; }
+  .radio-card__body {
+    display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+    border: 1.5px solid var(--paper-4); border-radius: var(--radius);
+    background: var(--paper); transition: border-color .13s, background .13s;
+  }
+  .radio-card:hover .radio-card__body { border-color: var(--paper-5); }
+  .radio-card input:checked + .radio-card__body { border-color: var(--accent); background: var(--accent-bg); }
+  .radio-card__icon { color: var(--ink-5); flex-shrink: 0; }
+  .radio-card input:checked + .radio-card__body .radio-card__icon { color: var(--accent); }
+  .radio-card__title { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+  .radio-card__sub   { font-size: 11.5px; color: var(--ink-5); margin-top: 1px; }
+
+   
+  .route-badge {
+    display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+    background: var(--ink); border-radius: var(--radius);
+    margin-bottom: 22px; color: rgba(255,255,255,.4);
+  }
+  .route-badge__terminal {
+    flex: 1; font-size: 14px; font-weight: 700; color: #fff;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+   
+  .toggle-switch { display: flex; align-items: center; gap: 11px; cursor: pointer; user-select: none; }
+  .toggle-switch input { display: none; }
+  .toggle-switch__track {
+    width: 42px; height: 23px; border-radius: 999px;
+    background: var(--paper-4); border: 1.5px solid var(--paper-5);
+    position: relative; flex-shrink: 0; transition: background .18s, border-color .18s;
+  }
+  .toggle-switch__track::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 15px; height: 15px; border-radius: 50%;
+    background: var(--ink-5); transition: transform .18s, background .18s;
+  }
+  .toggle-switch input:checked ~ .toggle-switch__track { background: var(--accent); border-color: var(--accent); }
+  .toggle-switch input:checked ~ .toggle-switch__track::after { transform: translateX(19px); background: #fff; }
+  .toggle-switch__label { font-size: 14px; font-weight: 600; color: var(--ink); }
+
+   
+  .service-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+  .svc-card {
+    display: flex; align-items: stretch;
+    border: 1.5px solid var(--paper-4); border-radius: var(--radius-lg);
+    background: var(--paper); cursor: pointer; overflow: hidden;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .svc-card:hover { border-color: var(--paper-5); box-shadow: var(--shadow-sm); }
+  .svc-card.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(15,123,78,.1); }
+  .svc-card input { display: none; }
+  .svc-card__stripe { width: 4px; background: var(--paper-4); flex-shrink: 0; transition: background .15s; }
+  .svc-card.selected .svc-card__stripe { background: var(--accent); }
+  .svc-card__body { flex: 1; padding: 16px 18px; display: flex; align-items: center; gap: 18px; }
+  .svc-card__level {
+    font-family: var(--mono); font-size: 9.5px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 1.2px;
+    padding: 3px 8px; border-radius: 4px;
+    background: var(--paper-3); color: var(--ink-4);
+    flex-shrink: 0; min-width: 60px; text-align: center;
+    border: 1px solid var(--paper-4);
+    transition: background .15s, color .15s;
+  }
+  .svc-card.selected .svc-card__level { background: var(--accent-bg); color: var(--accent); border-color: var(--accent-mid); }
+  .svc-card__info { flex: 1; }
+  .svc-card__name { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+  .svc-card__desc { font-size: 12.5px; color: var(--ink-4); }
+  .svc-card__meta { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
+  .svc-card__speed { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--ink); }
+  .svc-card__speed-label { font-size: 10.5px; color: var(--ink-5); }
+  .svc-card__dg-ok { font-size: 11.5px; color: var(--accent); font-weight: 700; }
+  .svc-card__dg-no { font-size: 11.5px; color: var(--ink-5); }
+
+   
+  .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+  .review-card {
+    background: var(--paper); border: 1.5px solid var(--paper-4);
+    border-radius: var(--radius); padding: 14px 16px;
+  }
+  .review-card__label {
+    font-family: var(--mono); font-size: 9.5px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 1.1px; color: var(--ink-5); margin-bottom: 5px;
+  }
+  .review-card__value { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .review-card__sub   { font-size: 12px; color: var(--ink-4); margin-top: 2px; }
+  .review-card--warn  { background: var(--amber-bg); border-color: rgba(180,83,9,.2); }
+  .review-card--warn .review-card__value { color: var(--amber); }
+
+   
+  .alert {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 13px 15px; border-radius: var(--radius);
+    font-size: 13.5px; font-weight: 600;
+    border: 1.5px solid; margin-bottom: 18px;
+  }
+  .alert--error { background: var(--red-bg); border-color: rgba(220,38,38,.2); color: var(--red); }
+  .alert--warn  { background: var(--amber-bg); border-color: rgba(180,83,9,.2); color: var(--amber); }
+  .alert svg { flex-shrink: 0; margin-top: 1px; }
+
+   
+  .pane-actions {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 22px; border-top: 1px solid var(--paper-4);
+    margin-top: 8px; gap: 10px;
+  }
+
+   
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    height: 42px; padding: 0 18px;
+    border-radius: var(--radius); border: 1.5px solid var(--paper-4);
+    background: var(--paper); color: var(--ink-3);
+    font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: background .13s, border-color .13s;
+  }
+  .btn:hover { background: var(--paper-3); }
+  .btn--primary {
+    background: var(--ink); border-color: var(--ink); color: #fff;
+    height: 46px; padding: 0 22px; font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.14);
+  }
+  .btn--primary:hover { background: var(--ink-2); }
+  .btn--ghost { background: transparent; border-color: transparent; color: var(--ink-4); }
+  .btn--ghost:hover { background: var(--paper-3); border-color: var(--paper-4); color: var(--ink); }
+  .btn--generate {
+    background: var(--accent); border-color: var(--accent); color: #fff;
+    height: 48px; padding: 0 26px; font-size: 14.5px; font-weight: 800;
+    box-shadow: 0 2px 12px rgba(15,123,78,.28);
+  }
+  .btn--generate:hover { background: var(--accent-h); border-color: var(--accent-h); }
+  .btn--generate:disabled { opacity: .5; pointer-events: none; }
+
+   
+  .loading-state {
+    display: none; flex-direction: column; align-items: center;
+    gap: 22px; padding: 48px 20px;
+  }
+  .loading-state.show { display: flex; animation: paneFadeIn .2s ease; }
+  .spinner-svg { animation: spin .85s linear infinite; display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-state__steps { display: flex; flex-direction: column; gap: 8px; }
+  .ls-step {
+    font-size: 13.5px; color: var(--ink-5);
+    display: flex; align-items: center; gap: 10px; transition: color .3s;
+  }
+  .ls-step::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--paper-4); flex-shrink: 0; transition: background .3s;
+  }
+  .ls-step.active { color: var(--ink); font-weight: 700; }
+  .ls-step.active::before { background: var(--ink); }
+  .ls-step.done   { color: var(--accent); }
+  .ls-step.done::before   { background: var(--accent); }
+
+   
+  .result-panel {
+    display: none;
+    background: var(--paper);
+    border: 1.5px solid var(--paper-4);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 28px;
+    box-shadow: var(--shadow-md);
+  }
+  .result-panel.show { display: block; animation: paneFadeIn .3s ease; }
+
+   
+  .result-panel__topbar {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 18px 24px 16px;
+    background: var(--ink);
+  }
+  .result-panel__refs { display: flex; flex-direction: column; gap: 5px; }
+  .result-panel__ref-row { display: flex; align-items: center; gap: 10px; }
+  .result-panel__ref-label {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: rgba(255,255,255,.35);
+    white-space: nowrap; min-width: 110px;
+  }
+  .result-panel__ref-val {
+    font-family: var(--mono); font-size: 13.5px; font-weight: 500;
+    color: #fff; letter-spacing: 0.6px;
+  }
+  .result-panel__ref-val--booking { color: #6EE7B7; font-size: 14.5px; }
+
+  .btn--new-quote {
+    background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.16);
+    color: rgba(255,255,255,.65); height: 34px; padding: 0 14px;
+    font-size: 12.5px; flex-shrink: 0; margin-top: 2px;
+  }
+  .btn--new-quote:hover { background: rgba(255,255,255,.16); color: #fff; }
+
+   
+  .result-kpis {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--paper-4);
+  }
+  .kpi { padding: 20px 22px; border-right: 1px solid var(--paper-4); }
+  .kpi:last-child { border-right: none; }
+  .kpi--accent { background: var(--accent-bg); }
+  .kpi__label {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--ink-5); margin-bottom: 8px;
+  }
+  .kpi__value {
+    font-family: var(--display); font-size: 21px; font-weight: 800;
+    color: var(--ink); line-height: 1; margin-bottom: 5px;
+  }
+  .kpi--accent .kpi__value { color: var(--accent); }
+  .kpi__sub { font-size: 11.5px; color: var(--ink-5); }
+  .kpi--accent .kpi__sub { color: var(--accent-h); opacity: .7; }
+
+   
+  .result-section { padding: 18px 24px; border-bottom: 1px solid var(--paper-4); }
+  .result-section__label {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--ink-5); margin-bottom: 13px;
+  }
+
+   
+  .route-path { list-style: none; display: flex; flex-direction: column; }
+  .route-path li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 7px 0; font-size: 13.5px; color: var(--ink-4);
+    border-bottom: 1px solid var(--paper-3);
+  }
+  .route-path li:last-child { border-bottom: none; }
+  .route-path li::before {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--paper-4); flex-shrink: 0; margin-top: 4px;
+  }
+  .route-path li:first-child::before,
+  .route-path li:last-child::before { background: var(--accent); }
+  .rp-name  { font-weight: 700; color: var(--ink); }
+  .rp-meta  { font-size: 11.5px; color: var(--ink-5); margin-left: 4px; }
+
+   
+  .breakdown-table { width: 100%; border-collapse: collapse; }
+  .breakdown-table td {
+    padding: 9px 0; border-bottom: 1px solid var(--paper-3);
+    font-size: 13.5px; color: var(--ink-4);
+  }
+  .breakdown-table tr:last-child td { border-bottom: none; }
+  .breakdown-table td:last-child {
+    text-align: right; font-family: var(--mono); font-size: 13px; color: var(--ink-3);
+  }
+  .breakdown-table .row-indent td:first-child { padding-left: 18px; font-size: 12.5px; color: var(--ink-5); }
+  .breakdown-table .row-sub td { color: var(--ink-3); font-weight: 600; font-size: 13px; }
+  .breakdown-table .row-total td {
+    color: var(--accent); font-weight: 800; font-size: 16px;
+    border-top: 2px solid var(--accent-lite); padding-top: 13px;
+  }
+  .breakdown-table .row-total td:last-child { font-family: var(--mono); font-size: 15px; }
+  .breakdown-table .row-tax-note td {
+    color: var(--ink-5); font-size: 11.5px; font-style: italic; padding-top: 3px;
+  }
+
+   
+  .pdf-row { display: flex; gap: 10px; padding: 18px 24px; }
+  .btn--pdf-open {
+    flex: 1; justify-content: center;
+    background: var(--accent); border-color: var(--accent); color: #fff;
+    height: 44px; font-weight: 800;
+  }
+  .btn--pdf-open:hover { background: var(--accent-h); border-color: var(--accent-h); }
+
+   
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar {
+      position: static; height: auto; padding: 12px 0;
+      border-right: none; border-bottom: 1px solid var(--paper-4);
+    }
+    .step-nav { flex-direction: row; flex-wrap: wrap; padding: 0 10px; gap: 2px; }
+    .step-nav__item { padding: 8px 10px; border-left: none; border-bottom: 2px solid transparent; }
+    .step-nav__item.active { border-bottom-color: var(--accent); }
+    .step-nav__sub { display: none; }
+    .content-area { padding: 22px 18px 60px; max-width: 100%; }
+    .sidebar__footer { display: none; }
+  }
+  @media (max-width: 580px) {
+    .field-row { grid-template-columns: 1fr; }
+    .radio-cards { grid-template-columns: 1fr; }
+    .review-grid { grid-template-columns: 1fr; }
+    .result-kpis { grid-template-columns: 1fr; }
+    .kpi { border-right: none; border-bottom: 1px solid var(--paper-4); }
+    .pdf-row { flex-direction: column; }
+    .pane-header__title { font-size: 24px; }
+  }
+</style>    <style>
+     
+    .step3-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 24px;
+      align-items: start;
+    }
+    .step3-left  { display: flex; flex-direction: column; gap: 16px; }
+    .step3-right { display: flex; flex-direction: column; gap: 14px; }
+
+    .cal-wrap {
+      background: var(--paper);
+      border: 1.5px solid var(--paper-4);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .cal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid var(--paper-4);
+      background: var(--paper-2);
+    }
+    .cal-month-label {
+      font-family: var(--display);
+      font-size: 15px; font-weight: 700;
+      color: var(--ink);
+    }
+    .cal-nav {
+      width: 30px; height: 30px;
+      border-radius: 7px;
+      border: 1.5px solid var(--paper-4);
+      background: var(--paper);
+      display: grid; place-items: center;
+      cursor: pointer; color: var(--ink-4);
+      transition: border-color .13s, background .13s;
+    }
+    .cal-nav:hover:not(:disabled) { border-color: var(--paper-5); background: var(--paper-3); color: var(--ink); }
+    .cal-nav:disabled { opacity: .35; cursor: default; }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      padding: 14px;
+    }
+    .cal-dow {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 10px; font-weight: 500;
+      color: var(--ink-5);
+      padding-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .cal-cell {
+      aspect-ratio: 1;
+      display: grid; place-items: center;
+      border-radius: 7px;
+      font-size: 13px; font-weight: 600;
+      cursor: default;
+      transition: background .12s, color .12s, transform .1s;
+      position: relative;
+    }
+    .cal-cell--empty { background: transparent; }
+    .cal-cell--out {
+      color: var(--ink-5); opacity: .35; font-weight: 400;
+    }
+    .cal-cell--available {
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .cal-cell--available:hover {
+      background: var(--accent-bg);
+      color: var(--accent);
+      transform: scale(1.08);
+    }
+    .cal-cell--selected {
+      background: var(--accent) !important;
+      color: #fff !important;
+      transform: scale(1.08);
+      box-shadow: 0 2px 8px rgba(15,123,78,.3);
+    }
+    .cal-cell--no-service {
+      color: var(--ink-5);
+      background: var(--paper-3);
+      font-weight: 400;
+    }
+    .cal-cell--no-service::after {
+      content: '';
+      position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--paper-5);
+    }
+    .cal-cell--blocked {
+      color: var(--red);
+      background: var(--red-bg);
+      font-weight: 400;
+      text-decoration: line-through;
+      opacity: .7;
+    }
+
+    .cal-legend {
+      display: flex; gap: 16px;
+      padding: 10px 14px 14px;
+      border-top: 1px solid var(--paper-3);
+    }
+    .cal-legend__item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11.5px; color: var(--ink-5);
+    }
+    .cal-legend__dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .cal-legend__dot--available { background: var(--accent); }
+    .cal-legend__dot--no-service { background: var(--paper-5); }
+    .cal-legend__dot--blocked    { background: var(--red); }
+
+    .cal-note {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 14px;
+      background: var(--paper-2);
+      border-top: 1px solid var(--paper-3);
+      font-size: 11.5px; color: var(--ink-4);
+    }
+    .cal-note--warn { color: var(--amber); background: var(--amber-bg); }
+
+     
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 1.4px;
+      color: var(--ink-5);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--paper-4);
+    }
+
+     
+    .arrival-preview {
+      display: none;
+      background: var(--accent-bg);
+      border: 1.5px solid var(--accent-mid);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .arr-row {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .arr-block { display: flex; flex-direction: column; gap: 3px; }
+    .arr-label {
+      font-family: var(--mono); font-size: 9px;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--accent-h); font-weight: 500;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .arr-time {
+      font-size: 14px; font-weight: 700; color: var(--ink);
+    }
+    .arr-time--accent { color: var(--accent); }
+    .arr-time--muted  { color: var(--ink-5); font-weight: 500; font-size: 13px; }
+    .arr-separator {
+      font-size: 18px; color: var(--accent-mid); font-weight: 300;
+      flex-shrink: 0;
+    }
+    .arr-separator--thin { width: 1px; height: 32px; background: var(--accent-mid); }
+    .arr-tag {
+      font-size: 9px; font-weight: 700;
+      background: var(--accent); color: #fff;
+      border-radius: 4px; padding: 1px 5px;
+      letter-spacing: 0.3px;
+    }
+
+     
+    .selected-date-card {
+      background: var(--paper);
+      border: 1.5px solid var(--paper-4);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .selected-date-card.has-date {
+      border-color: var(--accent-mid);
+      background: var(--accent-bg);
+    }
+    .sdc__label {
+      font-family: var(--mono); font-size: 9px;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--ink-5); margin-bottom: 5px;
+    }
+    .sdc__value { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .sdc__value.empty { color: var(--ink-5); font-weight: 400; font-size: 13px; }
+    .sdc__dep {
+      font-family: var(--mono); font-size: 11px; color: var(--accent);
+      margin-top: 3px; font-weight: 500;
+    }
+
+     
+    .dep-arr-strip {
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; gap: 12px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--paper-4);
+      background: var(--paper-2);
+    }
+    .da-block { display: flex; flex-direction: column; gap: 3px; }
+    .da-block--right { text-align: right; align-items: flex-end; }
+    .da-label {
+      font-family: var(--mono); font-size: 9px;
+      text-transform: uppercase; letter-spacing: 1.4px;
+      color: var(--ink-5);
+    }
+    .da-value { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .da-value--accent { color: var(--accent); }
+    .da-arrow {
+      text-align: center; color: var(--ink-5); font-size: 20px;
+    }
+
+    @media (max-width: 820px) {
+      .step3-layout { grid-template-columns: 1fr; }
+      .step3-right { order: -1; }
+    }
+    </style>
+  </head>
+  <body>
+
+    <header class="topbar">
+      <div class="topbar__brand">
+        <div class="logo-mark">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="6" width="16" height="9" rx="2" stroke="white" stroke-width="1.5"/>
+            <path d="M5 15v2M15 15v2" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M2 10h16M7 6V4M13 6V4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="5.5" cy="12" r="1" fill="white"/>
+            <circle cx="14.5" cy="12" r="1" fill="white"/>
+          </svg>
+        </div>
+        <div class="topbar__text">
+          <span class="topbar__brand-name" id="brandName">Railway Quotation Simulator</span>
+          <span class="topbar__company" id="companyName">Railway Company</span>
+        </div>
+      </div>
+      <div><span class="currency-tag" id="currencyPill">EUR</span></div>
+    </header>
+
+    <main class="layout">
+
+      
+      <aside class="sidebar">
+        <nav class="step-nav" id="stepNav">
+          <button class="step-nav__item active" data-step="1">
+            <span class="step-nav__num">01</span>
+            <span class="step-nav__info">
+              <span class="step-nav__title">Route</span>
+              <span class="step-nav__sub">Origin & destination</span>
+            </span>
+            <span class="step-nav__check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <button class="step-nav__item" data-step="2">
+            <span class="step-nav__num">02</span>
+            <span class="step-nav__info">
+              <span class="step-nav__title">Cargo</span>
+              <span class="step-nav__sub">Type & weight</span>
+            </span>
+            <span class="step-nav__check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <button class="step-nav__item" data-step="3">
+            <span class="step-nav__num">03</span>
+            <span class="step-nav__info">
+              <span class="step-nav__title">Service & Date</span>
+              <span class="step-nav__sub">Train + departure</span>
+            </span>
+            <span class="step-nav__check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <button class="step-nav__item" data-step="4">
+            <span class="step-nav__num">04</span>
+            <span class="step-nav__info">
+              <span class="step-nav__title">Contact</span>
+              <span class="step-nav__sub">Your details</span>
+            </span>
+            <span class="step-nav__check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <button class="step-nav__item" data-step="5">
+            <span class="step-nav__num">05</span>
+            <span class="step-nav__info">
+              <span class="step-nav__title">Review</span>
+              <span class="step-nav__sub">Generate quote</span>
+            </span>
+            <span class="step-nav__check"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+        </nav>
+        <div class="sidebar__footer">
+          <div class="sidebar__footer-label">Need help?</div>
+          <a class="sidebar__footer-email" id="supportEmailLink" href="#">support@example.com</a>
+        </div>
+      </aside>
+
+      
+      <div class="content-area">
+
+        
+        <div class="alert alert--error" id="globalAlert" style="display:none;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3.5M8 10.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span id="globalAlertText"></span>
+        </div>
+
+        
+        <div class="step-pane step-pane--active" data-step="1">
+          <div class="pane-header">
+            <div class="pane-header__step">Step 1 of 5</div>
+            <h2 class="pane-header__title">Select your route</h2>
+            <p class="pane-header__desc">Choose origin and destination terminals. The system calculates the optimal rail path automatically.</p>
+          </div>
+          <div class="form-section">
+            <div class="form-section__label">Origin</div>
+            <div class="field-row">
+              <div class="field">
+                <label class="field__label">Country</label>
+                <select class="field__select" id="originCountry"></select>
+              </div>
+              <div class="field">
+                <label class="field__label">Terminal</label>
+                <select class="field__select" id="originTerminal"></select>
+              </div>
+            </div>
+          </div>
+          <div class="route-arrow">
+            <div class="route-arrow__line"></div>
+            <div class="route-arrow__icon">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M4 10l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="route-arrow__line"></div>
+          </div>
+          <div class="form-section">
+            <div class="form-section__label">Destination</div>
+            <div class="field-row">
+              <div class="field">
+                <label class="field__label">Country</label>
+                <select class="field__select" id="destCountry"></select>
+              </div>
+              <div class="field">
+                <label class="field__label">Terminal</label>
+                <select class="field__select" id="destTerminal"></select>
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <div class="form-section__label">Routing preference</div>
+            <div class="radio-cards">
+              <label class="radio-card">
+                <input type="radio" name="routingMetric" value="DISTANCE" checked>
+                <div class="radio-card__body">
+                  <svg class="radio-card__icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <div><div class="radio-card__title">Shortest distance</div><div class="radio-card__sub">Minimise total km</div></div>
+                </div>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="routingMetric" value="TIME">
+                <div class="radio-card__body">
+                  <svg class="radio-card__icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <div><div class="radio-card__title">Fastest transit</div><div class="radio-card__sub">Minimise travel time</div></div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="alert alert--warn" id="sameTerminalAlert" style="display:none;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3.5M8 10.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Origin and destination must be different terminals.
+          </div>
+          <div class="pane-actions">
+            <span></span>
+            <button class="btn btn--primary" id="toStep2">Continue <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M5 2.5l4.5 4.5L5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+
+        
+        <div class="step-pane" data-step="2">
+          <div class="pane-header">
+            <div class="pane-header__step">Step 2 of 5</div>
+            <h2 class="pane-header__title">Cargo details</h2>
+            <p class="pane-header__desc">Specify what you're shipping, the unit type, and total weight.</p>
+          </div>
+          <div class="route-badge" id="routeBadge">
+            <span class="route-badge__terminal" id="rbOrigin">—</span>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="route-badge__terminal" id="rbDest">—</span>
+          </div>
+          <div class="form-section">
+            <div class="field-row">
+              <div class="field" style="grid-column:1/-1;display:grid;grid-template-columns:2fr 1fr;gap:14px;">
+                <div class="field">
+                  <label class="field__label">UTI type</label>
+                  <select class="field__select" id="utiType"></select>
+                </div>
+                <div class="field">
+                  <label class="field__label">Units</label>
+                  <input class="field__input" id="units" type="number" min="1" value="1">
+                </div>
+              </div>
+            </div>
+            <div class="field-row" style="margin-top:14px;">
+              <div class="field">
+                <label class="field__label">Total weight (kg)</label>
+                <input class="field__input" id="weightKg" type="number" min="1" value="1000">
+              </div>
+              <div class="field">
+                <label class="field__label">Cargo description</label>
+                <input class="field__input" id="cargoDescription" type="text" placeholder="e.g. Consumer electronics">
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <div class="form-section__label">Dangerous goods</div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="dgToggle">
+              <span class="toggle-switch__track"></span>
+              <span class="toggle-switch__label">This shipment contains dangerous goods (ADR)</span>
+            </label>
+            <div id="adrRow" style="display:none;margin-top:14px;">
+              <div class="field" style="max-width:300px;">
+                <label class="field__label">ADR class</label>
+                <select class="field__select" id="adrClass"></select>
+              </div>
+            </div>
+          </div>
+          <div class="pane-actions">
+            <button class="btn btn--ghost" id="backTo1"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2.5L4.5 7 9 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>
+            <button class="btn btn--primary" id="toStep3">Continue <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M5 2.5l4.5 4.5L5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+
+        
+        <div class="step-pane" data-step="3">
+          <div class="pane-header">
+            <div class="pane-header__step">Step 3 of 5</div>
+            <h2 class="pane-header__title">Service &amp; departure</h2>
+            <p class="pane-header__desc">Choose your train service, then pick an available departure date.</p>
+          </div>
+
+          <div class="step3-layout">
+
+            
+            <div class="step3-left">
+              <div>
+                <div class="section-label">Train service</div>
+                <div class="service-grid" id="svcList"></div>
+                <select id="serviceId" style="display:none;"></select>
+              </div>
+
+              
+              <div>
+                <div class="section-label">Departure &amp; estimated arrival</div>
+                <div class="arrival-preview" id="arrivalPreview"></div>
+                <div id="arrivalEmpty" style="font-size:13px;color:var(--ink-5);padding:10px 0;">
+                  Select a date from the calendar to see departure &amp; estimated arrival times.
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="step3-right">
+              <div>
+                <div class="section-label">Departure date</div>
+                
+                <div class="selected-date-card" id="selectedDateCard">
+                  <div class="sdc__label">Selected date</div>
+                  <div class="sdc__value empty" id="sdcValue">No date selected</div>
+                  <div class="sdc__dep" id="sdcDep" style="display:none;"></div>
+                </div>
+              </div>
+              <div class="cal-wrap" id="calWrap">
+                
+                <div style="padding:40px;text-align:center;color:var(--ink-5);font-size:13px;">Loading schedule…</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pane-actions" style="margin-top:24px;">
+            <button class="btn btn--ghost" id="backTo2"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2.5L4.5 7 9 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>
+            <button class="btn btn--primary" id="toStep4">Continue <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M5 2.5l4.5 4.5L5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+
+        
+        <div class="step-pane" data-step="4">
+          <div class="pane-header">
+            <div class="pane-header__step">Step 4 of 5</div>
+            <h2 class="pane-header__title">Contact information</h2>
+            <p class="pane-header__desc">Your quote will be personalised with these details and logged to the system.</p>
+          </div>
+          <div class="form-section">
+            <div class="field-row">
+              <div class="field">
+                <label class="field__label">Company name</label>
+                <input class="field__input" id="company" type="text" placeholder="Acme Logistics GmbH">
+              </div>
+              <div class="field">
+                <label class="field__label">Contact name</label>
+                <input class="field__input" id="contactName" type="text" placeholder="Alex Müller">
+              </div>
+            </div>
+            <div style="margin-top:14px;">
+              <div class="field">
+                <label class="field__label">Email address</label>
+                <input class="field__input" id="contactEmail" type="email" placeholder="alex@company.com">
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <div class="form-section__label">Insurance</div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="insuranceRequested">
+              <span class="toggle-switch__track"></span>
+              <span class="toggle-switch__label">Add cargo insurance to this quote</span>
+            </label>
+            <div id="goodsValueRow" style="display:none;margin-top:14px;">
+              <div class="field" style="max-width:260px;">
+                <label class="field__label">Declared goods value</label>
+                <input class="field__input" id="goodsValue" type="number" min="0" value="10000">
+                <span class="field__hint">Rate and minimum defined in CONFIG sheet.</span>
+              </div>
+            </div>
+          </div>
+          <div class="pane-actions">
+            <button class="btn btn--ghost" id="backTo3"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2.5L4.5 7 9 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>
+            <button class="btn btn--primary" id="toStep5">Review &amp; generate <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M5 2.5l4.5 4.5L5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+
+        
+        <div class="step-pane" data-step="5">
+          <div class="pane-header">
+            <div class="pane-header__step">Step 5 of 5</div>
+            <h2 class="pane-header__title">Review &amp; generate</h2>
+            <p class="pane-header__desc">Check all details before generating the final quotation and PDF document.</p>
+          </div>
+          <div class="review-grid" id="reviewGrid"></div>
+          <div class="pane-actions" style="border-top:none;padding-top:0;margin-top:8px;">
+            <button class="btn btn--ghost" id="backTo4"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2.5L4.5 7 9 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>
+            <button class="btn btn--generate" id="generateBtn">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M13.5 2H2.5a.5.5 0 00-.5.5v11a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-11a.5.5 0 00-.5-.5zM5 6.5h6M5 9h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              Generate quote &amp; PDF
+            </button>
+          </div>
+          <div class="loading-state" id="loadingPanel">
+            <div>
+              <svg class="spinner-svg" width="46" height="46" viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="20" stroke="#E5E7EB" stroke-width="3"/>
+                <path d="M24 4a20 20 0 0 1 20 20" stroke="#111827" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="loading-state__steps">
+              <div class="ls-step active" data-ls="0">Calculating optimal route…</div>
+              <div class="ls-step" data-ls="1">Applying tariffs &amp; surcharges…</div>
+              <div class="ls-step" data-ls="2">Generating PDF document…</div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="result-panel" id="resultWrap">
+
+          <div class="result-panel__topbar">
+            <div class="result-panel__refs">
+              <div class="result-panel__ref-row">
+                <span class="result-panel__ref-label">Quote ref</span>
+                <span class="result-panel__ref-val" id="rQuoteRef">—</span>
+              </div>
+              <div class="result-panel__ref-row">
+                <span class="result-panel__ref-label">Booking ref</span>
+                <span class="result-panel__ref-val result-panel__ref-val--booking" id="rBookingRef">—</span>
+              </div>
+            </div>
+            <button class="btn btn--new-quote" id="newQuoteBtn">↺ New quote</button>
+          </div>
+
+          
+          <div class="dep-arr-strip">
+            <div class="da-block">
+              <div class="da-label">Departure</div>
+              <div class="da-value" id="rDepDate">—</div>
+            </div>
+            <div class="da-arrow">→</div>
+            <div class="da-block da-block--right">
+              <div class="da-label">Estimated arrival</div>
+              <div class="da-value da-value--accent" id="rArrDate">—</div>
+            </div>
+          </div>
+
+          <div class="result-kpis">
+            <div class="kpi">
+              <div class="kpi__label">Mode</div>
+              <div class="kpi__value" id="rMode">—</div>
+              <div class="kpi__sub" id="rValidity">—</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi__label">Distance</div>
+              <div class="kpi__value" id="rDist">—</div>
+              <div class="kpi__sub" id="rTransit">—</div>
+            </div>
+            <div class="kpi kpi--accent">
+              <div class="kpi__label">Total</div>
+              <div class="kpi__value" id="rTotal">—</div>
+              <div class="kpi__sub">Taxes not included</div>
+            </div>
+          </div>
+
+          <div class="result-section">
+            <div class="result-section__label">Route path</div>
+            <ol class="route-path" id="pathList"></ol>
+          </div>
+
+          <div class="result-section">
+            <div class="result-section__label">Cost breakdown</div>
+            <table class="breakdown-table"><tbody id="pricingBody"></tbody></table>
+          </div>
+
+          <div class="pdf-row">
+            <a class="btn btn--pdf-open" id="pdfViewLink" href="#" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 15 15" fill="none"><path d="M3 1.5h5.5l3 3V13H3V1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8.5 1.5V4.5H11.5M5 7.5h5M5 9.5h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              Open PDF
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <script>
+      window.BOOTSTRAP_DATA = {"config":{"companyName":"SDG Railway","brandName":"Railway Quotation Simulator","currency":"EUR","vatRate":0,"insuranceRate":0.005,"minInsuranceValue":100,"quotationValidityDays":30,"supportEmail":"coursemanager@playpcs.com","defaultRoutingMetric":"DISTANCE","defaultSpeedKmH":80},"countries":[{"code":"BE","name":"Belgium","flag":"🇧🇪"},{"code":"EG","name":"Egypt","flag":"🇪🇬"},{"code":"FR","name":"France","flag":"🇫🇷"},{"code":"IT","name":"Italy","flag":"🇮🇹"},{"code":"JO","name":"Jordan","flag":"🇯🇴"},{"code":"MA","name":"Morocco","flag":"🇲🇦"},{"code":"NL","name":"Netherlands","flag":"🇳🇱"},{"code":"PT","name":"Portugal","flag":"🇵🇹"},{"code":"SA","name":"Saudi Arabia","flag":"🇸🇦"},{"code":"ES","name":"Spain","flag":"🇪🇸"}],"terminals":[{"id":"ALAIN-ICD","name":"Al Ain Inland Container Depot","city":"Al Ain","countryCode":"AE","terminalType":"Intermodal","dgCapable":true},{"id":"FUJ-PORTLOG","name":"Fujairah Port Logistics Terminal","city":"Fujairah","countryCode":"AE","terminalType":"Port Terminal","dgCapable":true},{"id":"DXB-JEBELALI","name":"Jebel Ali Logistics Rail Terminal","city":"Dubai","countryCode":"AE","terminalType":"Port Terminal","dgCapable":true},{"id":"AUH-KHALIFAPORT","name":"Khalifa Port Rail Terminal","city":"Abu Dhabi","countryCode":"AE","terminalType":"Port Terminal","dgCapable":true},{"id":"ANT-COMBINANT","name":"Antwerp Combinant Terminal","city":"Antwerp","countryCode":"BE","terminalType":"Intermodal","dgCapable":true},{"id":"GENK-HUPAC","name":"Genk Intermodal Terminal","city":"Genk","countryCode":"BE","terminalType":"Intermodal","dgCapable":true},{"id":"GENT-KLUIZENDOK","name":"Ghent Kluizendok Rail Terminal","city":"Ghent","countryCode":"BE","terminalType":"Freight Terminal","dgCapable":true},{"id":"LIE-TRILOGIPORT","name":"Liège Trilogiport Platform","city":"Liège","countryCode":"BE","terminalType":"Intermodal","dgCapable":true},{"id":"ZEE-RAILTERM","name":"Zeebrugge Rail Terminal","city":"Zeebrugge","countryCode":"BE","terminalType":"Port Terminal","dgCapable":true},{"id":"ALG-CENTRALFY","name":"Algiers Central Freight Yard","city":"Algiers","countryCode":"DZ","terminalType":"Freight Terminal","dgCapable":true},{"id":"ANN-STEEL","name":"Annaba Mining and Steel Terminal","city":"Annaba","countryCode":"DZ","terminalType":"Freight Terminal","dgCapable":true},{"id":"CST-INDHUB","name":"Constantine Industrial Distribution Hub","city":"Constantine","countryCode":"DZ","terminalType":"Freight Terminal","dgCapable":false},{"id":"HME-ENERGY","name":"Hassi Messaoud Energy Yard","city":"Hassi Messaoud","countryCode":"DZ","terminalType":"Freight Terminal","dgCapable":true},{"id":"ORN-PORT","name":"Oran Port Freight Terminal","city":"Oran","countryCode":"DZ","terminalType":"Port Terminal","dgCapable":true},{"id":"ALX-FREIGHT","name":"Alexandria Freight Terminal","city":"Alexandria","countryCode":"EG","terminalType":"Port Terminal","dgCapable":true},{"id":"CAI-TEBBIN","name":"Cairo El Tebbin Freight Station","city":"Cairo","countryCode":"EG","terminalType":"Freight Terminal","dgCapable":true},{"id":"DAM-PORT","name":"Damietta Port Terminal","city":"Damietta","countryCode":"EG","terminalType":"Port Terminal","dgCapable":true},{"id":"BCN-MORROT","name":"Barcelona Morrot Terminal","city":"Barcelona","countryCode":"ES","terminalType":"Intermodal","dgCapable":true},{"id":"BIL-MERC","name":"Bilbao Mercancías Terminal","city":"Bilbao","countryCode":"ES","terminalType":"Port Terminal","dgCapable":true},{"id":"MAD-ABRONIGAL","name":"Madrid Abroñigal Terminal","city":"Madrid","countryCode":"ES","terminalType":"Intermodal","dgCapable":true},{"id":"MAL-MACARENO","name":"Málaga Macareno Freight Terminal","city":"Málaga","countryCode":"ES","terminalType":"Port Terminal","dgCapable":true},{"id":"PAM-NOAIN","name":"Noáin Freight Terminal","city":"Pamplona","countryCode":"ES","terminalType":"Freight Terminal","dgCapable":false},{"id":"TAR-MERCADERIES","name":"Tarragona Mercaderies Terminal","city":"Tarragona","countryCode":"ES","terminalType":"Port Terminal","dgCapable":true},{"id":"VAL-FUENTESANLUIS","name":"Valencia Fuente San Luis Terminal","city":"Valencia","countryCode":"ES","terminalType":"Port Terminal","dgCapable":true},{"id":"VLL-ESPERANZA","name":"Valladolid La Esperanza Terminal","city":"Valladolid","countryCode":"ES","terminalType":"Freight Terminal","dgCapable":false},{"id":"ZAR-PLAZA","name":"Zaragoza PLAZA Terminal","city":"Zaragoza","countryCode":"ES","terminalType":"Intermodal","dgCapable":true},{"id":"BDX-HOURCADE","name":"Bordeaux Hourcade Terminal","city":"Bordeaux","countryCode":"FR","terminalType":"Freight Terminal","dgCapable":false},{"id":"LIL-DOURGES","name":"Dourges Delta 3 Terminal","city":"Lille","countryCode":"FR","terminalType":"Intermodal","dgCapable":true},{"id":"LYO-VENISSIEUX","name":"Lyon Vénissieux Terminal","city":"Lyon","countryCode":"FR","terminalType":"Intermodal","dgCapable":true},{"id":"MAR-CANET","name":"Marseille Canet Terminal","city":"Marseille","countryCode":"FR","terminalType":"Port Terminal","dgCapable":true},{"id":"PAR-VALENTON","name":"Paris Valenton Terminal","city":"Paris","countryCode":"FR","terminalType":"Intermodal","dgCapable":true},{"id":"PERP-STCHARLES","name":"Perpignan Saint-Charles Terminal","city":"Perpignan","countryCode":"FR","terminalType":"Intermodal","dgCapable":true},{"id":"TLS-STJORY","name":"Toulouse Saint-Jory Terminal","city":"Toulouse","countryCode":"FR","terminalType":"Freight Terminal","dgCapable":false},{"id":"DAV-DIRFT","name":"Daventry International Rail Freight Terminal","city":"Daventry","countryCode":"GB","terminalType":"Intermodal","dgCapable":true},{"id":"FELIXSTOWE-RAIL","name":"Felixstowe Rail Terminal","city":"Felixstowe","countryCode":"GB","terminalType":"Port Terminal","dgCapable":true},{"id":"SOU-MARITIME","name":"Southampton Maritime Freight Terminal","city":"Southampton","countryCode":"GB","terminalType":"Port Terminal","dgCapable":true},{"id":"TEE-NORTHHUB","name":"Teesport Northern Freight Hub","city":"Teesport","countryCode":"GB","terminalType":"Port Terminal","dgCapable":true},{"id":"MAN-TRAFFORD","name":"Trafford Park Railport","city":"Manchester","countryCode":"GB","terminalType":"Intermodal","dgCapable":true},{"id":"BAR-LAMASINATA","name":"Bari Lamasinata Terminal","city":"Bari","countryCode":"IT","terminalType":"Freight Terminal","dgCapable":true},{"id":"CIV-FREIGHT","name":"Civitavecchia Freight Yard","city":"Civitavecchia","countryCode":"IT","terminalType":"Port Terminal","dgCapable":true},{"id":"PES-PORTANUOVA","name":"Pescara Porta Nuova Freight Terminal","city":"Pescara","countryCode":"IT","terminalType":"Freight Terminal","dgCapable":false},{"id":"ROM-SANTAPALOMBA","name":"Santa Palomba Interporto Roma Sud","city":"Rome","countryCode":"IT","terminalType":"Intermodal","dgCapable":true},{"id":"VER-QUADRANTE","name":"Verona Quadrante Europa","city":"Verona","countryCode":"IT","terminalType":"Intermodal","dgCapable":true},{"id":"AMM-DRYPORT","name":"Amman Dry Port","city":"Amman","countryCode":"JO","terminalType":"Intermodal","dgCapable":true},{"id":"AQA-FREIGHT","name":"Aqaba Freight Terminal","city":"Aqaba","countryCode":"JO","terminalType":"Port Terminal","dgCapable":true},{"id":"AGA-AGRI","name":"Agadir Agricultural Products Terminal","city":"Agadir","countryCode":"MA","terminalType":"Freight Terminal","dgCapable":false},{"id":"CAS-MOGHREB","name":"Casablanca Moghreb Terminal","city":"Casablanca","countryCode":"MA","terminalType":"Intermodal","dgCapable":true},{"id":"KEN-AUTO","name":"Kenitra Automotive Logistics Platform","city":"Kenitra","countryCode":"MA","terminalType":"Intermodal","dgCapable":true},{"id":"MAR-FREIGHT","name":"Marrakech Freight Terminal","city":"Marrakech","countryCode":"MA","terminalType":"Freight Terminal","dgCapable":false},{"id":"TNG-TANGERMED","name":"Tanger Med Port Terminal","city":"Tangier","countryCode":"MA","terminalType":"Port Terminal","dgCapable":true},{"id":"AMS-WESTPOORT","name":"Amsterdam Westpoort Freight Hub","city":"Amsterdam","countryCode":"NL","terminalType":"Port Terminal","dgCapable":true},{"id":"MOERDIJK-IMT","name":"Moerdijk Intermodal Terminal","city":"Moerdijk","countryCode":"NL","terminalType":"Intermodal","dgCapable":true},{"id":"RTM-MAASVLAKTE","name":"Rotterdam Maasvlakte Rail Terminal","city":"Rotterdam","countryCode":"NL","terminalType":"Port Terminal","dgCapable":true},{"id":"TIL-RAILPORT","name":"Tilburg Railport","city":"Tilburg","countryCode":"NL","terminalType":"Intermodal","dgCapable":true},{"id":"VENLO-RAIL","name":"Venlo Rail Terminal","city":"Venlo","countryCode":"NL","terminalType":"Intermodal","dgCapable":true},{"id":"RAM-LOGNODE","name":"Ramallah Logistics Node","city":"Ramallah","countryCode":"PS","terminalType":"Freight Terminal","dgCapable":false},{"id":"AVR-CANAL","name":"Aveiro Canal Industrial Terminal","city":"Aveiro","countryCode":"PT","terminalType":"Intermodal","dgCapable":true},{"id":"BOB-LISBON","name":"Bobadela Freight Station","city":"Lisbon","countryCode":"PT","terminalType":"Freight Terminal","dgCapable":false},{"id":"ENT-HUB","name":"Entroncamento Freight Hub","city":"Entroncamento","countryCode":"PT","terminalType":"Intermodal","dgCapable":true},{"id":"ERM-SADO","name":"Ermidas do Sado Freight Station","city":"Ermidas do Sado","countryCode":"PT","terminalType":"Freight Terminal","dgCapable":false},{"id":"PORTO-LEIXOES","name":"Leixões Port Rail Terminal","city":"Porto","countryCode":"PT","terminalType":"Port Terminal","dgCapable":true},{"id":"LIS-POCEIRAO","name":"Poceirão Intermodal Platform","city":"Lisbon","countryCode":"PT","terminalType":"Intermodal","dgCapable":true},{"id":"SET-SADOPORT","name":"Setúbal Sadoport Rail Terminal","city":"Setúbal","countryCode":"PT","terminalType":"Port Terminal","dgCapable":true},{"id":"SINES-PORT","name":"Sines Port Freight Yard","city":"Sines","countryCode":"PT","terminalType":"Port Terminal","dgCapable":true},{"id":"HAIL-FREIGHT","name":"Hail Freight Hub","city":"Hail","countryCode":"SA","terminalType":"Freight Terminal","dgCapable":false},{"id":"JED-LOGTERM","name":"Jeddah Logistics Terminal","city":"Jeddah","countryCode":"SA","terminalType":"Intermodal","dgCapable":true},{"id":"JUB-INDPORT","name":"Jubail Industrial Port Terminal","city":"Jubail","countryCode":"SA","terminalType":"Port Terminal","dgCapable":true},{"id":"DAMMAM-PORT","name":"King Abdulaziz Port Rail Terminal","city":"Dammam","countryCode":"SA","terminalType":"Port Terminal","dgCapable":true},{"id":"RIYADH-DRYPORT","name":"Riyadh Dry Port","city":"Riyadh","countryCode":"SA","terminalType":"Intermodal","dgCapable":true},{"id":"GAB-CHEM","name":"Gabès Chemical Terminal","city":"Gabès","countryCode":"TN","terminalType":"Freight Terminal","dgCapable":true},{"id":"GAF-MINING","name":"Gafsa Mining Terminal","city":"Gafsa","countryCode":"TN","terminalType":"Freight Terminal","dgCapable":false},{"id":"SFX-FREIGHT","name":"Sfax Freight Terminal","city":"Sfax","countryCode":"TN","terminalType":"Port Terminal","dgCapable":true},{"id":"TUN-KSARSAID","name":"Tunis Ksar Said Freight Yard","city":"Tunis","countryCode":"TN","terminalType":"Intermodal","dgCapable":true}],"services":[{"id":"GRN-RAIL","name":"Economy Rail Service","level":"Economy","speedKmH":70,"dgAllowed":false,"description":"Eco option with discount surcharge rule"},{"id":"EXP-RAIL","name":"Express Rail Service","level":"Express","speedKmH":100,"dgAllowed":false,"description":"Faster service, no DG"},{"id":"STD-RAIL","name":"Standard Rail Service","level":"Standard","speedKmH":80,"dgAllowed":true,"description":"Baseline service, DG allowed"}],"utiTypes":[{"code":"CONTAINER-20","name":"20ft Container","category":"Intermodal","description":"ISO 20ft container"},{"code":"CONTAINER-40","name":"40ft Container","category":"Intermodal","description":"ISO 40ft container"},{"code":"REEFER-40","name":"40ft Reefer","category":"Temperature Controlled","description":"Refrigerated container"},{"code":"SEMI-TRAILER","name":"Semi-trailer","category":"Road-Rail","description":"Road semi-trailer on railway flat wagon"},{"code":"WAGON","name":"Standard Freight Wagon","category":"Rolling Stock","description":"Conventional railway wagon"},{"code":"SWAP-BODY","name":"Swap Body","category":"Intermodal","description":"European swap body (7.15m, 7.45m, 7.82m)"},{"code":"TANK","name":"Tank Wagon","category":"Specialized","description":"Liquid cargo tank"}],"adrClasses":[{"code":"3","name":"Flammable Liquids","description":"Liquids with flashpoint ≤60°C"},{"code":"8","name":"Corrosive Substances","description":"Cause tissue damage"},{"code":"NON-DG","name":"Non-Dangerous Goods","description":"General cargo (not classified as dangerous)"}]};
+    </script>
+    <script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+
+  const TRAIN_NAMES = {
+    'STD-RAIL': 'Iberian Freight Express',
+    'EXP-RAIL': 'Eurostar Cargo Rapid',
+    'GRN-RAIL': 'EcoRail Green Line',
+  };
+  const LEVEL_NAMES = {
+    'standard': 'Standard Freight',
+    'express':  'Rapid Cargo',
+    'green':    'EcoRail',
+    'premium':  'Premium Direct',
+  };
+  function getTrainName(svc) {
+    if (TRAIN_NAMES[svc.id]) return TRAIN_NAMES[svc.id];
+    return LEVEL_NAMES[(svc.level || '').toLowerCase()] || svc.name;
+  }
+  function genBookingRef() {
+    return 'SDGR26' + String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+  }
+
+  
+  const state = {
+    step: 1,
+    bootstrap: window.BOOTSTRAP_DATA || null,
+    countries: [], terminals: [], services: [],
+    utiTypes: [], adrClasses: [], config: {},
+    loadingTimer: null,
+    scheduleData: null,
+    calYear: null, calMonth: null,
+    selectedDate: null,
+    selectedDepartureTime: null,
+    transitMin: 0,
+  };
+
+  
+  function init() {
+    if (!state.bootstrap) {
+      google.script.run
+        .withSuccessHandler(d => { state.bootstrap = d; hydrate(); })
+        .withFailureHandler(err => showGlobalError(err?.message || 'Failed to load data.'))
+        .apiGetBootstrapData();
+      return;
+    }
+    hydrate();
+  }
+
+  function hydrate() {
+    const b = state.bootstrap;
+    state.config     = b.config     || {};
+    state.countries  = b.countries  || [];
+    state.terminals  = b.terminals  || [];
+    state.services   = b.services   || [];
+    state.utiTypes   = b.utiTypes   || [];
+    state.adrClasses = b.adrClasses || [];
+
+    $('brandName').textContent    = state.config.brandName   || 'Railway Quotation Simulator';
+    $('companyName').textContent  = state.config.companyName || 'Railway Company';
+    $('currencyPill').textContent = state.config.currency    || 'EUR';
+
+    const emailEl = $('supportEmailLink');
+    const email   = state.config.supportEmail || 'support@example.com';
+    if (emailEl) { emailEl.textContent = email; emailEl.href = 'mailto:' + email; }
+
+    const def = String(state.config.defaultRoutingMetric || 'DISTANCE').toUpperCase();
+    const mEl = document.querySelector(`input[name="routingMetric"][value="${def}"]`);
+    if (mEl) mEl.checked = true;
+
+    populateCountries();
+    populateUtiTypes();
+    populateAdrClasses();
+    buildServiceCards();
+    wireEvents();
+    loadScheduleData();
+    goToStep(1);
+  }
+
+  
+  function loadScheduleData() {
+    google.script.run
+      .withSuccessHandler(data => {
+        state.scheduleData = data;
+        
+        console.log('[Schedule] hasSCHEDULES:', data.hasSCHEDULES);
+        console.log('[Schedule] routeSchedules keys:', Object.keys(data.routeSchedules || {}));
+        console.log('[Schedule] globalBlocked:', (data.globalBlockedDates||[]).length, 'dates');
+        if (state.step === 3) renderCalendar();
+      })
+      .withFailureHandler(() => {
+        state.scheduleData = { globalBlockedDates: [], schedules: {}, hasSCHEDULES: false };
+        if (state.step === 3) renderCalendar();
+      })
+      .apiGetScheduleData();
+  }
+
+  
+
+  function resolveSchedule(serviceId) {
+    const data = state.scheduleData;
+    if (!data) return null;
+
+    const svcMap = data.schedules?.[serviceId] || null;
+    if (!svcMap) return null;
+
+    const originCC = state.terminals.find(t => t.id === $('originTerminal').value)?.countryCode || '';
+    const destCC   = state.terminals.find(t => t.id === $('destTerminal').value)?.countryCode   || '';
+    const o = originCC.toUpperCase(), d = destCC.toUpperCase();
+
+    const keys = [];
+    if (o && d) keys.push(o+'→'+d);
+    if (d)      keys.push('*→'+d);
+    if (o)      keys.push(o+'→*');
+    keys.push('*', '');
+
+    for (const k of keys) {
+      if (svcMap[k]) return svcMap[k];
+    }
+    return null;
+  }
+
+  
+  function fillSelect(sel, items, getValue, getLabel, withEmpty) {
+    sel.innerHTML = '';
+    if (withEmpty) {
+      const o = document.createElement('option');
+      o.value = ''; o.textContent = '— Select —'; sel.appendChild(o);
+    }
+    items.forEach(item => {
+      const o = document.createElement('option');
+      o.value = getValue(item); o.textContent = getLabel(item); sel.appendChild(o);
+    });
+  }
+  function populateCountries() {
+    const fmt = c => `${c.flag ? c.flag + ' ' : ''}${c.name} (${c.code})`;
+    fillSelect($('originCountry'), state.countries, c => c.code, fmt, true);
+    fillSelect($('destCountry'),   state.countries, c => c.code, fmt, true);
+    if (state.countries.length) {
+      $('originCountry').value = state.countries[0].code;
+      $('destCountry').value   = state.countries[0].code;
+    }
+    populateTerminals('origin');
+    populateTerminals('dest');
+  }
+  function populateTerminals(side) {
+    const cc  = side === 'origin' ? $('originCountry').value : $('destCountry').value;
+    const sel = side === 'origin' ? $('originTerminal') : $('destTerminal');
+    const list = state.terminals.filter(t => t.countryCode === cc);
+    fillSelect(sel, list, t => t.id, t => {
+      let l = t.name;
+      if (t.city) l += ` — ${t.city}`;
+      if (t.dgCapable) l += ' [DG]';
+      return l;
+    }, true);
+    checkSameTerminal();
+  }
+  function populateUtiTypes() {
+    fillSelect($('utiType'), state.utiTypes, u => u.code, u => `${u.name} (${u.code})`, true);
+  }
+  function populateAdrClasses() {
+    fillSelect($('adrClass'), state.adrClasses, a => a.code, a => `${a.code} — ${a.name}`, true);
+  }
+
+  
+  function buildServiceCards() {
+    const dg   = $('dgToggle').checked;
+    const list  = dg ? state.services.filter(s => s.dgAllowed) : state.services;
+    fillSelect($('serviceId'), list, s => s.id, s => s.name, true);
+
+    const container = $('svcList');
+    container.innerHTML = '';
+    if (!list.length) {
+      container.innerHTML = '<p style="color:var(--ink-4);font-size:14px;padding:16px 0;">No services available for dangerous goods.</p>';
+      return;
+    }
+    list.forEach((s, i) => {
+      const trainName = getTrainName(s);
+      const card = document.createElement('label');
+      card.className = 'svc-card' + (i === 0 ? ' selected' : '');
+      card.innerHTML = `
+        <input type="radio" name="svcRadio" value="${s.id}" ${i === 0 ? 'checked' : ''}>
+        <div class="svc-card__stripe"></div>
+        <div class="svc-card__body">
+          <span class="svc-card__level">${s.level || 'Service'}</span>
+          <div class="svc-card__info">
+            <div class="svc-card__name">${trainName}</div>
+            <div class="svc-card__desc">${s.description || s.name}</div>
+          </div>
+          <div class="svc-card__meta">
+            <span class="svc-card__speed">${s.speedKmH} km/h</span>
+            <span class="svc-card__speed-label">avg speed</span>
+            <span class="${s.dgAllowed ? 'svc-card__dg-ok' : 'svc-card__dg-no'}">${s.dgAllowed ? 'DG allowed' : 'No DG'}</span>
+          </div>
+        </div>`;
+      card.querySelector('input').addEventListener('change', function () {
+        if (this.checked) {
+          $('serviceId').value = s.id;
+          document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          state.selectedDate = null;
+          state.selectedDepartureTime = null;
+          renderCalendar();
+          updateArrivalPreview();
+        }
+      });
+      container.appendChild(card);
+    });
+    if (list.length) $('serviceId').value = list[0].id;
+  }
+
+  // ── CALENDAR ──────────────────────────────────────────
+  function initCalendar() {
+    const today = new Date();
+    state.calYear  = today.getFullYear();
+    state.calMonth = today.getMonth();
+    
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const wrap = $('calWrap');
+    if (!wrap) return;
+
+    const serviceId     = $('serviceId').value;
+    const sched         = resolveSchedule(serviceId);
+    const globalBlocked = state.scheduleData?.globalBlockedDates || [];
+
+    const year  = state.calYear  || new Date().getFullYear();
+    const month = state.calMonth || 0;
+
+    const today = new Date(); today.setHours(0,0,0,0);
+    const minDate = new Date(today); minDate.setDate(minDate.getDate() + 1);
+    const maxDate = new Date(today); maxDate.setDate(maxDate.getDate() + 90);
+
+    const MONTHS   = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const DOW      = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay  = new Date(year, month + 1, 0);
+    const startDow = firstDay.getDay();
+
+    const prevOk = new Date(year, month - 1, 1) >= new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+    const nextOk = new Date(year, month + 1, 1) <= new Date(maxDate.getFullYear(), maxDate.getMonth(), 1);
+
+    function isoDate(y, m, d) {
+      return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    }
+    function getDayStatus(d) {
+      const dateObj = new Date(year, month, d);
+      if (dateObj < minDate || dateObj > maxDate) return 'out';
+      const iso = isoDate(year, month, d);
+      const dow = dateObj.getDay();
+      if (globalBlocked.includes(iso)) return 'blocked';
+      if (!sched) return 'available';
+      if (sched.blockedDates?.includes(iso)) return 'blocked';
+      if (sched.departureDays && !sched.departureDays.includes(dow)) return 'no-service';
+      return 'available';
+    }
+
+    let html = `
+      <div class="cal-header">
+        <button class="cal-nav" id="calPrev" ${!prevOk?'disabled':''}>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4.5 7 9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="cal-month-label">${MONTHS[month]} ${year}</span>
+        <button class="cal-nav" id="calNext" ${!nextOk?'disabled':''}>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M5 2l4.5 5L5 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="cal-grid">
+        ${DOW.map(n => `<div class="cal-dow">${n}</div>`).join('')}`;
+
+    for (let i = 0; i < startDow; i++) html += `<div class="cal-cell cal-cell--empty"></div>`;
+
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+      const iso    = isoDate(year, month, d);
+      const status = getDayStatus(d);
+      const isSel  = iso === state.selectedDate;
+      const depTime = sched?.departureTime || '08:00';
+      const cls = ['cal-cell', `cal-cell--${status}`, isSel ? 'cal-cell--selected' : ''].filter(Boolean).join(' ');
+      const attrs = status === 'available' ? `data-date="${iso}" data-dep="${depTime}"` : '';
+      html += `<div class="${cls}" ${attrs}>${d}</div>`;
+    }
+
+    html += `</div>`;
+
+    // Legend
+    html += `<div class="cal-legend">
+      <span class="cal-legend__item"><span class="cal-legend__dot cal-legend__dot--available"></span>Available</span>
+      <span class="cal-legend__item"><span class="cal-legend__dot cal-legend__dot--no-service"></span>No service</span>
+      <span class="cal-legend__item"><span class="cal-legend__dot cal-legend__dot--blocked"></span>Blocked</span>
+    </div>`;
+
+    // Frequency note
+    if (sched?.departureDays) {
+      const DAY_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const opDays = sched.departureDays.map(n => DAY_SHORT[n]).join(', ');
+      const originCC = state.terminals.find(t => t.id === $('originTerminal').value)?.countryCode || '';
+      const destCC   = state.terminals.find(t => t.id === $('destTerminal').value)?.countryCode   || '';
+      const routeTag = originCC && destCC ? ` · ${originCC}→${destCC}` : '';
+      html += `<div class="cal-note">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4.5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Departs ${opDays} · ${sched.departureTime}${routeTag}
+      </div>`;
+    }
+    if (sched?.notes) {
+      html += `<div class="cal-note cal-note--warn">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 12H1L7 1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7 5.5v3M7 9.5h.01" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        ${sched.notes}
+      </div>`;
+    }
+    if (!state.scheduleData?.hasSCHEDULES) {
+      html += `<div class="cal-note">All dates available (no SCHEDULES sheet found)</div>`;
+    }
+
+    wrap.innerHTML = html;
+
+    // Click handlers
+    wrap.querySelectorAll('.cal-cell--available[data-date]').forEach(cell => {
+      cell.addEventListener('click', () => {
+        state.selectedDate = cell.dataset.date;
+        state.selectedDepartureTime = cell.dataset.dep || '08:00';
+        renderCalendar();
+        updateArrivalPreview();
+      });
+    });
+    const prevBtn = $('calPrev'), nextBtn = $('calNext');
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+      if (--state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
+      renderCalendar();
+    });
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+      if (++state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
+      renderCalendar();
+    });
+  }
+
+  
+  function updateArrivalPreview() {
+    const wrap = $('arrivalPreview');
+    if (!wrap) return;
+
+    if (!state.selectedDate || !state.selectedDepartureTime) {
+      wrap.innerHTML = '';
+      wrap.style.display = 'none';
+      return;
+    }
+
+    const [hh, mm] = state.selectedDepartureTime.split(':').map(Number);
+    const dep = new Date(state.selectedDate + 'T00:00:00');
+    dep.setHours(hh, mm, 0, 0);
+
+    let arrBlock = '';
+    if (state.transitMin > 0) {
+      const arr = new Date(dep.getTime() + state.transitMin * 60000);
+      const diffDays = Math.floor((arr - dep) / 86400000);
+      const dayTag = diffDays > 0 ? `<span class="arr-tag">+${diffDays}d</span>` : '';
+      arrBlock = `
+        <div class="arr-separator">→</div>
+        <div class="arr-block">
+          <div class="arr-label">Estimated arrival ${dayTag}</div>
+          <div class="arr-time arr-time--accent">${fmtDayShort(arr)} · ${pad2(arr.getHours())}:${pad2(arr.getMinutes())}</div>
+        </div>
+        <div class="arr-separator arr-separator--thin"></div>
+        <div class="arr-block">
+          <div class="arr-label">Transit time</div>
+          <div class="arr-time">${fmtMin(state.transitMin)}</div>
+        </div>`;
+    } else {
+      arrBlock = `
+        <div class="arr-separator">→</div>
+        <div class="arr-block">
+          <div class="arr-label">Estimated arrival</div>
+          <div class="arr-time arr-time--muted">After route calculation</div>
+        </div>`;
+    }
+
+    wrap.innerHTML = `
+      <div class="arr-row">
+        <div class="arr-block">
+          <div class="arr-label">Departure</div>
+          <div class="arr-time">${fmtDayShort(dep)} · ${state.selectedDepartureTime}</div>
+        </div>
+        ${arrBlock}
+      </div>`;
+    wrap.style.display = 'block';
+  }
+
+  // ── NAVIGATION ────────────────────────────────────────
+  function goToStep(n) {
+    state.step = n;
+    document.querySelectorAll('.step-nav__item').forEach(btn => {
+      const s = parseInt(btn.dataset.step, 10);
+      btn.classList.toggle('active', s === n);
+      btn.classList.toggle('done',   s < n);
+    });
+    document.querySelectorAll('.step-pane').forEach(p => {
+      p.classList.toggle('step-pane--active', parseInt(p.dataset.step, 10) === n);
+    });
+    clearGlobalError();
+    if (n === 2) updateRouteBadge();
+    if (n === 3) initCalendar();
+    if (n === 5) buildReviewGrid();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateRouteBadge() {
+    const oSel = $('originTerminal'), dSel = $('destTerminal');
+    $('rbOrigin').textContent = oSel.options[oSel.selectedIndex]?.textContent.split('—')[0].trim() || '—';
+    $('rbDest').textContent   = dSel.options[dSel.selectedIndex]?.textContent.split('—')[0].trim() || '—';
+  }
+
+  
+  function buildReviewGrid() {
+    const oSel = $('originTerminal'), dSel = $('destTerminal');
+    const oName = oSel.options[oSel.selectedIndex]?.textContent.split('—')[0].trim() || '—';
+    const dName = dSel.options[dSel.selectedIndex]?.textContent.split('—')[0].trim() || '—';
+    const oCC = state.terminals.find(t => t.id === oSel.value)?.countryCode || '';
+    const dCC = state.terminals.find(t => t.id === dSel.value)?.countryCode || '';
+
+    const metricEl = document.querySelector('input[name="routingMetric"]:checked');
+    const metric = metricEl ? (metricEl.value === 'TIME' ? 'Fastest transit' : 'Shortest distance') : '—';
+
+    const svcId = $('serviceId').value;
+    const svc = state.services.find(s => s.id === svcId);
+    const trainName = svc ? getTrainName(svc) : '—';
+
+    const utiEl = $('utiType');
+    const utiName = utiEl.options[utiEl.selectedIndex]?.textContent.split('(')[0].trim() || '—';
+    const units  = $('units').value || '1';
+    const weight = Number($('weightKg').value || 0).toLocaleString() + ' kg';
+    const cargo  = $('cargoDescription').value.trim() || '—';
+    const dg     = $('dgToggle').checked;
+    const adrEl  = $('adrClass');
+    const adrLabel = dg ? (adrEl.options[adrEl.selectedIndex]?.textContent || '') : '—';
+    const ins    = $('insuranceRequested').checked;
+    const company = $('company').value.trim() || '—';
+    const contact = $('contactName').value.trim() || '—';
+    const email   = $('contactEmail').value.trim() || '—';
+    const depLabel = state.selectedDate
+      ? `${state.selectedDate} · ${state.selectedDepartureTime || '08:00'}`
+      : '— Not selected —';
+
+    const cards = [
+      { label: 'Origin',         value: oName,     sub: oCC },
+      { label: 'Destination',    value: dName,     sub: dCC },
+      { label: 'Routing',        value: metric,    sub: '' },
+      { label: 'Train service',  value: trainName, sub: svc ? svc.level : '' },
+      { label: 'Departure date', value: depLabel,  sub: state.transitMin > 0 ? 'Transit: ' + fmtMin(state.transitMin) : '' },
+      { label: 'UTI / Units',    value: `${units}× ${utiName}`, sub: weight },
+      { label: 'Cargo',          value: cargo,     sub: dg ? 'DG — ' + adrLabel : 'Non-hazardous', warn: dg },
+      { label: 'Contact',        value: company,   sub: contact + ' · ' + email },
+    ];
+
+    const grid = $('reviewGrid');
+    grid.innerHTML = '';
+    cards.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'review-card' + (c.warn ? ' review-card--warn' : '');
+      div.innerHTML = `<div class="review-card__label">${c.label}</div><div class="review-card__value">${c.value}</div>${c.sub ? `<div class="review-card__sub">${c.sub}</div>` : ''}`;
+      grid.appendChild(div);
+    });
+  }
+
+  // ── VALIDATION ────────────────────────────────────────
+  function checkSameTerminal() {
+    const alertEl = $('sameTerminalAlert');
+    const o = $('originTerminal').value, d = $('destTerminal').value;
+    if (alertEl) alertEl.style.display = (o && d && o === d) ? 'flex' : 'none';
+  }
+  function validateStep1() {
+    const o = $('originTerminal').value, d = $('destTerminal').value;
+    if (!o || !d) return 'Please select origin and destination terminals.';
+    if (o === d)  return 'Origin and destination must be different terminals.';
+    return null;
+  }
+  function validateStep2() {
+    if (!$('utiType').value) return 'Please select a UTI type.';
+    const u = Number($('units').value), w = Number($('weightKg').value);
+    if (!u || u < 1) return 'Units must be at least 1.';
+    if (!w || w < 1) return 'Weight must be at least 1 kg.';
+    if (!$('cargoDescription').value.trim()) return 'Please enter a cargo description.';
+    if ($('dgToggle').checked && !$('adrClass').value) return 'Please select an ADR class.';
+    return null;
+  }
+  function validateStep3() {
+    if (!$('serviceId').value) return 'Please select a service.';
+    if (!state.selectedDate)   return 'Please select a departure date from the calendar.';
+    return null;
+  }
+  function validateStep4() {
+    const co = $('company').value.trim(), cn = $('contactName').value.trim(), ce = $('contactEmail').value.trim();
+    if (!co || !cn || !ce) return 'Please fill in company, contact name and email.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ce)) return 'Please enter a valid email address.';
+    if ($('insuranceRequested').checked) {
+      const gv = Number($('goodsValue').value);
+      if (!gv || gv <= 0) return 'Please enter a valid declared goods value.';
+      const min = Number(state.config.minInsuranceValue || 0);
+      if (min && gv < min) return `Goods value must be ≥ ${min.toLocaleString()} ${state.config.currency || 'EUR'} for insurance.`;
+    }
+    return null;
+  }
+  function showGlobalError(msg) {
+    $('globalAlertText').textContent = msg;
+    $('globalAlert').style.display = 'flex';
+  }
+  function clearGlobalError() { $('globalAlert').style.display = 'none'; }
+
+  
+  function wireEvents() {
+    document.querySelectorAll('.step-nav__item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const t = parseInt(btn.dataset.step, 10);
+        if (t < state.step) goToStep(t);
+      });
+    });
+    $('originCountry').addEventListener('change', () => populateTerminals('origin'));
+    $('destCountry').addEventListener('change',   () => populateTerminals('dest'));
+    $('originTerminal').addEventListener('change', checkSameTerminal);
+    $('destTerminal').addEventListener('change',   checkSameTerminal);
+    $('dgToggle').addEventListener('change', () => {
+      $('adrRow').style.display = $('dgToggle').checked ? 'block' : 'none';
+      buildServiceCards();
+    });
+    $('insuranceRequested').addEventListener('change', () => {
+      $('goodsValueRow').style.display = $('insuranceRequested').checked ? 'block' : 'none';
+    });
+    $('toStep2').addEventListener('click', () => { const e = validateStep1(); if (e) return showGlobalError(e); goToStep(2); });
+    $('backTo1').addEventListener('click', () => goToStep(1));
+    $('toStep3').addEventListener('click', () => { const e = validateStep2(); if (e) return showGlobalError(e); goToStep(3); });
+    $('backTo2').addEventListener('click', () => goToStep(2));
+    $('toStep4').addEventListener('click', () => { const e = validateStep3(); if (e) return showGlobalError(e); goToStep(4); });
+    $('backTo3').addEventListener('click', () => goToStep(3));
+    $('toStep5').addEventListener('click', () => { const e = validateStep4(); if (e) return showGlobalError(e); goToStep(5); });
+    $('backTo4').addEventListener('click', () => goToStep(4));
+    $('generateBtn').addEventListener('click', generateQuote);
+    $('newQuoteBtn').addEventListener('click', () => {
+      $('resultWrap').classList.remove('show');
+      clearGlobalError();
+      goToStep(1);
+    });
+  }
+
+  
+  function startLoading() {
+    $('loadingPanel').classList.add('show');
+    $('generateBtn').disabled = true;
+    $('backTo4').disabled = true;
+    const steps = $('loadingPanel').querySelectorAll('.ls-step');
+    let i = 0;
+    steps.forEach(s => s.classList.remove('active','done'));
+    steps[0].classList.add('active');
+    state.loadingTimer = setInterval(() => {
+      if (i < steps.length - 1) { steps[i].classList.remove('active'); steps[i].classList.add('done'); i++; steps[i].classList.add('active'); }
+    }, 1100);
+  }
+  function stopLoading() {
+    clearInterval(state.loadingTimer);
+    $('loadingPanel').classList.remove('show');
+    $('generateBtn').disabled = false;
+    $('backTo4').disabled = false;
+    const steps = $('loadingPanel').querySelectorAll('.ls-step');
+    steps.forEach(s => s.classList.remove('active','done'));
+    if (steps[0]) steps[0].classList.add('active');
+  }
+
+  
+  function generateQuote() {
+    const e = validateStep1() || validateStep2() || validateStep3() || validateStep4();
+    if (e) return showGlobalError(e);
+    clearGlobalError();
+    startLoading();
+
+    const metricEl = document.querySelector('input[name="routingMetric"]:checked');
+    const payload = {
+      originTerminalId:   $('originTerminal').value,
+      destTerminalId:     $('destTerminal').value,
+      routingMetric:      metricEl ? metricEl.value : 'DISTANCE',
+      utiType:            $('utiType').value,
+      units:              Number($('units').value),
+      weightKg:           Number($('weightKg').value),
+      cargoDescription:   $('cargoDescription').value.trim(),
+      dg:                 $('dgToggle').checked,
+      adrClass:           $('dgToggle').checked ? $('adrClass').value : '',
+      serviceId:          $('serviceId').value,
+      departureDateIso:   state.selectedDate,
+      departureTime:      state.selectedDepartureTime || '08:00',
+      insuranceRequested: $('insuranceRequested').checked,
+      goodsValue:         $('insuranceRequested').checked ? Number($('goodsValue').value) : 0,
+      company:            $('company').value.trim(),
+      contactName:        $('contactName').value.trim(),
+      contactEmail:       $('contactEmail').value.trim(),
+    };
+
+    google.script.run
+      .withSuccessHandler(res => {
+        stopLoading();
+        if (!res)      return showGlobalError('Unexpected empty response from server.');
+        if (res.error) return showGlobalError(res.error);
+        if (res.route?.transitMin) state.transitMin = res.route.transitMin;
+        renderResult(res);
+      })
+      .withFailureHandler(err => {
+        stopLoading();
+        showGlobalError(err?.message || String(err));
+      })
+      .apiGenerateQuote(payload);
+  }
+
+  
+  function renderResult(q) {
+    const cur = q.currency || state.config.currency || 'EUR';
+    const bookingRef = genBookingRef();
+    const transitMin = q.route?.transitMin || 0;
+
+    let arrivalStr = '—';
+    if (state.selectedDate && state.selectedDepartureTime && transitMin) {
+      const [hh, mm] = state.selectedDepartureTime.split(':').map(Number);
+      const dep = new Date(state.selectedDate + 'T00:00:00');
+      dep.setHours(hh, mm, 0, 0);
+      const arr = new Date(dep.getTime() + transitMin * 60000);
+      const diffDays = Math.floor((arr - dep) / 86400000);
+      arrivalStr = `${fmtDayShort(arr)} · ${pad2(arr.getHours())}:${pad2(arr.getMinutes())}` +
+                   (diffDays > 0 ? ` (+${diffDays}d)` : '');
+    }
+
+    $('rQuoteRef').textContent   = q.quoteRef || '—';
+    $('rBookingRef').textContent = bookingRef;
+    $('rMode').textContent     = q.route?.mode || '—';
+    $('rValidity').textContent = 'Valid until ' + fmtDate(q.validUntilIso);
+    $('rDist').textContent     = fmtN(q.route?.distanceKm) + ' km';
+    $('rTransit').textContent  = fmtMin(transitMin) + ' transit';
+    $('rTotal').textContent    = fmtMoney(q.pricing?.total, cur);
+    $('rDepDate').textContent  = state.selectedDate ? `${state.selectedDate} · ${state.selectedDepartureTime}` : '—';
+    $('rArrDate').textContent  = arrivalStr;
+
+    const pathList = $('pathList');
+    pathList.innerHTML = '';
+    (q.route?.path || []).forEach(t => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="rp-name">${t.name}</span><span class="rp-meta">${t.countryCode}${t.city ? ' · '+t.city : ''}</span>`;
+      pathList.appendChild(li);
+    });
+
+    const tbody = $('pricingBody');
+    tbody.innerHTML = '';
+    addPRow(tbody, 'Base freight', fmtMoney(q.pricing?.baseFreight, cur));
+    (q.pricing?.surcharges || []).forEach(s => addPRow(tbody, s.label, fmtMoney(s.amount, cur), 'row-indent'));
+    if ((q.pricing?.insurance || 0) > 0) addPRow(tbody, 'Cargo insurance', fmtMoney(q.pricing.insurance, cur));
+    addPRow(tbody, 'Subtotal', fmtMoney(q.pricing?.subtotal, cur), 'row-sub');
+    addPRow(tbody, 'Total', fmtMoney(q.pricing?.total, cur), 'row-total');
+    addPRow(tbody, 'Taxes and duties not included. Final amount subject to applicable local charges.', '', 'row-tax-note');
+
+    $('pdfViewLink').href = q.pdf?.viewUrl || '#';
+    $('resultWrap').classList.add('show');
+    setTimeout(() => $('resultWrap').scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+  }
+
+  function addPRow(tbody, label, value, cls) {
+    const tr = document.createElement('tr');
+    if (cls) tr.className = cls;
+    tr.innerHTML = `<td>${label}</td><td>${value}</td>`;
+    tbody.appendChild(tr);
+  }
+
+  
+  function fmtMoney(n, cur) {
+    try { return new Intl.NumberFormat(undefined, { style: 'currency', currency: cur || 'EUR' }).format(Number(n || 0)); }
+    catch { return `${fmtN(n)} ${cur || ''}`.trim(); }
+  }
+  function fmtN(n) {
+    try { return new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(Number(n || 0)); }
+    catch { return String(n || 0); }
+  }
+  function fmtMin(m) {
+    const t = Math.max(0, Math.round(Number(m || 0)));
+    const h = Math.floor(t / 60), r = t % 60;
+    return h > 0 ? `${h}h ${r}m` : `${r} min`;
+  }
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+  function fmtDayShort(d) {
+    const D = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${D[d.getDay()]} ${d.getDate()} ${M[d.getMonth()]}`;
+  }
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  init();
+})();
+</script>
+    
+    <script>
+    (function() {
+      
+      const origRender = window.__calPatch;
+      const interval = setInterval(() => {
+        const sdc = document.getElementById('selectedDateCard');
+        const sdcVal = document.getElementById('sdcValue');
+        const sdcDep = document.getElementById('sdcDep');
+        const arrEmpty = document.getElementById('arrivalEmpty');
+        const arrPrev  = document.getElementById('arrivalPreview');
+        if (!sdc || !sdcVal) return;
+        clearInterval(interval);
+
+        
+        setInterval(() => {
+          if (typeof state === 'undefined') return;
+          if (state.selectedDate) {
+            sdc.classList.add('has-date');
+            sdcVal.className = 'sdc__value';
+            sdcVal.textContent = state.selectedDate;
+            sdcDep.style.display = 'block';
+            sdcDep.textContent = '✈ Dep. ' + (state.selectedDepartureTime || '08:00');
+            if (arrEmpty) arrEmpty.style.display = 'none';
+          } else {
+            sdc.classList.remove('has-date');
+            sdcVal.className = 'sdc__value empty';
+            sdcVal.textContent = 'No date selected';
+            sdcDep.style.display = 'none';
+            if (arrEmpty) arrEmpty.style.display = 'block';
+            if (arrPrev)  arrPrev.style.display = 'none';
+          }
+        }, 200);
+      }, 100);
+    })();
+    </script>
+  </body>
+</html>

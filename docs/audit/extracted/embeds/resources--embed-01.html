@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: #062659;
+    margin: 0;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #062659;
+    margin-bottom: 40px;
+    font-size: 28px;
+  }
+
+  .glossary-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .accordion-item {
+    background: #ffffff;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .accordion-header {
+    cursor: pointer;
+    padding: 18px 22px;
+    font-weight: 600;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .accordion-header:hover {
+    background-color: #e8f6ec;
+  }
+
+  .accordion-header.active {
+    background-color: #36a052;
+    color: white;
+  }
+
+  .accordion-header::after {
+    content: '+';
+    font-size: 20px;
+    position: absolute;
+    right: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .accordion-header.active::after {
+    content: '−';
+    transform: rotate(180deg);
+  }
+
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    background: #fff;
+    padding: 0 22px;
+  }
+
+  .accordion-content.open {
+    max-height: 600px;
+    padding: 18px 22px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .sdg-tag {
+    display: inline-block;
+    background-color: #36a052;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="glossary-container">
+
+  <div class="accordion-item">
+    <div class="accordion-header">Axle Load</div>
+    <div class="accordion-content">
+      The total weight distributed over each axle of a railway vehicle. It determines track capacity and safety limits.
+      <div class="sdg-tag">SDG 9 – Industry, Innovation and Infrastructure</div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Bi-Mode Locomotive</div>
+    <div class="accordion-content">
+      A locomotive capable of operating both under electric power (from overhead lines) and diesel engines. It enables flexibility on mixed routes and reduces emissions.
+      <div class="sdg-tag">SDG 7 – Affordable and Clean Energy</div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">CO₂e (Carbon Dioxide Equivalent)</div>
+    <div class="accordion-content">
+      A unit used to compare the emissions of different greenhouse gases based on their global warming potential.
+      <div class="sdg-tag">SDG 13 – Climate Action</div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Combined Transport</div>
+    <div class="accordion-content">
+      A logistics system where goods are moved using more than one mode of transport (e.g., rail and road) with minimal handling.
+      <div class="sdg-tag">SDG 11 – Sustainable Cities and Communities</div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Corridor</div>
+    <div class="accordion-content">
+    A strategic route connecting major terminals or regions, facilitating efficient freight flows across countries or continents.
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Dangerous Goods (DG)</div>
+    <div class="accordion-content">
+      Substances or materials that pose risks to health, safety, property, or the environment. Transported under international regulations such as ADR/RID.
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Digitalization</div>
+    <div class="accordion-content">
+      The integration of digital tools and systems (e.g., ERPs, simulators, smart sensors) to optimize logistics and operational efficiency.
+      <div class="sdg-tag">SDG 9 – Industry, Innovation and Infrastructure</div>
+    </div>
+  </div>
+  
+    <div class="accordion-item">
+    <div class="accordion-header">Energy Efficiency</div>
+    <div class="accordion-content">
+      The use of less energy to perform the same transport operations, reducing environmental impact.
+      <div class="sdg-tag">SDG 7 – Affordable and Clean Energy</div>
+    </div>
+  </div>
+  
+    <div class="accordion-item">
+    <div class="accordion-header">Eco-Performance</div>
+    <div class="accordion-content">
+      The balance between transport productivity and its environmental footprint. Often measured by emissions per ton-kilometer.
+    </div>
+  </div>
+  
+    <div class="accordion-item">
+    <div class="accordion-header">Freight Train</div>
+    <div class="accordion-content">
+  A train designed for carrying goods, containers, or semi-trailers instead of passengers. Essential for sustainable supply chains.
+  <div class="sdg-tag">SDG 12 – Responsible Consumption and Production</div>
+  </div>
+  </div>
+  
+    <div class="accordion-item">
+    <div class="accordion-header">Gate In / Gate Out</div>
+    <div class="accordion-content">
+   The operational process at terminals where loading units (containers or trailers) enter (Gate In) or exit (Gate Out) controlled facilities for transport or delivery.
+    </div>
+  </div>
+  
+      <div class="accordion-item">
+    <div class="accordion-header">Green Corridor</div>
+    <div class="accordion-content">
+    A freight route designed to prioritize low-emission and sustainable transport methods.
+    <div class="sdg-tag">SDG 13 – Climate Action</div>
+  </div>
+  </div>
+  
+      <div class="accordion-item">
+    <div class="accordion-header">Intermodal Transport</div>
+    <div class="accordion-content">
+    The movement of goods using two or more transport modes within a single transport chain, without handling the goods themselves when changing modes.
+    <div class="sdg-tag">SDG 9 – Industry, Innovation and Infrastructure</div>
+  </div>
+  </div>
+  
+  
+        <div class="accordion-item">
+    <div class="accordion-header">ITU (Intermodal Transport Unit)</div>
+    <div class="accordion-content">
+    A standardized unit (e.g., container, swap body, or trailer) designed to be used in intermodal transport chains.
+    </div>
+  </div>
+  
+          <div class="accordion-item">
+    <div class="accordion-header">Load Planner Tool</div>
+    <div class="accordion-content">
+    A digital application that simulates wagon loading, checking balance, axle loads, and CO₂ impact before train departure.
+    </div>
+  </div>
+  
+         <div class="accordion-item">
+    <div class="accordion-header">Modal Shift</div>
+    <div class="accordion-content">
+The transition of freight from road to more sustainable modes like rail or sea, reducing congestion and emissions.
+    <div class="sdg-tag">SDG 13 – Climate Action</div>
+  </div>
+  </div>
+  
+     <div class="accordion-item">
+    <div class="accordion-header">PlayPackaging</div>
+    <div class="accordion-content">
+An initiative and partner focused on safe, compliant, and sustainable packaging solutions for intermodal and dangerous goods logistics.
+    <div class="sdg-tag">SDG 13 – Climate Action</div>
+  </div>
+  </div>
+  
+       <div class="accordion-item">
+    <div class="accordion-header">Play TT Circle Forwarders</div>
+    <div class="accordion-content">
+Trusted insurance partner of SDG Railway, offering coverage for goods during transport and special conditions for force majeure events.
+    </div>
+  </div>
+  
+      <div class="accordion-item">
+    <div class="accordion-header">Railway Gauge</div>
+    <div class="accordion-content">
+The distance between the inner sides of the two parallel rails. Standard gauge in Europe is 1,435 mm.
+    </div>
+  </div>
+  
+        <div class="accordion-item">
+    <div class="accordion-header">Railway Corridor</div>
+    <div class="accordion-content">
+A network section used for national or international freight operations, often forming part of Trans-European Transport Networks (TEN-T).
+     <div class="sdg-tag">SDG 9 – Industry, Innovation and Infrastructure</div>
+  </div>
+  </div>
+  
+  <div class="accordion-item">
+    <div class="accordion-header">RID (Regulations Concerning the International Carriage of Dangerous Goods by Rail)</div>
+    <div class="accordion-content">
+      The European regulation governing the safe transport of dangerous goods by rail. It establishes classification, packaging, labeling, and documentation requirements to ensure safety in international freight operations.
+      <div class="sdg-tag">SDG 3 – Good Health and Well-being</div>
+      <div class="sdg-tag">SDG 12 – Responsible Consumption and Production</div>
+    </div>
+  </div>
+
+      <div class="accordion-item">
+    <div class="accordion-header">Sustainability</div>
+    <div class="accordion-content">
+The commitment to balancing economic growth, environmental care, and social inclusion through innovative logistics.
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Terminal</div>
+    <div class="accordion-content">
+      A facility where goods are transferred between transport modes (road, rail, sea). Equipped for storage, handling, and customs procedures.
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Track Gauge</div>
+    <div class="accordion-content">
+     The standardized width between rails determining the type of train that can operate on a given line.
+    </div>
+</div>
+
+<script>
+  const headers = document.querySelectorAll('.accordion-header');
+  headers.forEach(header => {
+    header.addEventListener('click', () => {
+      // Close others
+      headers.forEach(h => {
+        if (h !== header) {
+          h.classList.remove('active');
+          h.nextElementSibling.classList.remove('open');
+        }
+      });
+      // Toggle clicked one
+      header.classList.toggle('active');
+      header.nextElementSibling.classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>

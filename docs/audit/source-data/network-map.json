@@ -1,0 +1,875 @@
+{
+  "name": "SDG Railway – Intermodal Network",
+  "description": "Fast routes connecting ports and inland terminals across Spain and France.",
+  "folders": [
+    {
+      "name": "FAST FRANCE - Mediterranean Corridor",
+      "placemarks": [
+        {
+          "name": "FAST FRANCE - Mediterranean Corridor",
+          "description": "Can Tunis Freight Terminal - Rail access to port and international routes.",
+          "style": "#icon-1716-0097A7",
+          "geometry": "point",
+          "coordinates": [
+            2.168417,
+            41.361739
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE - Mediterranean Corridor",
+          "description": "Saint-Charles International Terminal (Le Boulou) - Key intermodal freight hub in southern France.",
+          "style": "#icon-1716-0097A7",
+          "geometry": "point",
+          "coordinates": [
+            2.846163,
+            42.684859
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE - Mediterranean Corridor",
+          "description": "Lyon-Vénissieux / Saint-Priest Intermodal Terminal",
+          "style": "#icon-1716-0097A7",
+          "geometry": "point",
+          "coordinates": [
+            4.8100406,
+            45.7667953
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE - Mediterranean Corridor",
+          "description": "Valenton Intermodal Terminal (Plateforme Multimodale de Valenton)",
+          "style": "#icon-1716-0097A7",
+          "geometry": "point",
+          "coordinates": [
+            2.3455943,
+            48.8602879
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE - Mediterranean Corridor",
+          "description": "Barcelona – Perpignan – Lyon – Paris",
+          "style": "#line-0097A7-5000",
+          "geometry": "line",
+          "coordinates": [
+            [
+              2.168417,
+              41.361739
+            ],
+            [
+              2.846163,
+              42.684859
+            ],
+            [
+              4.830723,
+              45.7706263
+            ],
+            [
+              2.3455943,
+              48.8602879
+            ]
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Eastern Corridor (ES–E)",
+          "description": "Valencia Fuente San Luis Terminal",
+          "style": "#icon-1716-3949AB",
+          "geometry": "point",
+          "coordinates": [
+            -0.3714015,
+            39.4415972
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Eastern Corridor (ES–E)",
+          "description": "Madrid Abroñigal Terminal",
+          "style": "#icon-1716-3949AB",
+          "geometry": "point",
+          "coordinates": [
+            -3.6764042,
+            40.3901816
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Eastern Corridor (ES–E)",
+          "description": "Valencia → Madrid → Zaragoza",
+          "style": "#line-3949AB-4681",
+          "geometry": "line",
+          "coordinates": [
+            [
+              -0.3714015,
+              39.4415972
+            ],
+            [
+              -3.6764042,
+              40.3901816
+            ],
+            [
+              -1.005008,
+              41.638802
+            ]
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST SPAIN – Northern Corridor",
+      "placemarks": [
+        {
+          "name": "FAST SPAIN – Northern Corridor",
+          "description": "Can Tunis Freight Terminal - Rail access to port and international routes.",
+          "style": "#icon-1716-FBC02D",
+          "geometry": "point",
+          "coordinates": [
+            2.168417,
+            41.361739
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Northern Corridor",
+          "description": "Plaza Intermodal Freight Terminal (tmZ) - High-volume intermodal terminal operated by ADIF.",
+          "style": "#icon-1716-FBC02D",
+          "geometry": "point",
+          "coordinates": [
+            -1.005008,
+            41.638802
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Northern Corridor",
+          "description": "Noáin Freight Terminal - Main cargo rail terminal in Navarra.",
+          "style": "#icon-1716-FBC02D",
+          "geometry": "point",
+          "coordinates": [
+            -1.644551,
+            42.757609
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Northern Corridor",
+          "description": "Bilbao Port Rail Terminal (Olabeaga / ADIF) - Connects directly to the Port of Bilbao.",
+          "style": "#icon-1716-FBC02D",
+          "geometry": "point",
+          "coordinates": [
+            -2.928554,
+            43.259956
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Northern Corridor",
+          "description": "Barcelona – Zaragoza – Pamplona – Bilbao",
+          "style": "#line-FBC02D-5000",
+          "geometry": "line",
+          "coordinates": [
+            [
+              2.168417,
+              41.361739
+            ],
+            [
+              -1.005008,
+              41.638802
+            ],
+            [
+              -1.644551,
+              42.757609
+            ],
+            [
+              -2.928554,
+              43.259956
+            ]
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Eastern Corridor (ES–E)",
+          "description": "Zaragoza PLAZA Intermodal Terminal",
+          "style": "#icon-1716-3949AB",
+          "geometry": "point",
+          "coordinates": [
+            -1.005008,
+            41.638802
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST FRANCE – Atlantic Branch",
+      "placemarks": [
+        {
+          "name": "FAST FRANCE – Atlantic Branch",
+          "description": "Le Boulou Terminal Intermodal (Plateforme Multimodale du Boulou)",
+          "style": "#icon-1716-F57C00",
+          "geometry": "point",
+          "coordinates": [
+            2.846163,
+            42.684859
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE – Atlantic Branch",
+          "description": "Toulouse Saint-Jory (Terminal Fret de Saint-Jory)",
+          "style": "#icon-1716-F57C00",
+          "geometry": "point",
+          "coordinates": [
+            1.4003201,
+            43.5795331
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE – Atlantic Branch",
+          "description": "Bordeaux-Bruges Freight Yard (Triages de Bordeaux-Bruges)",
+          "style": "#icon-1716-F57C00",
+          "geometry": "point",
+          "coordinates": [
+            -0.6020006,
+            44.8434207
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE – Atlantic Branch",
+          "description": "Perpignan – Toulouse – Bordeaux",
+          "style": "#line-F57C00-4681",
+          "geometry": "line",
+          "coordinates": [
+            [
+              2.846163,
+              42.684859
+            ],
+            [
+              1.4003201,
+              43.5795331
+            ],
+            [
+              -0.6020006,
+              44.8434207
+            ]
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST SPAIN – Central Corridor",
+      "placemarks": [
+        {
+          "name": "FAST SPAIN – Central Corridor",
+          "description": "Can Tunis Freight Terminal - Rail access to port and international routes.",
+          "style": "#icon-1716-7CB342",
+          "geometry": "point",
+          "coordinates": [
+            2.168417,
+            41.361739
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Central Corridor",
+          "description": "Plaza Intermodal Freight Terminal (tmZ) - High-volume intermodal terminal operated by ADIF.",
+          "style": "#icon-1716-7CB342",
+          "geometry": "point",
+          "coordinates": [
+            -1.005008,
+            41.638802
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Central Corridor",
+          "description": "Abroñigal Freight Terminal - Main container logistics hub in central Spain.",
+          "style": "#icon-1716-7CB342",
+          "geometry": "point",
+          "coordinates": [
+            -3.676438,
+            40.390373
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Central Corridor",
+          "description": "Valladolid–Campo Grande Freight Terminal - Northern Spain’s key inland rail freight terminal.",
+          "style": "#icon-1716-7CB342",
+          "geometry": "point",
+          "coordinates": [
+            -4.726913,
+            41.642056
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Central Corridor",
+          "description": "Barcelona – Zaragoza – Madrid – Valladolid",
+          "style": "#line-7CB342-5000",
+          "geometry": "line",
+          "coordinates": [
+            [
+              2.168417,
+              41.361739
+            ],
+            [
+              -1.005008,
+              41.638802
+            ],
+            [
+              -3.676438,
+              40.390373
+            ],
+            [
+              -4.726913,
+              41.642056
+            ]
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST SOUTH - Mediterranean Corridor",
+      "placemarks": [
+        {
+          "name": "FAST SPAIN – Mediterranean Corridor",
+          "description": "Can Tunis Freight Terminal - Rail access to port and international routes.",
+          "style": "#icon-1716-FF5252",
+          "geometry": "point",
+          "coordinates": [
+            2.168417,
+            41.361739
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Mediterranean Corridor",
+          "description": "La Boella Intermodal Terminal - Located near the Port of Tarragona; handles chemicals, containers, and bulk cargo.",
+          "style": "#icon-1716-FF5252",
+          "geometry": "point",
+          "coordinates": [
+            1.204245,
+            41.097745
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST SPAIN – Mediterranean Corridor",
+          "description": "Barcelona – Tarragona",
+          "style": "#line-FF5252-6000",
+          "geometry": "line",
+          "coordinates": [
+            [
+              2.168417,
+              41.361739
+            ],
+            [
+              1.204245,
+              41.097745
+            ]
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST FRANCE – Southern Branch",
+      "placemarks": [
+        {
+          "name": "FAST FRANCE – Southern Branch",
+          "description": "Lyon-Vénissieux / Saint-Priest Intermodal Terminal",
+          "style": "#icon-1716-9C27B0",
+          "geometry": "point",
+          "coordinates": [
+            4.8100378,
+            45.7667945
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE – Southern Branch",
+          "description": "Marseille–Canet Freight Terminal (Terminal de Marseille-Canet)",
+          "style": "#icon-1716-9C27B0",
+          "geometry": "point",
+          "coordinates": [
+            5.3766257,
+            43.3090894
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST FRANCE – Southern Branch",
+          "description": "Lyon – Marseille",
+          "style": "#line-CE93D8-5069",
+          "geometry": "line",
+          "coordinates": [
+            [
+              4.810467,
+              45.7664353
+            ],
+            [
+              5.3766257,
+              43.3090894
+            ]
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST ITALY – Adriatic Corridor",
+      "placemarks": [
+        {
+          "name": "FAST ITALY – Adriatic Corridor",
+          "description": "Quadrante Europa Intermodal Terminal (Interporto Quadrante Europa – Verona)",
+          "style": "#icon-1716-006064",
+          "geometry": "point",
+          "coordinates": [
+            10.9903405,
+            45.4325839
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Adriatic Corridor",
+          "description": "Pescara Porta Nuova Freight Yard (Scalo Merci di Pescara Porta Nuova)",
+          "style": "#icon-1716-006064",
+          "geometry": "point",
+          "coordinates": [
+            14.2025892,
+            42.4478359
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Adriatic Corridor",
+          "description": "Bari Lamasinata Freight Terminal (Interporto Regionale della Puglia – Bari Lamasinata)",
+          "style": "#icon-1716-006064",
+          "geometry": "point",
+          "coordinates": [
+            16.8667738,
+            41.1249392
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Adriatic Corridor",
+          "description": "Verona – Pescara – Bari",
+          "style": "#line-006064-5069",
+          "geometry": "line",
+          "coordinates": [
+            [
+              10.9903405,
+              45.4325839
+            ],
+            [
+              12.5238218,
+              43.9022065
+            ],
+            [
+              14.2025892,
+              42.4478359
+            ],
+            [
+              15.3067285,
+              41.4367918
+            ],
+            [
+              16.8667738,
+              41.1249392
+            ]
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST ITALY – Tyrrhenian Corridor",
+      "placemarks": [
+        {
+          "name": "FAST ITALY – Tyrrhenian Corridor",
+          "description": "Santa Palomba Intermodal Terminal (Terminal Intermodale di Santa Palomba)",
+          "style": "#icon-1716-0288D1",
+          "geometry": "point",
+          "coordinates": [
+            12.571646,
+            41.710121
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Tyrrhenian Corridor",
+          "description": "Civitavecchia Port Rail Terminal (Terminal Ferroviario del Porto di Civitavecchia)",
+          "style": "#icon-1716-0288D1",
+          "geometry": "point",
+          "coordinates": [
+            11.7972083,
+            42.0943437
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Tyrrhenian Corridor",
+          "description": "Quadrante Europa Intermodal Terminal (Interporto Quadrante Europa – Verona)",
+          "style": "#icon-1716-0288D1",
+          "geometry": "point",
+          "coordinates": [
+            10.9903405,
+            45.4325839
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Tyrrhenian Corridor",
+          "description": "Civitavecchia – Santa Palomba – Verona",
+          "style": "#line-0288D1-5069",
+          "geometry": "line",
+          "coordinates": [
+            [
+              12.5717444,
+              41.710028
+            ],
+            [
+              12.1993747,
+              41.9304275
+            ],
+            [
+              12.0081637,
+              42.0237839
+            ],
+            [
+              11.7972083,
+              42.0943437
+            ],
+            [
+              10.9903405,
+              45.4325839
+            ]
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST ITALY – Central Logistics Line",
+      "placemarks": [
+        {
+          "name": "FAST ITALY – Central Logistics Line",
+          "description": "Santa Palomba Intermodal Terminal (Terminal Intermodale di Santa Palomba)",
+          "style": "#icon-1716-880E4F",
+          "geometry": "point",
+          "coordinates": [
+            12.5717444,
+            41.710028
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Central Logistics Line",
+          "description": "Pescara Porta Nuova Freight Yard (Scalo Merci di Pescara Porta Nuova)",
+          "style": "#icon-1716-880E4F",
+          "geometry": "point",
+          "coordinates": [
+            14.2025892,
+            42.4478359
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Central Logistics Line",
+          "description": "Bari Lamasinata Freight Terminal (Interporto Regionale della Puglia – Bari Lamasinata)",
+          "style": "#icon-1716-880E4F",
+          "geometry": "point",
+          "coordinates": [
+            16.8667738,
+            41.1249392
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST ITALY – Central Logistics Line",
+          "description": "Santa Palomba – Pescara – Bari",
+          "style": "#line-880E4F-6038",
+          "geometry": "line",
+          "coordinates": [
+            [
+              12.5717444,
+              41.710028
+            ],
+            [
+              12.7227337,
+              41.7362665
+            ],
+            [
+              13.4867961,
+              41.9838956
+            ],
+            [
+              14.2025892,
+              42.4478359
+            ],
+            [
+              14.6583221,
+              42.0874897
+            ],
+            [
+              15.2188379,
+              41.8145552
+            ],
+            [
+              15.8384484,
+              41.3944384
+            ],
+            [
+              16.8667738,
+              41.1249392
+            ]
+          ],
+          "data": []
+        }
+      ]
+    },
+    {
+      "name": "FAST PORTUGAL",
+      "placemarks": [
+        {
+          "name": "Aveiro Canal Industrial Terminal",
+          "description": "Aveiro",
+          "style": "",
+          "geometry": "none",
+          "coordinates": null,
+          "data": []
+        },
+        {
+          "name": "Bobadela Freight Station",
+          "description": "Lisbon",
+          "style": "",
+          "geometry": "none",
+          "coordinates": null,
+          "data": []
+        },
+        {
+          "name": "Leixões Port Rail Terminal",
+          "description": "Porto",
+          "style": "",
+          "geometry": "none",
+          "coordinates": null,
+          "data": []
+        },
+        {
+          "name": "Poceirão Intermodal Platform",
+          "description": "Lisbon",
+          "style": "",
+          "geometry": "none",
+          "coordinates": null,
+          "data": []
+        },
+        {
+          "name": "Setúbal Sadoport Rail Terminal",
+          "description": "Setúbal",
+          "style": "",
+          "geometry": "none",
+          "coordinates": null,
+          "data": []
+        },
+        {
+          "name": "Sines Port Freight Yard",
+          "description": "Sines",
+          "style": "",
+          "geometry": "none",
+          "coordinates": null,
+          "data": []
+        },
+        {
+          "name": "Entroncamento Freight Hub",
+          "description": "Entroncamento",
+          "style": "",
+          "geometry": "none",
+          "coordinates": null,
+          "data": []
+        },
+        {
+          "name": "Aveiro Canal Industrial Terminal",
+          "description": "Fast Portugal",
+          "style": "#icon-1716-558B2F",
+          "geometry": "point",
+          "coordinates": [
+            -8.6385886,
+            40.6437273
+          ],
+          "data": []
+        },
+        {
+          "name": "Bobadela Freight Station",
+          "description": "Fast Portugal",
+          "style": "#icon-1716-558B2F",
+          "geometry": "point",
+          "coordinates": [
+            -9.087601,
+            38.817294
+          ],
+          "data": []
+        },
+        {
+          "name": "Entroncamento Freight Hub",
+          "description": "Fast Portugal",
+          "style": "#icon-1716-558B2F",
+          "geometry": "point",
+          "coordinates": [
+            -8.473775,
+            39.4612966
+          ],
+          "data": []
+        },
+        {
+          "name": "Ermidas do Sado Freight Station",
+          "description": "Fast Portugal",
+          "style": "#icon-1716-558B2F",
+          "geometry": "point",
+          "coordinates": [
+            -8.4141397,
+            38.0027221
+          ],
+          "data": []
+        },
+        {
+          "name": "Leixões Port Rail Terminal",
+          "description": "Fast Portugal",
+          "style": "#icon-1716-558B2F",
+          "geometry": "point",
+          "coordinates": [
+            -8.6847399,
+            41.1895838
+          ],
+          "data": []
+        },
+        {
+          "name": "Poceirão Intermodal Platform",
+          "description": "Fast Portugal",
+          "style": "#icon-1716-558B2F",
+          "geometry": "point",
+          "coordinates": [
+            -8.7434022,
+            38.6344506
+          ],
+          "data": []
+        },
+        {
+          "name": "Setúbal Sadoport Rail Terminal",
+          "description": "Fast Portugal",
+          "style": "#icon-1716-558B2F",
+          "geometry": "point",
+          "coordinates": [
+            -8.869224,
+            38.5156426
+          ],
+          "data": []
+        },
+        {
+          "name": "Sines Port Freight Yard",
+          "description": "Fast Portugal",
+          "style": "#icon-1716-558B2F",
+          "geometry": "point",
+          "coordinates": [
+            -8.8455241,
+            37.9399633
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST PORTUGAL",
+          "description": "",
+          "style": "#line-558B2F-3906-nodesc",
+          "geometry": "line",
+          "coordinates": [
+            [
+              -8.6847399,
+              41.1895838
+            ],
+            [
+              -8.6385867,
+              40.6437015
+            ],
+            [
+              -8.473775,
+              39.4612966
+            ],
+            [
+              -9.087601,
+              38.817294
+            ]
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST PORTUGAL",
+          "description": "",
+          "style": "#line-558B2F-3713-nodesc",
+          "geometry": "line",
+          "coordinates": [
+            [
+              -8.473775,
+              39.4612966
+            ],
+            [
+              -8.7434022,
+              38.6344506
+            ],
+            [
+              -8.869224,
+              38.5156426
+            ]
+          ],
+          "data": []
+        },
+        {
+          "name": "FAST PORTUGAL",
+          "description": "",
+          "style": "#line-558B2F-5263-nodesc",
+          "geometry": "line",
+          "coordinates": [
+            [
+              -8.7434022,
+              38.6344506
+            ],
+            [
+              -8.4141397,
+              38.0027221
+            ],
+            [
+              -8.8455241,
+              37.9399633
+            ]
+          ],
+          "data": []
+        },
+        {
+          "name": "Iberian Route",
+          "description": "",
+          "style": "#line-7CB342-4875-nodesc",
+          "geometry": "line",
+          "coordinates": [
+            [
+              -3.6764042,
+              40.3901816
+            ],
+            [
+              -9.087601,
+              38.817294
+            ]
+          ],
+          "data": []
+        }
+      ]
+    }
+  ]
+}
