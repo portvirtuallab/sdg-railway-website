@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+/*
+ * SDG Railway design tokens.
+ * PROVISIONAL: railway-blue-900 and railway-green-600 were taken from colours used in the source
+ * site's embed code (docs/audit/README.md), not from approved brand files. Replace once the
+ * owner supplies the logo source. Derived shades are chosen for WCAG 2.2 AA contrast and are
+ * checked by tests/unit/tokens.test.ts.
+ */
+@theme {
+  --color-railway-blue-950: #031634;
+  --color-railway-blue-900: #062659; /* source: embeds, 27 uses */
+  --color-railway-blue-700: #1b4185;
+  --color-railway-blue-100: #e6ecf6;
+
+  --color-railway-green-700: #2a7d40; /* text and buttons on white */
+  --color-railway-green-600: #37a053; /* source: embeds, 10 uses; large text and graphics only */
+  --color-railway-green-100: #e8f5ec;
+
+  --color-neutral-50: #f7f8fa;
+  --color-neutral-200: #dde2ea;
+  --color-neutral-600: #4b5565;
+  --color-neutral-900: #151a22;
+
+  --color-notice-bg: #fff8e1;
+  --color-notice-border: #b98900;
+  --color-notice-text: #4a3700;
+
+  --font-sans: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+
+@layer base {
+  html {
+    color: var(--color-neutral-900);
+    background: #ffffff;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-railway-blue-700);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
