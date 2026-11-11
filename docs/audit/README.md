@@ -14,7 +14,7 @@ This audit records what exists on the current Google Sites website before any ne
 | `embedded-tools.md` | Every embedded tool and workflow, with integration options for the **quotation simulator** |
 | `verification-log.md` | 21 findings to resolve (data conflicts, claims, accessibility, rights) |
 | `asset-register.csv` | 182 image placements with source page, URL, host, alt text and migration status |
-| `source-html/` | Raw HTML of each page as served on the review date |
+| `source-html/` | Raw HTML of each page as served on the review date. The public Google API key that Google Sites embeds in every page (`_at_config`) is replaced by `REDACTED-GOOGLE-SITES-PUBLIC-KEY`. It belongs to Google, not to this project, and must be redacted again if the pages are re-downloaded. |
 | `extracted/` | Structured JSON per page (sections, text, images, links, embeds) and `embeds/` with every custom HTML/JS embed verbatim |
 | `source-data/` | Network map export from Google My Maps (`network-map.kml`) and parsed `network-map.json` |
 | `source-apps-script/` | Client-side HTML of the Railway Quotation Simulator (Apps Script web app) |
