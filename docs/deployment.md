@@ -7,13 +7,11 @@ runs from `main`. Nothing is deployed automatically.
 
 Before the first run, check the following:
 
-1. **Plan and visibility.** The repository is private. GitHub Pages for private repositories needs
-   a plan that supports it (GitHub Team or Enterprise for organisations). Do not make the
-   repository public to work around this.
-2. **Settings → Pages → Source:** select _GitHub Actions_.
-3. **Pages visibility.** On Enterprise plans, Pages for a private repository can be restricted to
-   organisation members. Choose who may see the preview.
-4. **Owner approval** for the preview.
+1. **Visibility.** The repository is **public**. The owner decided this on 2026-11-11, so the
+   preview can use GitHub Pages on the free plan. Code, audit evidence and preview are visible to
+   anyone. Never commit secrets, personal data or material whose reuse rights are unconfirmed.
+2. **Settings → Pages → Build and deployment → Source:** select _GitHub Actions_.
+3. **Owner approval** for each preview deployment.
 
 To run it: **Actions → Deploy preview to GitHub Pages → Run workflow** (branch `main`).
 

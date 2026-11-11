@@ -1,7 +1,7 @@
 name: Deploy preview to GitHub Pages
 
 # Manual only. The first deployment is a preview and needs owner approval (brief §18).
-# Pages for a private repository requires a GitHub plan that supports it; check Settings → Pages.
+# Requires Settings → Pages → Source: GitHub Actions (public repository, free plan).
 on:
   workflow_dispatch:
 
