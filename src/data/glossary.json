@@ -1,0 +1,146 @@
+[
+  {
+    "id": "axle-load",
+    "term": "Axle Load",
+    "definition": "The total weight distributed over each axle of a railway vehicle. It determines track capacity and safety limits.",
+    "sdg": "SDG 9 – Industry, Innovation and Infrastructure"
+  },
+  {
+    "id": "bi-mode-locomotive",
+    "term": "Bi-Mode Locomotive",
+    "definition": "A locomotive capable of operating both under electric power (from overhead lines) and diesel engines. It enables flexibility on mixed routes and reduces emissions.",
+    "sdg": "SDG 7 – Affordable and Clean Energy"
+  },
+  {
+    "id": "co-e-carbon-dioxide-equivalent",
+    "term": "CO₂e (Carbon Dioxide Equivalent)",
+    "definition": "A unit used to compare the emissions of different greenhouse gases based on their global warming potential.",
+    "sdg": "SDG 13 – Climate Action"
+  },
+  {
+    "id": "combined-transport",
+    "term": "Combined Transport",
+    "definition": "A logistics system where goods are moved using more than one mode of transport (e.g., rail and road) with minimal handling.",
+    "sdg": "SDG 11 – Sustainable Cities and Communities"
+  },
+  {
+    "id": "corridor",
+    "term": "Corridor",
+    "definition": "A strategic route connecting major terminals or regions, facilitating efficient freight flows across countries or continents.",
+    "sdg": null
+  },
+  {
+    "id": "dangerous-goods-dg",
+    "term": "Dangerous Goods (DG)",
+    "definition": "Substances or materials that pose risks to health, safety, property, or the environment. Transported under international regulations such as ADR/RID.",
+    "sdg": null
+  },
+  {
+    "id": "digitalization",
+    "term": "Digitalization",
+    "definition": "The integration of digital tools and systems (e.g., ERPs, simulators, smart sensors) to optimize logistics and operational efficiency.",
+    "sdg": "SDG 9 – Industry, Innovation and Infrastructure"
+  },
+  {
+    "id": "energy-efficiency",
+    "term": "Energy Efficiency",
+    "definition": "The use of less energy to perform the same transport operations, reducing environmental impact.",
+    "sdg": "SDG 7 – Affordable and Clean Energy"
+  },
+  {
+    "id": "eco-performance",
+    "term": "Eco-Performance",
+    "definition": "The balance between transport productivity and its environmental footprint. Often measured by emissions per ton-kilometer.",
+    "sdg": null
+  },
+  {
+    "id": "freight-train",
+    "term": "Freight Train",
+    "definition": "A train designed for carrying goods, containers, or semi-trailers instead of passengers. Essential for sustainable supply chains.",
+    "sdg": "SDG 12 – Responsible Consumption and Production"
+  },
+  {
+    "id": "gate-in-gate-out",
+    "term": "Gate In / Gate Out",
+    "definition": "The operational process at terminals where loading units (containers or trailers) enter (Gate In) or exit (Gate Out) controlled facilities for transport or delivery.",
+    "sdg": null
+  },
+  {
+    "id": "green-corridor",
+    "term": "Green Corridor",
+    "definition": "A freight route designed to prioritize low-emission and sustainable transport methods.",
+    "sdg": "SDG 13 – Climate Action"
+  },
+  {
+    "id": "intermodal-transport",
+    "term": "Intermodal Transport",
+    "definition": "The movement of goods using two or more transport modes within a single transport chain, without handling the goods themselves when changing modes.",
+    "sdg": "SDG 9 – Industry, Innovation and Infrastructure"
+  },
+  {
+    "id": "itu-intermodal-transport-unit",
+    "term": "ITU (Intermodal Transport Unit)",
+    "definition": "A standardized unit (e.g., container, swap body, or trailer) designed to be used in intermodal transport chains.",
+    "sdg": null
+  },
+  {
+    "id": "load-planner-tool",
+    "term": "Load Planner Tool",
+    "definition": "A digital application that simulates wagon loading, checking balance, axle loads, and CO₂ impact before train departure.",
+    "sdg": null
+  },
+  {
+    "id": "modal-shift",
+    "term": "Modal Shift",
+    "definition": "The transition of freight from road to more sustainable modes like rail or sea, reducing congestion and emissions.",
+    "sdg": "SDG 13 – Climate Action"
+  },
+  {
+    "id": "playpackaging",
+    "term": "PlayPackaging",
+    "definition": "An initiative and partner focused on safe, compliant, and sustainable packaging solutions for intermodal and dangerous goods logistics.",
+    "sdg": "SDG 13 – Climate Action"
+  },
+  {
+    "id": "play-tt-circle-forwarders",
+    "term": "Play TT Circle Forwarders",
+    "definition": "Trusted insurance partner of SDG Railway, offering coverage for goods during transport and special conditions for force majeure events.",
+    "sdg": null
+  },
+  {
+    "id": "railway-gauge",
+    "term": "Railway Gauge",
+    "definition": "The distance between the inner sides of the two parallel rails. Standard gauge in Europe is 1,435 mm.",
+    "sdg": null
+  },
+  {
+    "id": "railway-corridor",
+    "term": "Railway Corridor",
+    "definition": "A network section used for national or international freight operations, often forming part of Trans-European Transport Networks (TEN-T).",
+    "sdg": "SDG 9 – Industry, Innovation and Infrastructure"
+  },
+  {
+    "id": "rid-regulations-concerning-the-international-carriage-of-dangerous-goods-by-rail",
+    "term": "RID (Regulations Concerning the International Carriage of Dangerous Goods by Rail)",
+    "definition": "The European regulation governing the safe transport of dangerous goods by rail. It establishes classification, packaging, labeling, and documentation requirements to ensure safety in international freight operations.",
+    "sdg": "SDG 3 – Good Health and Well-beingSDG 12 – Responsible Consumption and Production"
+  },
+  {
+    "id": "sustainability",
+    "term": "Sustainability",
+    "definition": "The commitment to balancing economic growth, environmental care, and social inclusion through innovative logistics.",
+    "sdg": null
+  },
+  {
+    "id": "terminal",
+    "term": "Terminal",
+    "definition": "A facility where goods are transferred between transport modes (road, rail, sea). Equipped for storage, handling, and customs procedures.",
+    "sdg": null
+  },
+  {
+    "id": "track-gauge",
+    "term": "Track Gauge",
+    "definition": "The standardized width between rails determining the type of train that can operate on a given line.",
+    "sdg": null
+  }
+]

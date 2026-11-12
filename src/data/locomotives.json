@@ -1,0 +1,143 @@
+[
+  {
+    "id": "andreia",
+    "name": "ANDREIA",
+    "motto": "Courage",
+    "evn": "E-PRS 9 5 71 0 201 501 4",
+    "description": [
+      "According to Hippia of Élide, the purpose of the teaching was to achieve Areté, which means training to think, to speak and to act successfully. The political (\"civic\") excellence of the Greeks consisted in the cultivation of three specific virtues: andreia (courage), sofrosine (moderation or balance) and dicaiosine (justice): these virtues formed a relevant, useful and perfect citizen. To these virtues Plato then added a fourth, Prudence, giving rise to the so-called Cardinal Virtues: prudence, strength and temperance would correspond to the three parts of the soul, and harmony between them would engender the fourth, justice."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "sofrosine",
+    "name": "SOFROSINE",
+    "motto": "Balance",
+    "evn": "E-PRS 9 5 71 0 201 502 2",
+    "description": [
+      "In a way, the Greek areté would be equivalent to the Roman virtus, dignity, honour or manhood of good.Towards the classical period - above all the 5th and 4th centuries BC - the meaning of Areté approached what is today considered \"virtue\", fundamentally through the work of Aristotle, in general, including features such as μεγαλοψυχια (megalopsyjía, 'magnanimity'), σοφροσυνη (sofrosine, 'temperance') or δικαιοσυνη (dicaiosine, 'justice')."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "dicaiosine",
+    "name": "DICAIOSINE",
+    "motto": "Justice",
+    "evn": "E-PRS 9 5 71 0 201 503 0",
+    "description": [
+      "The acquisition of areté was the pivotal point in the education (παιδεία, paideía) of the young Greek to become a citizen, following the ideal set out by Isocrates.",
+      "Traces of the more restricted conception of the archaic era can be seen in the emphasis placed on discipline and mastery of the body through gymnastics, one of the main activities, and fighting, but a finished education also included the arts of oratory, music and - eventually - philosophy."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "pr-farfalla",
+    "name": "PR FARFALLA",
+    "motto": "Transformation",
+    "evn": "E-PRS 9 5 71 0 301 601 0",
+    "description": [
+      "Represents the adaptability and transformation of modern logistics. Much like a butterfly emerging from its chrysalis, this locomotive embodies efficiency and sustainability evolving together. Its lightweight structure and dual-power system allow it to operate seamlessly across electrified and non-electrified routes, ensuring flexibility where others stop."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "pr-speranza",
+    "name": "PR SPERANZA",
+    "motto": "Hope",
+    "evn": "E-PRS 9 5 71 0 301 602 0",
+    "description": [
+      "Carries the spirit of renewal and endurance. Designed for long-haul freight, its bi-mode propulsion ensures continuous motion, even in the face of challenges.",
+      "It is the locomotive of perseverance, connecting regions and industries with reliability and optimism.",
+      "In the tradition of SDG Railway, “Speranza” is not only a machine but a message: that sustainable mobility is the hope of future generations."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "pr-phronesis",
+    "name": "PR PHRONESIS",
+    "motto": "Wisdom",
+    "evn": "E-PRS 9 5 71 0 301 603 0",
+    "description": [
+      "Inspired by the Greek concept of practical wisdom, represents intelligent transport management. Equipped with advanced digital control systems and real-time diagnostics, it optimizes energy use and maintenance cycles.",
+      "It embodies thoughtful engineering, where precision meets purpose.",
+      "Every journey it leads is guided by logic, data, and responsibility."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "pr-veloce",
+    "name": "PR VELOCE",
+    "motto": "Speed",
+    "evn": "E-PRS 9 5 71 0 301 604 0",
+    "description": [
+      "PR Veloce is the expression of velocity and performance. Built for rapid intermodal transport, it combines aerodynamic design with a power output capable of handling Europe’s busiest freight corridors.",
+      "Its refined traction and regenerative braking systems deliver both speed and sustainability, proving that progress can move fast, yet stay balanced.",
+      "It is the emblem of SDG Railway’s commitment to smart, swift, and sustainable logistics."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "atr-express",
+    "name": "ATR EXPRESS",
+    "motto": "The Desert Pulse",
+    "evn": "E-PRS 9 5 71 0 401 701 0",
+    "description": [
+      "ATR Express is built to endure the demanding conditions of the Egyptian rail network, from the coastal humidity of Alexandria to the heat of the inland routes.",
+      "Its dual traction system ensures constant efficiency under extreme temperatures, while its reinforced suspension and high-capacity cooling systems make it ideal for heavy freight and long-distance operations.",
+      "Like the Nile that sustains life through balance, ATR Express embodies the rhythm of endurance, carrying the pulse of Egypt’s industrial growth"
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "chemaal-express",
+    "name": "CHEMAAL EXPRESS",
+    "motto": "The Horizon Line",
+    "evn": "E-PRS 9 5 71 0 401 702 0",
+    "description": [
+      "Chemaal Express takes its name from the Arabic word “شمال” (chemaal, meaning north), symbolizing guidance and direction.",
+      "It is a locomotive designed for reliability across Egypt’s northern corridors, linking the ports of the Mediterranean with inland logistics centers.",
+      "With its bi-mode power and optimized traction for sandy terrains, it demonstrates how technology adapts to geography.",
+      "Chemaal Express embodies the spirit of progress, always moving forward and always looking towards the horizon."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "cerise-express",
+    "name": "CERISE EXPRESS",
+    "motto": "The Pulse of Precision",
+    "evn": "E-PRS 9 5 71 0 501 801 0",
+    "description": [
+      "Cerise Express captures the strength and refinement of modern French engineering.",
+      "Named after the vibrant cherry (cerise), a symbol of energy and renewal, this locomotive embodies the harmony between speed and precision.",
+      "Equipped with a cutting-edge traction control system and real-time performance monitoring, it ensures seamless operation on both regional and international corridors.",
+      "Its bi-mode configuration allows effortless transition from electric to diesel, maintaining optimal performance even beyond electrified lines."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "chou-express",
+    "name": "CHOU EXPRESS",
+    "motto": "The Strength of Harmony",
+    "evn": "E-PRS 9 5 71 0 501 802 0",
+    "description": [
+      "Chou Express reflects endurance, adaptability, and sustainability, qualities deeply rooted in SDG Railway’s philosophy.",
+      "Its name (chou, meaning cabbage) may seem humble, but it symbolizes layered strength and nourishment, just like a robust logistics system that supports economies from within.",
+      "This locomotive is optimized for heavy freight along the Mediterranean and Atlantic branches, featuring enhanced regenerative braking and an aerodynamic frame for lower energy consumption.",
+      "Chou Express proves that durability and environmental care can coexist."
+    ],
+    "reviewState": "source"
+  },
+  {
+    "id": "pr-al-qitaar",
+    "name": "PR AL-QITAAR",
+    "motto": "The Spirit of the Desert Line",
+    "evn": "E-PRS 9 5 71 0 601 901 0",
+    "description": [
+      "PR Al-Qitaar takes its name from the Arabic word القطار (al-qitaar, “the train”), evoking the legacy of movement across the ancient trade routes that once connected the Arabian deserts to the Mediterranean.",
+      "Built to endure long hauls under extreme temperatures, this locomotive symbolizes resilience and continuity.",
+      "Its bi-mode propulsion ensures reliable operation across mixed electrified and non-electrified tracks, while advanced sand-filtration systems and adaptive cooling keep performance steady in desert conditions.",
+      "Al-Qitaar represents the union of tradition and technology."
+    ],
+    "reviewState": "source"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "20-dry-container",
+    "name": "20’ Dry Container",
+    "description": "A standard intermodal unit used for general and palletized cargo, fully compatible with rail, road, and maritime transport. Dimensions: 6.06 m × 2.44 m × 2.59 m",
+    "image": "IMG-097"
+  },
+  {
+    "id": "40-dry-container",
+    "name": "40’ Dry Container",
+    "description": "A widely used intermodal unit suitable for general and industrial cargo, ensuring efficient rail and multimodal operations. Dimensions: 12.19 m × 2.44 m × 2.59 m",
+    "image": "IMG-098"
+  },
+  {
+    "id": "40-high-cube-container",
+    "name": "40’ High Cube Container",
+    "description": "Provides additional internal height for voluminous cargo, commonly used in intermodal rail and maritime transport. Dimensions: 12.19 m × 2.44 m × 2.90 m",
+    "image": "IMG-099"
+  },
+  {
+    "id": "45-high-cube-container",
+    "name": "45’ High Cube Container",
+    "description": "A high-capacity container mainly used in European rail–road intermodal transport, maximizing payload volume on inland corridors. Dimensions: 13.72 m × 2.44 m × 2.90 m",
+    "image": "IMG-100"
+  },
+  {
+    "id": "60-extended-container",
+    "name": "60’ Extended Container",
+    "description": "Designed for enhanced cargo capacity and reduced carbon emissions, this next-generation intermodal container optimizes long-distance rail transport efficiency. Dimensions: 18.29 m × 2.44 m × 2.90 m",
+    "image": "IMG-101"
+  },
+  {
+    "id": "reefer-container",
+    "name": "Reefer Container",
+    "description": "A temperature-controlled intermodal unit for perishable goods, maintaining cold chain integrity during rail transport. Typical size: 40’ HC (12.19 m × 2.44 m × 2.90 m)",
+    "image": "IMG-102"
+  },
+  {
+    "id": "tank-container",
+    "name": "Tank Container",
+    "description": "Designed for the safe transport of liquids and chemicals, complying with international rail and intermodal safety standards. Typical capacity: 24,000 – 26,000 litres",
+    "image": "IMG-103"
+  },
+  {
+    "id": "swap-bodies",
+    "name": "Swap Bodies",
+    "description": "A European intermodal unit optimized for road–rail transport, handled using Lift-on/Lift-off (Lo-Lo) systems. Typical length: 7.15 m – 7.82 m",
+    "image": "IMG-104"
+  },
+  {
+    "id": "semi-trailers",
+    "name": "Semi-Trailers",
+    "description": "Unaccompanied road trailers transported by rail on pocket wagons, commonly compliant with the P400 loading profile. Typical length: 13.60 m",
+    "image": "IMG-105"
+  }
+]

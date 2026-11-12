@@ -1,0 +1,27 @@
+[
+  {
+    "department": "Operations Management",
+    "expertise": "Rail logistics coordinators and terminal supervisors",
+    "focus": "Route optimization, cargo scheduling, and coordination with port terminals."
+  },
+  {
+    "department": "Technical & Maintenance Division",
+    "expertise": "Engineers and locomotive technicians",
+    "focus": "Fleet maintenance, energy efficiency, and rail safety standards."
+  },
+  {
+    "department": "Digital Innovation Unit",
+    "expertise": "Data analysts and IT specialists",
+    "focus": "ERP integration, real-time tracking systems, and smart logistics platforms."
+  },
+  {
+    "department": "Sustainability & Compliance",
+    "expertise": "Environmental and quality officers",
+    "focus": "Emission control, sustainable operations, and compliance with European standards."
+  },
+  {
+    "department": "Customer Relations",
+    "expertise": "Account managers and logistics advisors",
+    "focus": "Personalized service, cargo solutions, and long-term client partnerships."
+  }
+]

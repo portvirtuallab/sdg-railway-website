@@ -1,0 +1,128 @@
+[
+  {
+    "id": "fr-mediterranean-corridor",
+    "country": "FR",
+    "name": "Mediterranean Corridor",
+    "network": "FAST France",
+    "stops": ["Barcelona", "Perpignan", "Lyon", "Paris"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "fr-atlantic-branch",
+    "country": "FR",
+    "name": "Atlantic Branch",
+    "network": "FAST France",
+    "stops": ["Perpignan", "Toulouse", "Bordeaux"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "fr-southern-branch",
+    "country": "FR",
+    "name": "Southern Branch",
+    "network": "FAST France",
+    "stops": ["Lyon", "Marseille"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "es-northern-corridor",
+    "country": "ES",
+    "name": "Northern Corridor",
+    "network": "FAST Spain",
+    "stops": ["Barcelona", "Zaragoza", "Pamplona", "Bilbao"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "es-central-corridor",
+    "country": "ES",
+    "name": "Central Corridor",
+    "network": "FAST Spain",
+    "stops": ["Barcelona", "Zaragoza", "Madrid", "Valladolid"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "es-mediterranean-corridor",
+    "country": "ES",
+    "name": "Mediterranean Corridor",
+    "network": "FAST Spain",
+    "stops": ["Barcelona", "Tarragona"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "es-eastern-corridor",
+    "country": "ES",
+    "name": "Eastern Corridor",
+    "network": "FAST Spain",
+    "stops": ["Valencia", "Madrid", "Zaragoza"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "it-adriatic-corridor",
+    "country": "IT",
+    "name": "Adriatic Corridor",
+    "network": "FAST Italy",
+    "stops": ["Verona", "Pescara", "Bari"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "it-tyrrhenian-corridor",
+    "country": "IT",
+    "name": "Tyrrhenian Corridor",
+    "network": "FAST Italy",
+    "stops": ["Civitavecchia", "Santa Palomba", "Verona"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "it-central-logistics-line",
+    "country": "IT",
+    "name": "Central Logistics Line",
+    "network": "FAST Italy",
+    "stops": ["Santa Palomba", "Pescara", "Bari"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "pt-portugal-freight-network",
+    "country": "PT",
+    "name": "Portugal Freight Network",
+    "network": "FAST Portugal",
+    "stops": [
+      "Aveiro",
+      "Porto",
+      "Entroncamento",
+      "Lisbon",
+      "Poceirão",
+      "Setúbal",
+      "Ermidas do Sado",
+      "Sines"
+    ],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "jo-red-sea-corridor",
+    "country": "JO",
+    "name": "Red Sea Corridor",
+    "network": "FAST Jordan",
+    "stops": ["Aqaba", "Amman", "Ramallah"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  },
+  {
+    "id": "eg-delta-corridor",
+    "country": "EG",
+    "name": "Delta Corridor",
+    "network": "FAST Egypt",
+    "stops": ["Alexandria", "Cairo", "Damietta"],
+    "source": "network-routes cards",
+    "reviewState": "source"
+  }
+]

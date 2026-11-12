@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Rail Motorway Services",
+    "description": "A combined transport system in which semi-trailers P400 are transported by rail in shuttle services using specially upgraded rolling stock and terminals. Our intermodal services focus on unaccompanied transport, meaning only the semi-trailer is loaded—drivers and tractors remain at the terminal. Our terminal network ensures competitive transit times and a more sustainable and economical alternative to road transport.",
+    "icon": "IMG-026"
+  },
+  {
+    "title": "Intermodal Container Services",
+    "description": "Our Intermodal services are different solutions that combine transport by road and rail, and enable the transit of your cargo inland. Based on your needs, SDG Railway can offer tailor-made solutions and keeps expanding its global and reliable network to offer integrated haulage services that meet your supply chain requirements. Our aim is to provide a safe and efficient delivery of your cargo in the Mediterranean area. Complementing SDG Lines outstanding shipping services due to Mediterranean port coverage, Port Railway’s intermodal solutions enable door-to-door delivery and connectivity with global inland commercial centres. We have the scale, experience, knowledge and equipment to provide for a fast and reliable transit of your goods, while leveraging the latest technologies and keeping a sustainable approach. Using our landside transport services not only saves you time and money; it also reduces your business’s carbon footprint.",
+    "icon": "IMG-027"
+  },
+  {
+    "title": "Sustainability & Environment",
+    "description": "Climate change and environmental degradation are an existential threat to Europe and the world. The European Green Deal is our plan to make the SDG Railway and EU's economy sustainable. We can do this by turning climate and environmental challenges into opportunities, and making the transition just and inclusive for all. The 2030 Agenda and the SDG lights our path.",
+    "icon": "IMG-028"
+  },
+  {
+    "title": "Vehicles",
+    "description": "SDG Railway is expert in supply-chain solutions and the Mediterranean leader in automotive logistics. Serving automotive industries, SDG Railway offers fully integrated services and a truly global, multimodal network. We design smart, flexible supply-chain solutions for each and every client need. With 15 years of expertise, we believe long-lasting cooperation with partners is the key to shared growth. Our goal is to play an innovative and influential role in supply-chain transformation to help customers meet their evolving technological, social and environmental challenges. SDG Railway is proud of its ability to nurture innovation by our employees and partners to offer creative solutions to changing industry needs.",
+    "icon": "IMG-029"
+  },
+  {
+    "title": "Cold Chain",
+    "description": "Our company transport fruit and vegetables from the main production centres to the Central Supply Markets and mass distribution platforms. Thanks to this experience, SDG Railway has established itself as a key player in the transport of fresh and frozen products. Always attentive to your needs, our teams, drawn from both the rail and road worlds, guarantee transporters a full understanding of their requirements.",
+    "icon": "IMG-028"
+  },
+  {
+    "title": "Quality",
+    "description": "We understand quality management as a task of guidance and each employee is jointly responsible for the quality of their work. A continuous improvement process in all parts of the company helps us to uncover possible gaps and eliminate existing weak points. Setting realistic annual targets and their achieving them are a substantial component of our firm culture and have been since we were founded.",
+    "icon": "IMG-028"
+  },
+  {
+    "title": "Digitalisation",
+    "description": "In railway, digitalisation and the use of data has had a huge impact. Trains have become sophisticated sensor hubs and data generators, producing and transmitting information from anywhere, often in real time. At the same time, advances in 5G and satellite communications are improving connectivity, allowing for massive increases in the volumes of data transferred at ever-lower cost.",
+    "icon": "IMG-028"
+  },
+  {
+    "title": "Dangerous Goods",
+    "description": "SDG Railway ensures safe transport by observing the relevant stowage and segregation requirements of dangerous goods. This gives additional safety to the cargo, the train, the crew, cargo handlers and the overall environment.",
+    "icon": "IMG-028"
+  }
+]
