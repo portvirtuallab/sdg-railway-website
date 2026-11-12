@@ -13,6 +13,7 @@
   --color-railway-blue-700: #1b4185;
   --color-railway-blue-100: #e6ecf6;
 
+  --color-railway-green-800: #21653a; /* hover state of green buttons */
   --color-railway-green-700: #2a7d40; /* text and buttons on white */
   --color-railway-green-600: #37a053; /* source: embeds, 10 uses; large text and graphics only */
   --color-railway-green-100: #e8f5ec;
@@ -26,8 +27,48 @@
   --color-notice-border: #b98900;
   --color-notice-text: #4a3700;
 
-  --font-sans: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* Self-hosted (@fontsource-variable). Montserrat is the heading face used by the source site. */
+  --font-sans:
+    'Inter Variable', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-display: 'Montserrat Variable', 'Inter Variable', 'Segoe UI', system-ui, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  /* Rail sleepers: a repeating tie pattern used as a decorative divider. */
+  .track-ties {
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0 14px,
+      var(--color-railway-green-600) 14px 20px
+    );
+  }
+
+  /* Body copy migrated from the source site (safe HTML from src/data). */
+  .prose-rail p + p,
+  .prose-rail p + ul,
+  .prose-rail ul + p {
+    margin-top: 0.75rem;
+  }
+  .prose-rail ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .prose-rail li + li {
+    margin-top: 0.35rem;
+  }
+  .prose-rail strong {
+    color: var(--color-railway-blue-900);
+  }
 }
 
 @layer base {

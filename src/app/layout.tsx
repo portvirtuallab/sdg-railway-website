@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from 'next';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/montserrat';
 import '@/styles/globals.css';
 import { SimulationNotice } from '@/components/SimulationNotice';
 import { SiteFooter } from '@/components/SiteFooter';
