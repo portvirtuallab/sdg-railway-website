@@ -32,6 +32,7 @@ describe('design token contrast', () => {
     ['white on railway-blue-950', WHITE, token('railway-blue-950')],
     ['white on railway-blue-700', WHITE, token('railway-blue-700')],
     ['white on railway-green-700', WHITE, token('railway-green-700')],
+    ['white on railway-green-800', WHITE, token('railway-green-800')],
     ['railway-green-700 on white', token('railway-green-700'), WHITE],
     ['railway-blue-700 on white', token('railway-blue-700'), WHITE],
     ['neutral-600 on white', token('neutral-600'), WHITE],

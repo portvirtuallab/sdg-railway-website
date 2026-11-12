@@ -40,7 +40,9 @@ test('submenus open with the keyboard and close with Escape', async ({ page, isM
   const toggle = page.getByRole('button', { name: 'Services submenu' });
   await toggle.click();
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.getByRole('link', { name: 'Dangerous Goods' })).toBeVisible();
+  await expect(
+    page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Dangerous Goods' }),
+  ).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 });

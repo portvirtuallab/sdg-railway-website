@@ -32,7 +32,10 @@ function resolves(urlPath) {
 const broken = [];
 let checked = 0;
 for (const file of htmlFiles(outDir)) {
-  const html = fs.readFileSync(file, 'utf8');
+  // Resource hints (e.g. Next.js adds <link rel="preconnect" href="/"> with assetPrefix) are not links.
+  const html = fs
+    .readFileSync(file, 'utf8')
+    .replace(/<link[^>]+rel="(?:preconnect|dns-prefetch)"[^>]*>/g, '');
   for (const m of html.matchAll(/\s(?:href|src)="([^"]+)"/g)) {
     const url = m[1];
     if (!url.startsWith('/') || url.startsWith('//')) continue;
