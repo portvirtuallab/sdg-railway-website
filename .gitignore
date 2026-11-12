@@ -10,3 +10,6 @@ test-results/
 !.env.example
 .DS_Store
 Thumbs.db
+
+# Original-resolution image downloads (large; regenerate with scripts/audit/fetch-images.mjs)
+docs/audit/source-images/
