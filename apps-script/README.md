@@ -64,19 +64,20 @@ Do it with the account that **owns** the Sheet and the PDF folder.
    code only gets an **example quote**, which is not recorded and cannot be accepted. Set
    `Active` to FALSE to switch a code off. Rows with `Role` set to `trainer` see every team.
    **Replace the example codes 4821, 1357, 2468 and the trainer code 9000.**
+
    **Linking the PVL access form instead of pasting codes.** The codes can come live from the
-   _Control Access PVL (Responses)_ Sheet, tab _Form responses 1_. In , keep row 2
+   _Control Access PVL (Responses)_ Sheet, tab _Form responses 1_. In `ACCESS_CODES`, keep row 2
    for your trainer code, clear rows 3 and below, and enter one formula per column in row 3:
 
-   | Cell | Formula | Brings                |
-   | ---- | ------- | --------------------- |
-   | A3   |         | Code                  |
-   | B3   |         | Team (course name)    |
-   | C3   |         | Company (institution) |
-   | F3   |         | Active ( / )          |
+   | Cell | Formula                                                                                  | Brings                          |
+   | ---- | ---------------------------------------------------------------------------------------- | ------------------------------- |
+   | A3   | `=IMPORTRANGE("19LcU3eDyjhCC_snzx89gxPj4-1zLeSWFIGQOSvfKnbk";"'Form responses 1'!H2:H")` | Code                            |
+   | B3   | `=IMPORTRANGE("19LcU3eDyjhCC_snzx89gxPj4-1zLeSWFIGQOSvfKnbk";"'Form responses 1'!B2:B")` | Team (course name)              |
+   | C3   | `=IMPORTRANGE("19LcU3eDyjhCC_snzx89gxPj4-1zLeSWFIGQOSvfKnbk";"'Form responses 1'!F2:F")` | Company (institution)           |
+   | F3   | `=IMPORTRANGE("19LcU3eDyjhCC_snzx89gxPj4-1zLeSWFIGQOSvfKnbk";"'Form responses 1'!I2:I")` | Active (`Active` / `No Active`) |
 
-   The first time, click the cell A3 and **Allow access**. Use instead of if your Sheet is
-   set to English. Codes with status only get example quotes. Emails are not imported.
+   The first time, click cell A3 and **Allow access**. Use `,` instead of `;` if your Sheet is set
+   to English. Codes with the status `No Active` only get example quotes. Emails are not imported.
 
 6. **Publish the web app.** In Apps Script: **Deploy → New deployment → Web app**, with
    _Execute as: Me_ and _Who has access: Anyone_. Copy the URL, which ends in `/exec`.
