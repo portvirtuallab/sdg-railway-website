@@ -224,4 +224,27 @@ describe('Apps Script v8 back end', () => {
     ss.sheets.get('ACCESS_CODES')!.set(ss.sheets.get('ACCESS_CODES')!.getLastRow(), 6, false);
     expect(gs.post({ action: 'quote', request: request({ pin: 'PVL-0042' }) }).example).toBe(true);
   });
+
+  it('reads codes imported from the PVL access form (Active / No Active)', () => {
+    const ss = freshSheet();
+    const gs = loadAppsScript(dist, ss);
+    gs.run('setupV8');
+    const codes = ss.sheets.get('ACCESS_CODES')!;
+    codes.appendRow([
+      7914,
+      'Administrator',
+      'Escola Europea Intermodal Transport',
+      '',
+      '',
+      'Active',
+      '',
+    ]);
+    codes.appendRow([6807, 'ADMIN', 'Escola Europea', '', '', 'No Active', '']);
+    codes.appendRow([989, 'Course', 'Institution', '', '', 'Active', '']);
+    expect(gs.post({ action: 'quote', request: request({ pin: '7914' }) }).quote.team).toBe(
+      'Administrator',
+    );
+    expect(gs.post({ action: 'quote', request: request({ pin: '6807' }) }).example).toBe(true);
+    expect(gs.post({ action: 'quote', request: request({ pin: '989' }) }).example).toBeUndefined();
+  });
 });

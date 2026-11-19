@@ -176,8 +176,9 @@ export function toBool(v: unknown, def: boolean): boolean {
   if (v === true || v === false) return v;
   if (v === null || v === undefined || v === '') return def;
   const s = String(v).trim().toUpperCase();
-  if (['TRUE', 'YES', 'Y', '1'].includes(s)) return true;
-  if (['FALSE', 'NO', 'N', '0'].includes(s)) return false;
+  // ACTIVE / NO ACTIVE: status words of the PVL access control form (ACCESS_CODES import).
+  if (['TRUE', 'YES', 'Y', '1', 'ACTIVE'].includes(s)) return true;
+  if (['FALSE', 'NO', 'N', '0', 'NO ACTIVE', 'NOT ACTIVE', 'INACTIVE'].includes(s)) return false;
   return def;
 }
 

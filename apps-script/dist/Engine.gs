@@ -27,13 +27,17 @@ var RailEngine = (function(exports) {
 			"TRUE",
 			"YES",
 			"Y",
-			"1"
+			"1",
+			"ACTIVE"
 		].includes(s)) return true;
 		if ([
 			"FALSE",
 			"NO",
 			"N",
-			"0"
+			"0",
+			"NO ACTIVE",
+			"NOT ACTIVE",
+			"INACTIVE"
 		].includes(s)) return false;
 		return def;
 	}
