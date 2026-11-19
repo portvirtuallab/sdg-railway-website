@@ -22,7 +22,7 @@ for (const sitePage of SITE_PAGES) {
 
 test('legacy /home path renders the homepage', async ({ page }) => {
   await page.goto('/home/');
-  await expect(page.locator('h1')).toContainText('Connecting ports and inland terminals');
+  await expect(page.locator('h1')).toContainText('Quote an intermodal rail solution');
 });
 
 test('skip link moves focus to the main content', async ({ page, isMobile }) => {
@@ -37,7 +37,7 @@ test('skip link moves focus to the main content', async ({ page, isMobile }) => 
 test('submenus open with the keyboard and close with Escape', async ({ page, isMobile }) => {
   test.skip(isMobile, 'Desktop navigation');
   await page.goto('/');
-  const toggle = page.getByRole('button', { name: 'Services submenu' });
+  const toggle = page.getByRole('button', { name: 'Equipment and cargo submenu' });
   await toggle.click();
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
   await expect(
