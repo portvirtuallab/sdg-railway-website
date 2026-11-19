@@ -41,18 +41,22 @@ export default function DashboardPage() {
               sustainable logistics solutions, where choices of route, terminal, train type and
               intermodal connection directly affect cost, lead time and environmental performance.
             </p>
-            <div className="pt-2">
-              <ButtonLink href={SIMULATOR_URL} external icon="quote">
-                Open the quotation simulator
+            <div className="flex flex-wrap gap-3 pt-2">
+              <ButtonLink href="/request-a-quotation/" icon="quote">
+                Get a quote
+              </ButtonLink>
+              <ButtonLink href={SIMULATOR_URL} external variant="secondary">
+                Previous simulator
               </ButtonLink>
             </div>
           </div>
           <Img id="IMG-035" className="w-full rounded-2xl shadow-xl" />
         </div>
         <div className="mt-10">
-          <Callout title="Simulation only">
-            The simulator runs on Google Apps Script. Quotations, prices and booking references are
-            generated for the exercise and have no commercial validity.
+          <Callout title="The quotation has moved">
+            Quotes are now requested in Get a quote, with prices by leg, an RWQ reference and a
+            booking linked to the train. The previous Apps Script simulator stays available during
+            the transition. Both are simulations with no commercial validity.
           </Callout>
         </div>
       </Section>

@@ -1,130 +1,166 @@
+import { Suspense } from 'react';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { ButtonLink, Callout, PageHero, Section } from '@/components/ui/layout';
-import { RAIL_SERVICES } from '@/data/departures';
-import { DeparturesBoard } from '@/features/quotation/DeparturesBoard';
+import catalogue from '@/data/demo-catalogue.json';
+import { QuoteForm } from '@/features/quote/QuoteForm';
+import { dayName } from '@/features/quote/time';
 import { getPage, pageMetadata } from '@/lib/page-meta';
 
 export const metadata = pageMetadata('request-a-quotation');
 
-const STEPS: { icon: IconName; title: string; text: string }[] = [
+const FLOW: { icon: IconName; title: string; text: string }[] = [
   {
-    icon: 'lock',
-    title: 'Enter your PVL PIN code',
-    text: 'Your trainer gives you a 4-digit Port Virtual Lab PIN. Enter it on the quotation page to open the Railway Dashboard.',
+    icon: 'quote',
+    title: 'Quote',
+    text: 'Request a door-to-door or terminal-to-terminal offer. You receive an RWQ quote with prices by leg, scope and validity.',
+  },
+  {
+    icon: 'check',
+    title: 'Accept',
+    text: 'A quote is not a booking. Accepting it asks SDG Railway to confirm capacity on the train.',
+  },
+  {
+    icon: 'train',
+    title: 'Train and booking',
+    text: 'You get a booking reference linked to the quote and the assigned train – or a “pending confirmation” status.',
   },
   {
     icon: 'route',
-    title: 'Plan the shipment',
-    text: 'Choose origin and destination terminals, the loading unit, units, weight, cargo and whether it is dangerous goods.',
-  },
-  {
-    icon: 'clock',
-    title: 'Pick a service and date',
-    text: 'Compare Standard, Express and Green rail services and choose an available departure.',
-  },
-  {
-    icon: 'quote',
-    title: 'Generate the quotation',
-    text: 'Review your request and generate a simulated quotation with a booking reference for your exercise.',
+    title: 'Hand off to Click & Cargo',
+    text: 'Download the handoff data for your ERP file: references, legs, prices, dates and train.',
   },
 ];
 
-export default function QuotationPage() {
+const terminal = (id: string) => catalogue.terminals.find((t) => t.id === id)!;
+
+export default function GetAQuotePage() {
   const page = getPage('request-a-quotation');
   return (
     <>
       <PageHero
         page={page}
         image="IMG-032"
-        eyebrow="Simulated quotation"
-        intro="Plan a rail freight shipment and generate a simulated quotation as part of a Port Virtual Lab exercise."
-      >
-        <div className="mt-8 flex flex-wrap gap-3">
-          <ButtonLink href={page.sourceUrl} external icon="lock">
-            Enter your PVL PIN code
-          </ButtonLink>
-          <ButtonLink href="#departures" variant="ghost-light" icon="clock">
-            See departures
-          </ButtonLink>
-        </div>
-      </PageHero>
+        eyebrow="Intermodal quotation"
+        intro="Your team acts as the freight forwarder. SDG Railway, the intermodal carrier, quotes the whole chain: road legs, terminals and the train."
+      />
 
-      <Section eyebrow="How it works" title="From PIN code to quotation in four steps">
-        <ol className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((s, i) => (
+      <Section className="print:hidden">
+        <ol className="grid gap-4 md:grid-cols-4">
+          {FLOW.map((s, i) => (
             <li
               key={s.title}
-              className="relative rounded-2xl bg-white p-6 shadow-sm ring-1 ring-neutral-200"
+              className="relative rounded-2xl bg-white p-5 shadow-sm ring-1 ring-neutral-200"
             >
               <span
-                className="font-display text-railway-green-100 absolute top-5 right-5 text-4xl font-bold"
+                className="font-display text-railway-green-100 absolute top-4 right-4 text-3xl font-bold"
                 aria-hidden="true"
               >
                 {i + 1}
               </span>
-              <span className="bg-railway-green-700 inline-flex size-12 items-center justify-center rounded-xl text-white">
+              <span className="bg-railway-blue-900 inline-flex size-11 items-center justify-center rounded-xl text-white">
                 <Icon name={s.icon} />
               </span>
-              <h3 className="text-railway-blue-900 mt-4 text-lg font-bold">
+              <h2 className="text-railway-blue-900 mt-3 font-bold">
                 <span className="sr-only">Step {i + 1}: </span>
                 {s.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-neutral-600">{s.text}</p>
+              </h2>
+              <p className="mt-1 text-sm leading-relaxed text-neutral-600">{s.text}</p>
             </li>
           ))}
         </ol>
-        <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <Callout title="Where your request goes">
-            The PIN check and the quotation simulator run on Google Apps Script, provided by Escola
-            Europea. Pricing comes from the simulation and has no commercial validity. The simulator
-            asks for a company, contact name and email for the exercise: use the details your
-            trainer tells you to.
-          </Callout>
-          <Callout title="Moving to the new site" tone="info">
-            The quotation workflow still opens on the original SDG Railway site while it is being
-            integrated into this website.
-          </Callout>
-        </div>
       </Section>
 
-      <Section tone="muted" eyebrow="Services" title="Choose your rail service">
-        <ul className="grid gap-5 md:grid-cols-3">
-          {RAIL_SERVICES.map((s) => (
-            <li key={s.id} className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-neutral-200">
-              <p className="font-mono text-xs font-semibold text-neutral-600">{s.id}</p>
-              <h3 className="text-railway-blue-900 mt-1 text-xl font-bold">{s.name}</h3>
-              <p className="text-railway-green-700 text-sm">{s.trainName}</p>
-              <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
-                <div>
-                  <dt className="text-neutral-600">Average speed</dt>
-                  <dd className="text-railway-blue-900 font-semibold">{s.speedKmh} km/h</dd>
-                </div>
-                <div>
-                  <dt className="text-neutral-600">Departure</dt>
-                  <dd className="text-railway-blue-900 font-semibold">{s.time}</dd>
-                </div>
-                <div className="col-span-2">
-                  <dt className="text-neutral-600">Operating days</dt>
-                  <dd className="text-railway-blue-900 font-semibold">{s.days.join(' · ')}</dd>
-                </div>
-                <div className="col-span-2">
-                  <dt className="text-neutral-600">Dangerous goods</dt>
-                  <dd className="text-railway-blue-900 font-semibold">
-                    {s.dangerousGoods ? 'Accepted' : 'Not accepted'}
-                  </dd>
-                </div>
-              </dl>
-            </li>
-          ))}
-        </ul>
+      <Section tone="muted" id="quote-form">
+        <Suspense fallback={<p className="text-neutral-600">Loading the quotation form…</p>}>
+          <QuoteForm />
+        </Suspense>
       </Section>
 
       <Section
-        id="departures"
-        eyebrow="Departures board"
-        title="Scenario departures for the next 7 days"
+        id="lanes"
+        eyebrow={`Test catalogue ${catalogue.version}`}
+        title="Lanes you can quote"
+        intro="Only these approved lanes are quoted. Any other route returns “route not covered” instead of a made-up offer."
+        className="print:hidden"
       >
-        <DeparturesBoard />
+        <div
+          className="overflow-x-auto rounded-2xl ring-1 ring-neutral-200"
+          tabIndex={0}
+          role="region"
+          aria-label="Covered lanes table"
+        >
+          <table className="w-full min-w-[44rem] text-left text-sm">
+            <caption className="sr-only">Lanes covered by the test catalogue</caption>
+            <thead className="bg-railway-blue-900 text-white">
+              <tr>
+                <th scope="col" className="px-4 py-3">
+                  Lane
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  Terminals
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  Train
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  Departures
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  Loading units
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-neutral-200 bg-white">
+              {catalogue.lanes.map((l) => (
+                <tr key={l.id}>
+                  <th
+                    scope="row"
+                    className="text-railway-blue-900 px-4 py-3 font-mono font-semibold"
+                  >
+                    {l.id}
+                    {l.teaching && (
+                      <span className="bg-notice-bg text-notice-text ml-2 rounded-full px-2 py-0.5 font-sans text-xs">
+                        teaching case
+                      </span>
+                    )}
+                  </th>
+                  <td className="px-4 py-3">
+                    {terminal(l.from).city} → {terminal(l.to).city}
+                  </td>
+                  <td className="px-4 py-3">{l.train.id}</td>
+                  <td className="px-4 py-3">
+                    {l.train.days.map(dayName).join(', ')} {l.train.departure}
+                  </td>
+                  <td className="px-4 py-3">{l.acceptedItus.join(', ')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 text-sm text-neutral-600">
+          Door collection and delivery areas with Play Haulier road legs:{' '}
+          {catalogue.doors.map((d) => d.label).join('; ')}.
+        </p>
+        <div className="mt-8 grid gap-6 lg:grid-cols-2">
+          <Callout title="Simulated prices">
+            All amounts, trains and capacities come from the versioned DEMO test catalogue{' '}
+            {catalogue.version}, valid {catalogue.validFrom} to {catalogue.validTo}. They are for
+            teaching only and are not a commercial tariff.
+          </Callout>
+          <Callout title="Where your quotes are kept" tone="info">
+            In this prototype, quotes and bookings are saved in this browser only. In the final
+            version they are recorded by SDG Railway’s back end, so trainers can see every
+            operation.
+          </Callout>
+        </div>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <ButtonLink href="/my-quotes/" variant="secondary">
+            My quotes and bookings
+          </ButtonLink>
+          <ButtonLink href="/teaching-help/" variant="secondary">
+            Worked example and help
+          </ButtonLink>
+        </div>
       </Section>
     </>
   );
