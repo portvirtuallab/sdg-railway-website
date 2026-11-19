@@ -16,14 +16,15 @@ preserving its page hierarchy, content, images and learning workflows.
 
 ## Status
 
-| Phase                                                           | State                                      |
-| --------------------------------------------------------------- | ------------------------------------------ |
-| 1. Audit, repository, documentation, CI                         | Done ([audit](docs/audit/README.md))       |
-| 2. Brand tokens, components, header/footer                      | Skeleton in place; tokens provisional      |
-| 3. Page content migration                                       | Not started; pages link to their originals |
-| 4–8. Data, search, quotation, verification, preview, production | Not started                                |
+| Phase                                                                           | State                                                                               |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 1. Audit, repository, documentation, CI                                         | Done ([audit](docs/audit/README.md))                                                |
+| 2–3. Design system and page migration                                           | Done: all 13 source pages migrated with their images                                |
+| Intermodal quotation prototype (brief of 19 November 2026)                      | Prototype on test data ([product docs](docs/product/README.md))                     |
+| Back end (Apps Script + Google Sheet), real rates and trains, production domain | Pending owner input ([outstanding data](docs/product/outstanding-business-data.md)) |
 
-Owner input needed: see [docs/audit/verification-log.md](docs/audit/verification-log.md).
+Owner input needed: see [docs/audit/verification-log.md](docs/audit/verification-log.md) and
+[docs/product/outstanding-business-data.md](docs/product/outstanding-business-data.md).
 
 ## Relationship with PVL.ONE and Escola Europea
 

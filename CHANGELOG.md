@@ -7,6 +7,16 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- Intermodal quotation prototype (brief of 19 November 2026): Get a quote form with RWQ quotes,
+  prices by leg, scope, validity and train; acceptance into RWB bookings with assigned or pending
+  train; My quotes and bookings with terminal orders, print/PDF and Click & Cargo handoff (JSON).
+- Versioned DEMO test catalogue (lanes, trains, rates, road legs, ITUs, teams) and its generator.
+- New pages: How it works, My quotes and bookings, Teaching help (worked example, common errors,
+  trainer notes).
+- Network and trains: train table and departures from the catalogue; terminal directory moved here.
+- Equipment and cargo hub with ITU compatibility by train.
+- Product documentation: page and component map, data model and ERP mapping, acceptance
+  criteria, outstanding business data, Port Railway migration plan.
 - Source site audit: page inventory and migration map, embedded tools (including the Apps Script
   quotation simulator), verification log, image asset register, raw page sources and the network
   map export.
