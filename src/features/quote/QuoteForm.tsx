@@ -247,6 +247,7 @@ export function QuoteForm() {
   const [busy, setBusy] = useState<string | null>(null);
   const [result, setResult] = useState<Quote | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | undefined>(undefined);
+  const [isExample, setIsExample] = useState(false);
   const [booking, setBooking] = useState<Booking | null>(null);
   const [acceptMsg, setAcceptMsg] = useState<string | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -337,6 +338,7 @@ export function QuoteForm() {
     setErrors([]);
     setResult(res.quote);
     setPdfUrl(res.pdfUrl);
+    setIsExample(!!res.example);
     setBooking(null);
     focusTop();
   }
@@ -366,17 +368,25 @@ export function QuoteForm() {
           tabIndex={-1}
           className="text-railway-blue-900 text-2xl font-bold outline-none sm:text-3xl"
         >
-          {booking
-            ? booking.status === 'confirmed'
-              ? 'Booking confirmed'
-              : 'Booking created – train pending'
-            : 'Your quotation'}
+          {isExample
+            ? 'Example quotation (not saved)'
+            : booking
+              ? booking.status === 'confirmed'
+                ? 'Booking confirmed'
+                : 'Booking created – train pending'
+              : 'Your quotation'}
         </h2>
         <div
           role="status"
-          className="bg-railway-green-100 text-railway-green-700 mt-3 rounded-xl p-4 text-sm"
+          className={`mt-3 rounded-xl p-4 text-sm ${isExample ? 'border-notice-border bg-notice-bg text-notice-text border-l-4' : 'bg-railway-green-100 text-railway-green-700'}`}
         >
-          {booking ? (
+          {isExample ? (
+            <>
+              <strong>The access code {result.request.pin} is not in the SDG Railway list.</strong>{' '}
+              This is only an example of the offer: it has no reference, is not recorded and cannot
+              be accepted. Ask your trainer for your team’s code to issue a real quotation.
+            </>
+          ) : booking ? (
             <>
               Booking <strong className="font-mono">{booking.ref}</strong> is linked to quote{' '}
               <strong className="font-mono">{result.ref}</strong> v{result.version}.{' '}
@@ -415,7 +425,7 @@ export function QuoteForm() {
           </p>
         )}
         <div className="mt-6 flex flex-wrap gap-3 print:hidden">
-          {!booking && (
+          {!booking && !isExample && (
             <button
               type="button"
               onClick={accept}
@@ -425,12 +435,14 @@ export function QuoteForm() {
               <Icon name="check" className="size-4" /> Accept quote and book capacity
             </button>
           )}
-          <Link
-            href={`/my-quotes/?pin=${encodeURIComponent(result.request.pin)}&ref=${encodeURIComponent(result.ref)}&v=${result.version}`}
-            className="border-railway-blue-900/20 text-railway-blue-900 inline-flex min-h-11 items-center gap-2 rounded-lg border bg-white px-5 font-semibold"
-          >
-            Open in My quotes and bookings
-          </Link>
+          {!isExample && (
+            <Link
+              href={`/my-quotes/?pin=${encodeURIComponent(result.request.pin)}&ref=${encodeURIComponent(result.ref)}&v=${result.version}`}
+              className="border-railway-blue-900/20 text-railway-blue-900 inline-flex min-h-11 items-center gap-2 rounded-lg border bg-white px-5 font-semibold"
+            >
+              Open in My quotes and bookings
+            </Link>
+          )}
           <button
             type="button"
             onClick={() => window.print()}
@@ -541,12 +553,12 @@ export function QuoteForm() {
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             <div className="grid gap-1.5">
               <label htmlFor="f-pin" className={label}>
-                Team PIN
+                Access code
               </label>
               <input
                 id="f-pin"
-                inputMode="numeric"
-                maxLength={4}
+                maxLength={32}
+                autoCapitalize="characters"
                 autoComplete="off"
                 className={input}
                 value={f.pin}
@@ -555,7 +567,8 @@ export function QuoteForm() {
                 aria-describedby="h-pin"
               />
               <span id="h-pin" className="text-sm text-neutral-600">
-                The 4-digit PVL PIN of your team, from your trainer.
+                Your team’s PVL access code, from your trainer. Without a valid code you only see an
+                example.
               </span>
             </div>
             <div className="grid gap-1.5">
@@ -1038,7 +1051,7 @@ export function QuoteForm() {
             </fieldset>
             <dl className="mt-6 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
               {[
-                ['Team PIN', f.pin],
+                ['Access code', f.pin],
                 ['Requested by', f.requester],
                 ['Shipper → consignee', `${f.shipper} → ${f.consignee}`],
                 ['Incoterm', f.incoterm],

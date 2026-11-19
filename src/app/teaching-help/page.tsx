@@ -70,9 +70,9 @@ const STEPS = [
 
 const ERRORS = [
   [
-    'Invalid PIN',
-    'The PIN is not in the TEAMS tab of the SDG Railway Sheet, or the team is inactive.',
-    'Check the 4-digit PIN with your trainer.',
+    'Example quotation (not saved)',
+    'The access code is not in the ACCESS_CODES tab of the SDG Railway Sheet, or it is inactive.',
+    'Check the code with your trainer: with a valid code the quote gets a reference and is recorded.',
   ],
   [
     'Route not covered',
@@ -322,20 +322,20 @@ export default function TeachingHelpPage() {
             </summary>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
               <li>
-                Check the TEAMS tab of the SDG Railway Sheet: one active row (with a PIN) per team,
-                and a trainer row.
+                Check the ACCESS_CODES tab of the SDG Railway Sheet: one active row (with a code)
+                per team, and a trainer row.
               </li>
               <li>
-                Make the worked example with a team PIN and compare the PDF in the Drive folder with
-                the quote on screen.
+                Make the worked example with a team code and compare the PDF in the Drive folder
+                with the quote on screen.
               </li>
               <li>
                 Check that the booking reference and the train reach the student and the ERP file,
                 with no duplicate terminal charges.
               </li>
               <li>
-                A PIN with Role “trainer” in the TEAMS tab shows every team’s quotes in My quotes.
-                Every operation is also in QUOTE_LOG, BOOKINGS and HISTORY.
+                A code with Role “trainer” in the ACCESS_CODES tab shows every team’s quotes in My
+                quotes. Every operation is also in QUOTE_LOG, BOOKINGS and HISTORY.
               </li>
             </ul>
           </details>

@@ -21,21 +21,21 @@ Google Sheet (master data + register) ──► Apps Script web app (Code.gs + E
 
 ## Master data (Sheet tabs read by `buildCatalogue`)
 
-| Tab                   | Key columns                                                                                                | Used for                                                        |
-| --------------------- | ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| `CONFIG`              | `Parameter`, `Value`                                                                                       | Currency, VAT, insurance, validity, prefixes, cut-off, capacity |
-| `COUNTRIES`           | `CountryCode`, `CountryName`, `Status`                                                                     | Only `Active` countries can be chosen                           |
-| `TERMINALS`           | `TerminalID`, `TerminalName`, `City`, `CountryCode`, `TerminalType`, `DGCapable`, `Active`                 | Directory, routing, DG routing                                  |
-| `COUNTRY_CONNECTIONS` | `FromCountry`, `ToCountry`, `Active`                                                                       | Borders a route may cross                                       |
-| `LINKS`               | `LinkID`, `FromTerminalID`, `ToTerminalID`, `DistanceKm`, `TimeMin`, `Active`, `CorridorTag`               | Route graph (Dijkstra, shortest distance or time); corridors    |
-| `SERVICES`            | `ServiceID`, `ServiceName`, `ServiceLevel`, `SpeedKmH`, `DGAllowed`, `Active`                              | Services compared in the quote                                  |
-| `SCHEDULES`           | `ServiceID` (optionally `ID:ES→FR`), `DepartureDays`, `DepartureTime`, `BlockedDates`, `SlotsPerDeparture` | Departures, blocked days, capacity                              |
-| `UTI_TYPES`           | `UTICode`, `UTIName`, `Category`, `MaxGrossKg`, `VolumeM3`                                                 | Loading units, weight and volume checks, reefer                 |
-| `ADR_CLASSES`         | `ClassCode`, `ClassName`                                                                                   | Dangerous goods classes offered                                 |
-| `TARIFFS`             | `ServiceID`, `UTIType`, `FixedFee`, `RatePerKm`, `MinCharge`, `Active`                                     | Rail freight = max(fixed + km × rate, minimum) × units          |
-| `SURCHARGES`          | `SurchargeCode`, `Label`, `AmountType`, `Amount`, `Rule`, `ApplyPer`, `Active`                             | Rule-based surcharges (DG, border, long haul, terminal…)        |
-| `ROAD_LEGS`           | `PlaceID`, `PlaceName`, `CountryCode`, `TerminalID`, `DistanceKm`, `Price`, `TransitHours`                 | Play Haulier first and last mile (door ↔ terminal)              |
-| `TEAMS` (private)     | `PIN`, `TeamName`, `Role`, `Active`                                                                        | PIN check on every call; trainer role sees all teams            |
+| Tab                      | Key columns                                                                                                | Used for                                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `CONFIG`                 | `Parameter`, `Value`                                                                                       | Currency, VAT, insurance, validity, prefixes, cut-off, capacity                          |
+| `COUNTRIES`              | `CountryCode`, `CountryName`, `Status`                                                                     | Only `Active` countries can be chosen                                                    |
+| `TERMINALS`              | `TerminalID`, `TerminalName`, `City`, `CountryCode`, `TerminalType`, `DGCapable`, `Active`                 | Directory, routing, DG routing                                                           |
+| `COUNTRY_CONNECTIONS`    | `FromCountry`, `ToCountry`, `Active`                                                                       | Borders a route may cross                                                                |
+| `LINKS`                  | `LinkID`, `FromTerminalID`, `ToTerminalID`, `DistanceKm`, `TimeMin`, `Active`, `CorridorTag`               | Route graph (Dijkstra, shortest distance or time); corridors                             |
+| `SERVICES`               | `ServiceID`, `ServiceName`, `ServiceLevel`, `SpeedKmH`, `DGAllowed`, `Active`                              | Services compared in the quote                                                           |
+| `SCHEDULES`              | `ServiceID` (optionally `ID:ES→FR`), `DepartureDays`, `DepartureTime`, `BlockedDates`, `SlotsPerDeparture` | Departures, blocked days, capacity                                                       |
+| `UTI_TYPES`              | `UTICode`, `UTIName`, `Category`, `MaxGrossKg`, `VolumeM3`                                                 | Loading units, weight and volume checks, reefer                                          |
+| `ADR_CLASSES`            | `ClassCode`, `ClassName`                                                                                   | Dangerous goods classes offered                                                          |
+| `TARIFFS`                | `ServiceID`, `UTIType`, `FixedFee`, `RatePerKm`, `MinCharge`, `Active`                                     | Rail freight = max(fixed + km × rate, minimum) × units                                   |
+| `SURCHARGES`             | `SurchargeCode`, `Label`, `AmountType`, `Amount`, `Rule`, `ApplyPer`, `Active`                             | Rule-based surcharges (DG, border, long haul, terminal…)                                 |
+| `ROAD_LEGS`              | `PlaceID`, `PlaceName`, `CountryCode`, `TerminalID`, `DistanceKm`, `Price`, `TransitHours`                 | Play Haulier first and last mile (door ↔ terminal)                                       |
+| `ACCESS_CODES` (private) | `Code`, `Team`, `Role`, `Active`                                                                           | Code check on every call (unknown code: example quote only); trainer role sees all teams |
 
 ## Register (written by the service)
 
@@ -83,16 +83,16 @@ confirmed train.
 
 ## Web app API (`apps-script/src/Code.gs`)
 
-| Call                      | Input                       | Output                                                  |
-| ------------------------- | --------------------------- | ------------------------------------------------------- |
-| `GET ?action=catalogue`   | –                           | Public tabs (no `TEAMS`, no `PdfFolderId`, no register) |
-| `GET ?action=health`      | –                           | `{ ok, version }`                                       |
-| `POST {action:'options'}` | Request                     | Price and first train per service (not recorded)        |
-| `POST {action:'quote'}`   | Request (+ `requote.ref`)   | Quote and PDF link, or errors                           |
-| `POST {action:'accept'}`  | `pin`, `ref`, `version`     | Booking, accepted quote, handoff                        |
-| `POST {action:'orders'}`  | `pin`, `bookingRef`, orders | `{ ok }`                                                |
-| `POST {action:'list'}`    | `pin`                       | Team, quotes and bookings (all teams for a trainer PIN) |
+| Call                      | Input                       | Output                                                         |
+| ------------------------- | --------------------------- | -------------------------------------------------------------- |
+| `GET ?action=catalogue`   | –                           | Public tabs (no `ACCESS_CODES`, no `PdfFolderId`, no register) |
+| `GET ?action=health`      | –                           | `{ ok, version }`                                              |
+| `POST {action:'options'}` | Request                     | Price and first train per service (not recorded)               |
+| `POST {action:'quote'}`   | Request (+ `requote.ref`)   | Quote and PDF link, or errors                                  |
+| `POST {action:'accept'}`  | `pin`, `ref`, `version`     | Booking, accepted quote, handoff                               |
+| `POST {action:'orders'}`  | `pin`, `bookingRef`, orders | `{ ok }`                                                       |
+| `POST {action:'list'}`    | `pin`                       | Team, quotes and bookings (all teams for a trainer code)       |
 
 POST bodies are sent as `text/plain` JSON so browsers make a simple request (Apps Script does not
-answer CORS preflights). The PIN is checked against `TEAMS` on every call that reads or writes
+answer CORS preflights). The access code (`pin` in the API) is checked against `ACCESS_CODES` on every call that reads or writes
 team data.

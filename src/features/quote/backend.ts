@@ -5,6 +5,9 @@ import {
   buildHandoff,
   buildQuote,
   effectiveStatus,
+  EXAMPLE_REF,
+  isCodeFormat,
+  normaliseCode,
   serviceOptions,
   type Booking,
   type CapacityUsage,
@@ -16,6 +19,7 @@ import {
   type ServiceOption,
   type TerminalOrders,
 } from '@/engine';
+import seed from '../../../apps-script/seed/v8-seed.json';
 import { API_URL } from './catalogue-client';
 
 /**
@@ -26,7 +30,8 @@ import { API_URL } from './catalogue-client';
  *   local development and tests, or before the web app is deployed.
  */
 export type Failure = { errors: QuoteError[] };
-export type QuoteResult = { quote: Quote; pdfUrl?: string } | Failure;
+/** example: the access code is not in the list, so the quote is shown but not recorded. */
+export type QuoteResult = { quote: Quote; pdfUrl?: string; example?: boolean } | Failure;
 export type AcceptResult = { quote: Quote; booking: Booking; handoff: Handoff } | Failure;
 export interface TeamData {
   team: { name: string; role: string };
@@ -100,8 +105,14 @@ interface DemoState {
 }
 export const DEMO_KEY = 'sdg-railway.demo-store.v8';
 const EMPTY: DemoState = { schema: 8, quoteSeq: 0, bookingSeq: 0, quotes: [], bookings: [] };
-/** In demo mode any 4-digit PIN is a team; this one sees every team, like the trainer. */
-export const DEMO_TRAINER_PIN = '9000';
+/** Demo mode uses the example rows of ACCESS_CODES that Set up v8 adds to the Sheet. */
+const DEMO_CODES = new Map(
+  seed.newTabs.ACCESS_CODES.rows.map((r) => [
+    normaliseCode(String(r[0])),
+    { name: `${String(r[1])} (demo)`, role: String(r[4]) },
+  ]),
+);
+const CODE_ERROR = 'This access code is not in the SDG Railway list. Check it with your trainer.';
 
 function readDemo(): DemoState {
   try {
@@ -131,8 +142,8 @@ function usage(s: DemoState): CapacityUsage {
   return u;
 }
 
-const demoTeam = (pin: string) =>
-  pin === DEMO_TRAINER_PIN ? 'Trainer (demo)' : `Demo team ${pin}`;
+const demoTeam = (pin: string) => DEMO_CODES.get(normaliseCode(pin)) ?? null;
+const isTrainer = (pin: string) => demoTeam(pin)?.role === 'trainer';
 const ref = (prefix: string, n: number) => `${prefix}${String(n).padStart(8, '0')}`;
 
 const demo: Backend = {
@@ -141,6 +152,19 @@ const demo: Backend = {
     return serviceOptions(cat, req, usage(readDemo()));
   },
   async quote(cat, req, requoteRef) {
+    const team = demoTeam(req.pin);
+    if (!team) {
+      if (requoteRef) return fail(CODE_ERROR, 'pin');
+      const r = buildQuote(cat, req, {
+        ref: EXAMPLE_REF,
+        version: 1,
+        now: new Date(),
+        usage: usage(readDemo()),
+        team: 'Example – no valid access code',
+      });
+      return r.ok ? { quote: r.quote, example: true } : { errors: r.errors };
+    }
+    req = { ...req, pin: normaliseCode(req.pin) };
     const s = readDemo();
     const prev = requoteRef ? s.quotes.filter((q) => q.ref === requoteRef) : [];
     if (requoteRef && !prev.length) return fail(`Quote ${requoteRef} was not found.`);
@@ -150,7 +174,7 @@ const demo: Backend = {
       version: prev.length ? Math.max(...prev.map((q) => q.version)) + 1 : 1,
       now: new Date(),
       usage: usage(s),
-      team: demoTeam(req.pin),
+      team: team.name,
     });
     if (!r.ok) return { errors: r.errors };
     const quotes = s.quotes.map((q) =>
@@ -160,9 +184,10 @@ const demo: Backend = {
     return { quote: r.quote };
   },
   async accept(cat, pin, quoteRef, version) {
+    if (!demoTeam(pin)) return fail(CODE_ERROR, 'pin');
     const s = readDemo();
     const quote = s.quotes.find((q) => q.ref === quoteRef && q.version === version);
-    if (!quote || (quote.request.pin !== pin && pin !== DEMO_TRAINER_PIN))
+    if (!quote || (quote.request.pin !== normaliseCode(pin) && !isTrainer(pin)))
       return fail(`Quote ${quoteRef} v${version} was not found for this team.`);
     try {
       const bookingSeq = s.bookingSeq + 1;
@@ -184,6 +209,7 @@ const demo: Backend = {
     }
   },
   async orders(pin, bookingRef, orders) {
+    if (!demoTeam(pin)) return fail(CODE_ERROR, 'pin');
     const s = readDemo();
     writeDemo({
       ...s,
@@ -194,15 +220,17 @@ const demo: Backend = {
     return { ok: true };
   },
   async list(pin) {
-    if (!/^\d{4}$/.test(pin)) return fail('Enter your team’s 4-digit PVL PIN.', 'pin');
+    if (!isCodeFormat(pin)) return fail('Enter your PVL access code (from your trainer).', 'pin');
+    const team = demoTeam(pin);
+    if (!team) return fail(CODE_ERROR, 'pin');
     const s = readDemo();
-    const all = pin === DEMO_TRAINER_PIN;
+    const all = team.role === 'trainer';
     const quotes = s.quotes
-      .filter((q) => all || q.request.pin === pin)
+      .filter((q) => all || q.request.pin === normaliseCode(pin))
       .map((q) => ({ ...q, status: effectiveStatus(q, new Date()) }));
     const refs = new Set(quotes.map((q) => `${q.ref}|${q.version}`));
     return {
-      team: { name: demoTeam(pin), role: all ? 'trainer' : 'student' },
+      team: { name: team.name, role: team.role },
       quotes,
       bookings: s.bookings.filter((b) => refs.has(`${b.quoteRef}|${b.quoteVersion}`)),
     };

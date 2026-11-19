@@ -164,10 +164,10 @@ var V8_SEED = {
         ]
       ]
     },
-    "TEAMS": {
+    "ACCESS_CODES": {
       "headers": [
-        "PIN",
-        "TeamName",
+        "Code",
+        "Team",
         "Company",
         "Group",
         "Role",
@@ -182,7 +182,7 @@ var V8_SEED = {
           "B",
           "student",
           true,
-          "Demo team: replace with your class"
+          "Example code: paste your PVL code list in column Code"
         ],
         [
           "1357",
@@ -191,7 +191,7 @@ var V8_SEED = {
           "A",
           "student",
           true,
-          "Demo team: replace with your class"
+          "Example code: paste your PVL code list in column Code"
         ],
         [
           "2468",
@@ -200,7 +200,7 @@ var V8_SEED = {
           "C",
           "student",
           true,
-          "Demo team: replace with your class"
+          "Example code: paste your PVL code list in column Code"
         ],
         [
           "9000",
@@ -209,7 +209,7 @@ var V8_SEED = {
           "",
           "trainer",
           true,
-          "Sees every team’s quotes. Change this PIN"
+          "Sees every team’s quotes. Change this code"
         ]
       ]
     },

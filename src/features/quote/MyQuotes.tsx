@@ -7,6 +7,7 @@ import { Icon } from '@/components/ui/Icon';
 import {
   buildHandoff,
   effectiveStatus,
+  isCodeFormat,
   formatDateTime,
   placeName,
   type Booking,
@@ -46,7 +47,7 @@ export function MyQuotes() {
 
   const team = data?.team;
 
-  // Load the team's quotes from the register whenever the PIN changes.
+  // Load the team's quotes from the register whenever the access code changes.
   useEffect(() => {
     if (!pin) return;
     let cancelled = false;
@@ -74,8 +75,8 @@ export function MyQuotes() {
   function openTeam(e: React.FormEvent) {
     e.preventDefault();
     const next = pinInput.trim();
-    if (!/^\d{4}$/.test(next)) {
-      setPinError('Enter your team’s 4-digit PVL PIN.');
+    if (!isCodeFormat(next)) {
+      setPinError('Enter your PVL access code (from your trainer).');
       return;
     }
     setSelected(null);
@@ -97,12 +98,12 @@ export function MyQuotes() {
       >
         <div className="grid gap-1.5">
           <label htmlFor="mq-pin" className="text-railway-blue-900 text-sm font-semibold">
-            Team PIN
+            Access code
           </label>
           <input
             id="mq-pin"
-            inputMode="numeric"
-            maxLength={4}
+            maxLength={32}
+            autoCapitalize="characters"
             autoComplete="off"
             className={`${input} w-40`}
             value={pinInput}

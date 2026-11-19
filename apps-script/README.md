@@ -50,7 +50,7 @@ Do it with the account that **owns** the Sheet and the PDF folder.
    - Save.
 4. **Prepare the Sheet.** Reload the Sheet: the **Railway Quoter** menu appears. Run **Set up v8**
    and accept the permissions. It adds:
-   - The tabs `ROAD_LEGS`, `TEAMS`, `BOOKINGS` and `HISTORY`.
+   - The tabs `ROAD_LEGS`, `ACCESS_CODES`, `BOOKINGS` and `HISTORY`.
    - The columns `SlotsPerDeparture`, `MaxGrossKg`, `VolumeM3` and the new `QUOTE_LOG`
      columns.
    - The new `CONFIG` parameters.
@@ -58,8 +58,12 @@ Do it with the account that **owns** the Sheet and the PDF folder.
 
    It never deletes or changes existing rows.
 
-5. **Teams.** In `TEAMS`, replace the example rows with your teams: one row per team, with a
-   4-digit PIN. Rows with `Role` set to `trainer` see every team. **Change the trainer PIN 9000.**
+5. **Access codes.** In `ACCESS_CODES`, paste your general PVL code list into column `Code`
+   (one code per row; `Team` is optional, otherwise the quote shows "Team <code>"). Codes are
+   compared without case or spaces. Only these codes can issue, accept and see quotes; any other
+   code only gets an **example quote**, which is not recorded and cannot be accepted. Set
+   `Active` to FALSE to switch a code off. Rows with `Role` set to `trainer` see every team.
+   **Replace the example codes 4821, 1357, 2468 and the trainer code 9000.**
 6. **Publish the web app.** In Apps Script: **Deploy → New deployment → Web app**, with
    _Execute as: Me_ and _Who has access: Anyone_. Copy the URL, which ends in `/exec`.
 7. **Connect the website.** In GitHub, open `portvirtuallab/sdg-railway-website` → **Settings →
@@ -74,9 +78,9 @@ New version** so the URL stays the same.
 ## Checking that it works
 
 - `<URL>?action=health` answers `{"ok":true,"version":"v8"}`.
-- `<URL>?action=catalogue` returns the public tabs. It never includes `TEAMS`, `PdfFolderId` or
+- `<URL>?action=catalogue` returns the public tabs. It never includes `ACCESS_CODES`, `PdfFolderId` or
   the logs.
-- Make the worked example on the website with a team's PIN. Then check:
+- Make the worked example on the website with a team's access code. Then check:
   - A new `ISSUED` row in `QUOTE_LOG`.
   - A new PDF in the folder.
   - A `QUOTE` row in `HISTORY`.
@@ -100,7 +104,7 @@ New version** so the URL stays the same.
 | `TARIFFS`             | Trainer                           | Fixed fee + rate per km + minimum, per service and unit            |
 | `SURCHARGES`          | Trainer                           | Surcharges with rules (`DG=YES`, `ORIGIN_COUNTRY=ES`, …)           |
 | `ROAD_LEGS`           | Trainer                           | Play Haulier: door ↔ terminal, km, price, hours                    |
-| `TEAMS`               | Trainer                           | PIN and name of each team; trainer role                            |
+| `ACCESS_CODES`        | Trainer                           | PVL access codes (optional team name); trainer role                |
 | `QUOTE_LOG`           | **Service** (do not edit by hand) | One row per quote version; the full quote is in `BreakdownJSON`    |
 | `BOOKINGS`            | **Service**                       | Bookings, the train assigned and terminal orders                   |
 | `HISTORY`             | **Service**                       | Who did what and when                                              |

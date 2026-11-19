@@ -7,6 +7,18 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- Access codes: the ACCESS_CODES tab of the Sheet holds the PVL code list. Valid codes issue,
+  accept and list quotes; any other code only gets an example quote (not recorded, no PDF, cannot
+  be accepted). Replaces the TEAMS tab and the 4-digit PIN.
+- More visible Port Virtual Lab branding: “PVL powered by Escola Europea” in the top bar of every
+  page, the home hero and the footer.
+
+### Changed
+
+- Railway Equipment Fleet: the “Technical data under review” notice is removed (the data stays).
+
+### Added (Sheet back end)
+
 - Google Sheet back end (v8): one quotation engine (`src/engine`) shared by the website and the
   Apps Script service (`apps-script/`). Prices replay the v7 Apps Script exactly (100 logged
   quotes since 13 May 2026 match to the cent). The service records quotes, versions, bookings and

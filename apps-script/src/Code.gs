@@ -10,7 +10,10 @@
  *   POST {action:'quote', request, requote?}   issue a quote or a new version  → QUOTE_LOG + PDF
  *   POST {action:'accept', pin, ref, version}  accept a quote                  → BOOKINGS
  *   POST {action:'orders', pin, bookingRef, orders}  terminal delivery/collection orders
- *   POST {action:'list', pin}         the team's quotes and bookings (trainer PIN: all)
+ *   POST {action:'list', pin}         the team's quotes and bookings (trainer code: all)
+ *
+ * "pin" is the team's access code, checked against the ACCESS_CODES tab. A quote request with a
+ * code that is not in the list gets an example quote (reference EXAMPLE) that is not recorded.
  *
  * POST bodies are sent as text/plain JSON so browsers do not need a CORS preflight.
  */
@@ -18,7 +21,7 @@
 var V8 = {
   TAB_LOG: 'QUOTE_LOG',
   TAB_BOOKINGS: 'BOOKINGS',
-  TAB_TEAMS: 'TEAMS',
+  TAB_CODES: 'ACCESS_CODES',
   TAB_HISTORY: 'HISTORY',
   CACHE_KEY: 'v8_catalogue',
 };
@@ -83,12 +86,20 @@ function apiQuote_(body) {
   var cat = catalogue_();
   var req = body.request;
   var team = teamByPin_(req && req.pin);
-  if (!team)
-    throw userError_(
-      'This PIN does not belong to any active team. Check it with your trainer.',
-      'pin',
-    );
+  if (!team) {
+    if (body.requote) throw userError_(CODE_ERROR, 'pin');
+    // Unknown code: show what the offer would look like, but record nothing.
+    var example = RailEngine.buildQuote(cat, req, {
+      ref: RailEngine.EXAMPLE_REF,
+      version: 1,
+      now: new Date(),
+      usage: capacityUsage_(),
+      team: 'Example – no valid access code',
+    });
+    return example.ok ? { quote: example.quote, example: true } : { errors: example.errors };
+  }
 
+  req.pin = team.pin;
   var lock = LockService.getScriptLock();
   lock.waitLock(30000);
   try {
@@ -96,7 +107,10 @@ function apiQuote_(body) {
     var ref, version;
     if (body.requote) {
       var prev = findQuote_(body.requote.ref, null);
-      if (!prev || (prev.quote.request.pin !== team.pin && team.role !== 'trainer'))
+      if (
+        !prev ||
+        (RailEngine.normaliseCode(prev.quote.request.pin) !== team.pin && team.role !== 'trainer')
+      )
         throw userError_('Quote ' + body.requote.ref + ' was not found for this team.');
       ref = prev.quote.ref;
       version = maxVersion_(ref) + 1;
@@ -127,12 +141,15 @@ function apiQuote_(body) {
 function apiAccept_(body) {
   var cat = catalogue_();
   var team = teamByPin_(body.pin);
-  if (!team) throw userError_('This PIN does not belong to any active team.', 'pin');
+  if (!team) throw userError_(CODE_ERROR, 'pin');
   var lock = LockService.getScriptLock();
   lock.waitLock(30000);
   try {
     var found = findQuote_(body.ref, body.version);
-    if (!found || (found.quote.request.pin !== team.pin && team.role !== 'trainer'))
+    if (
+      !found ||
+      (RailEngine.normaliseCode(found.quote.request.pin) !== team.pin && team.role !== 'trainer')
+    )
       throw userError_('Quote ' + body.ref + ' v' + body.version + ' was not found for this team.');
     var quote = found.quote;
     quote.status =
@@ -163,13 +180,17 @@ function apiAccept_(body) {
 
 function apiOrders_(body) {
   var team = teamByPin_(body.pin);
-  if (!team) throw userError_('This PIN does not belong to any active team.', 'pin');
+  if (!team) throw userError_(CODE_ERROR, 'pin');
   var sheet = sheet_(V8.TAB_BOOKINGS);
   var data = sheet.getDataRange().getValues();
   var h = headerIndex_(data[0]);
   for (var r = 1; r < data.length; r++) {
     if (String(data[r][h.BookingRef]) !== String(body.bookingRef)) continue;
-    if (String(data[r][h.TeamPIN]) !== team.pin && team.role !== 'trainer') break;
+    if (
+      RailEngine.normaliseCode(String(data[r][h.TeamPIN])) !== team.pin &&
+      team.role !== 'trainer'
+    )
+      break;
     var o = body.orders || {};
     var set = function (col, v) {
       sheet.getRange(r + 1, h[col] + 1).setValue(String(v || '').slice(0, 80));
@@ -186,17 +207,13 @@ function apiOrders_(body) {
 
 function apiList_(body) {
   var team = teamByPin_(body.pin);
-  if (!team)
-    throw userError_(
-      'This PIN does not belong to any active team. Check it with your trainer.',
-      'pin',
-    );
+  if (!team) throw userError_(CODE_ERROR, 'pin');
   var all = team.role === 'trainer';
   var quotes = readQuotes_().filter(function (q) {
-    return all || q.quote.request.pin === team.pin;
+    return all || RailEngine.normaliseCode(q.quote.request.pin) === team.pin;
   });
   var bookings = readBookings_().filter(function (b) {
-    return all || b.pin === team.pin;
+    return all || RailEngine.normaliseCode(b.pin) === team.pin;
   });
   return {
     team: { name: team.name, role: team.role },
@@ -276,15 +293,19 @@ function headerIndex_(headerRow) {
   return h;
 }
 
+var CODE_ERROR = 'This access code is not in the SDG Railway list. Check it with your trainer.';
+
+/** Team for an access code of the ACCESS_CODES tab (active rows only), or null. */
 function teamByPin_(pin) {
-  if (!/^\d{4}$/.test(String(pin || ''))) return null;
-  var rows = table_(V8.TAB_TEAMS);
+  if (!RailEngine.isCodeFormat(String(pin || ''))) return null;
+  var code = RailEngine.normaliseCode(pin);
+  var rows = table_(V8.TAB_CODES);
   for (var i = 0; i < rows.length; i++) {
     var t = rows[i];
-    if (String(t.PIN).trim() === String(pin) && RailEngine.toBool(t.Active, true))
+    if (RailEngine.normaliseCode(String(t.Code)) === code && RailEngine.toBool(t.Active, true))
       return {
-        pin: String(pin),
-        name: String(t.TeamName || 'Team ' + pin),
+        pin: code,
+        name: String(t.Team || 'Team ' + code),
         role: String(t.Role || 'student').toLowerCase(),
       };
   }

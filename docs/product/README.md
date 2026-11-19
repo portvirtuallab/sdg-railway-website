@@ -42,5 +42,5 @@ runs in **demo mode**: same engine and Sheet snapshot, quotes kept in each brows
 ## Limits
 
 - The Click & Cargo handoff is a JSON download until an API is agreed.
-- The example rows of `ROAD_LEGS` and `TEAMS`, and the `MaxGrossKg`/`VolumeM3` values, must be
+- The example rows of `ROAD_LEGS` and `ACCESS_CODES`, and the `MaxGrossKg`/`VolumeM3` values, must be
   reviewed by the trainers.

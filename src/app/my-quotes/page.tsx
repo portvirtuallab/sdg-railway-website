@@ -13,7 +13,7 @@ export default function MyQuotesPage() {
         page={page}
         image="IMG-034"
         eyebrow="Your operations"
-        intro="Enter your team PIN to see your quotes, accept one, check the assigned train and hand the operation over to Click & Cargo."
+        intro="Enter your team’s access code to see your quotes, accept one, check the assigned train and hand the operation over to Click & Cargo."
       />
       <Section tone="muted">
         <Suspense fallback={<p className="text-neutral-600">Loading…</p>}>
@@ -30,7 +30,7 @@ export default function MyQuotesPage() {
           </Callout>
           <Callout title="Prototype storage">
             Quotes and bookings are kept in this browser only. Another computer, or a cleared
-            browser, will not show them. Use the trainer PIN to see every team’s quotes in this
+            browser, will not show them. Use the trainer code to see every team’s quotes in this
             browser.
           </Callout>
         </div>

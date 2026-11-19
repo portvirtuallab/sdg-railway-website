@@ -85,8 +85,8 @@ function setupV8() {
       'New tab ' + tab + (spec.rows.length ? ' with ' + spec.rows.length + ' example rows' : ''),
     );
   });
-  var teams = ss.getSheetByName('TEAMS');
-  if (teams) teams.getRange('A:A').setNumberFormat('@');
+  var codes = ss.getSheetByName('ACCESS_CODES');
+  if (codes) codes.getRange('A:A').setNumberFormat('@');
 
   clearServerCacheV8();
   var msg = done.length

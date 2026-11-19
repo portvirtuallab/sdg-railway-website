@@ -16,7 +16,7 @@ test.describe('end-to-end quotation journey', () => {
     page,
   }) => {
     await page.goto('/request-a-quotation/?example=1');
-    await expect(page.getByLabel('Team PIN')).toHaveValue('4821');
+    await expect(page.getByLabel('Access code')).toHaveValue('4821');
     await continueTo(page, 'Route and date');
     await expect(page.locator('#f-route')).toContainText(
       'Barcelona → Perpignan → Lyon → Verona → Rome → Civitavecchia',
@@ -76,11 +76,11 @@ test.describe('end-to-end quotation journey', () => {
 
   test('explains errors instead of producing a false offer', async ({ page }) => {
     await page.goto('/request-a-quotation/?example=1');
-    await page.getByLabel('Team PIN').fill('12');
+    await page.getByLabel('Access code').fill('12');
     await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(alert(page)).toContainText('4-digit PVL PIN');
+    await expect(alert(page)).toContainText('Enter your PVL access code');
 
-    await page.getByLabel('Team PIN').fill('4821');
+    await page.getByLabel('Access code').fill('4821');
     await continueTo(page, 'Route and date');
     await page.getByRole('radio', { name: /Terminal: you collect at the terminal/ }).check();
     await page.getByLabel('Terminal').last().selectOption('CAI-TEBBIN');
@@ -98,11 +98,27 @@ test.describe('end-to-end quotation journey', () => {
 
   test('My quotes asks for a team PIN', async ({ page }) => {
     await page.goto('/my-quotes/');
-    await page.getByLabel('Team PIN').fill('11');
+    await page.getByLabel('Access code').fill('11');
     await page.getByRole('button', { name: 'Show quotes' }).click();
-    await expect(alert(page)).toContainText('4-digit PVL PIN');
-    await page.getByLabel('Team PIN').fill('1357');
+    await expect(alert(page)).toContainText('Enter your PVL access code');
+    await page.getByLabel('Access code').fill('1357');
     await page.getByRole('button', { name: 'Show quotes' }).click();
-    await expect(page.getByText('No quotes yet for Demo team 1357 in this browser')).toBeVisible();
+    await expect(
+      page.getByText('No quotes yet for PlayForwarding – Group A (demo) in this browser'),
+    ).toBeVisible();
+  });
+
+  test('a code that is not in the list only gets an example quote', async ({ page }) => {
+    await page.goto('/request-a-quotation/?example=1');
+    await page.getByLabel('Access code').fill('XYZ-999');
+    await continueTo(page, 'Route and date');
+    await continueTo(page, 'Cargo and unit');
+    await continueTo(page, 'Service and review');
+    await page.getByRole('button', { name: 'Get the quotation' }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Example quotation (not saved)' }),
+    ).toBeVisible();
+    await expect(page.locator('.quote-doc')).toContainText('Example – not a valid offer');
+    await expect(page.getByRole('button', { name: /Accept quote/ })).toHaveCount(0);
   });
 });

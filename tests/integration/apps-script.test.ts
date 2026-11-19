@@ -72,7 +72,7 @@ describe('Apps Script v8 back end', () => {
     const gs = loadAppsScript(dist, ss);
     const first = gs.run('setupV8') as string;
     expect(first).toContain('SURCHARGES: header A1 set to SurchargeCode');
-    expect(first).toContain('New tab TEAMS');
+    expect(first).toContain('New tab ACCESS_CODES');
     expect(ss.sheets.get('SURCHARGES')!.cell(1, 1)).toBe('SurchargeCode');
     expect(ss.sheets.get('LINKS')!.rows.length).toBe(before);
     expect(ss.sheets.get('QUOTE_LOG')!.rows[0]).toContain('TeamPIN');
@@ -105,7 +105,7 @@ describe('Apps Script v8 back end', () => {
     gs.run('setupV8');
     const { tables: pub } = gs.get('catalogue');
     expect(pub.ROAD_LEGS.length).toBe(6);
-    expect(pub.TEAMS).toBeUndefined();
+    expect(pub.ACCESS_CODES).toBeUndefined();
     expect(JSON.stringify(pub.CONFIG)).not.toContain('folder-123');
   });
 
@@ -114,9 +114,15 @@ describe('Apps Script v8 back end', () => {
     const gs = loadAppsScript(dist, ss);
     gs.run('setupV8');
 
-    expect(gs.post({ action: 'quote', request: request({ pin: '1111' }) }).errors[0].field).toBe(
-      'pin',
-    );
+    // A code that is not in ACCESS_CODES gets an example quote that is not recorded.
+    const logRows = ss.sheets.get('QUOTE_LOG')!.rows.length;
+    const ex = gs.post({ action: 'quote', request: request({ pin: 'NOT-IN-LIST' }) });
+    expect(ex.example).toBe(true);
+    expect(ex.quote.ref).toBe('EXAMPLE');
+    expect(ex.pdfUrl).toBeUndefined();
+    expect(ss.sheets.get('QUOTE_LOG')!.rows.length).toBe(logRows);
+    expect(gs.files).toHaveLength(0);
+    expect(gs.post({ action: 'list', pin: 'NOT-IN-LIST' }).errors[0].field).toBe('pin');
 
     const opts = gs.post({ action: 'options', request: request() }).options;
     expect(opts.map((o: { serviceId: string }) => o.serviceId)).toEqual([
@@ -203,5 +209,19 @@ describe('Apps Script v8 back end', () => {
     expect(b.train.status).toBe('proposed');
     expect(b.train.departure > a.train.departure).toBe(true);
     expect(b.ref).not.toBe(a.ref);
+  });
+
+  it('accepts codes pasted from the PVL list, ignoring case and spaces', () => {
+    const ss = freshSheet();
+    const gs = loadAppsScript(dist, ss);
+    gs.run('setupV8');
+    ss.sheets.get('ACCESS_CODES')!.appendRow(['PVL-0042', '', '', '', 'student', true, '']);
+    const q = gs.post({ action: 'quote', request: request({ pin: ' pvl-0042 ' }) });
+    expect(q.example).toBeUndefined();
+    expect(q.quote.team).toBe('Team PVL-0042');
+    expect(ss.sheets.get('QUOTE_LOG')!.objects().at(-1)!.TeamPIN).toBe('PVL-0042');
+    expect(gs.post({ action: 'list', pin: 'PVL-0042' }).quotes).toHaveLength(1);
+    ss.sheets.get('ACCESS_CODES')!.set(ss.sheets.get('ACCESS_CODES')!.getLastRow(), 6, false);
+    expect(gs.post({ action: 'quote', request: request({ pin: 'PVL-0042' }) }).example).toBe(true);
   });
 });

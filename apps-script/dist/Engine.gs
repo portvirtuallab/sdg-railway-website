@@ -764,6 +764,16 @@ var RailEngine = (function(exports) {
 		"DPU",
 		"DDP"
 	];
+	/** Reference of a quote shown as an example (access code not in ACCESS_CODES): never saved. */
+	const EXAMPLE_REF = "EXAMPLE";
+	/** Access codes are compared without spaces and case: " pvl-0042 " is "PVL-0042". */
+	function normaliseCode(code) {
+		return String(code !== null && code !== void 0 ? code : "").trim().toUpperCase();
+	}
+	/** 3 to 32 letters, digits, "-" or "_" (the format of the PVL code list). */
+	function isCodeFormat(code) {
+		return /^[A-Z0-9][A-Z0-9_-]{2,31}$/.test(normaliseCode(code));
+	}
 	function terminalById(cat, id) {
 		return cat.terminals.find((t) => t.id === id);
 	}
@@ -789,7 +799,7 @@ var RailEngine = (function(exports) {
 				message
 			});
 		};
-		need("pin", /^\d{4}$/.test(req.pin), "Enter your team’s 4-digit PVL PIN.");
+		need("pin", isCodeFormat(req.pin), "Enter your PVL access code (from your trainer).");
 		need("requester", req.requester.trim(), "Enter the name of the person requesting the quote.");
 		need("shipper", req.shipper.trim(), "Enter the shipper (from your Click & Cargo case).");
 		need("consignee", req.consignee.trim(), "Enter the consignee (from your Click & Cargo case).");
@@ -1334,6 +1344,7 @@ var RailEngine = (function(exports) {
 			] : []]
 		};
 	}
+	exports.EXAMPLE_REF = EXAMPLE_REF;
 	exports.INCOTERMS = INCOTERMS;
 	exports.PUBLIC_TABS = PUBLIC_TABS;
 	exports.TABS = TABS;
@@ -1358,8 +1369,10 @@ var RailEngine = (function(exports) {
 	exports.findTariff = findTariff;
 	exports.formatDateTime = formatDateTime;
 	exports.fromMs = fromMs;
+	exports.isCodeFormat = isCodeFormat;
 	exports.legLabel = legLabel;
 	exports.localNow = localNow;
+	exports.normaliseCode = normaliseCode;
 	exports.parseScheduleKey = parseScheduleKey;
 	exports.parseTime = parseTime;
 	exports.placeName = placeName;

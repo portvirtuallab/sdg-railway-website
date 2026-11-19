@@ -37,9 +37,18 @@
     "UTI_TYPES": {
       "key": "UTICode",
       "rows": {
-        "CONTAINER-20": { "MaxGrossKg": 28200, "VolumeM3": 33.2 },
-        "CONTAINER-40": { "MaxGrossKg": 26700, "VolumeM3": 67.7 },
-        "REEFER-40": { "MaxGrossKg": 29000, "VolumeM3": 67.5 }
+        "CONTAINER-20": {
+          "MaxGrossKg": 28200,
+          "VolumeM3": 33.2
+        },
+        "CONTAINER-40": {
+          "MaxGrossKg": 26700,
+          "VolumeM3": 67.7
+        },
+        "REEFER-40": {
+          "MaxGrossKg": 29000,
+          "VolumeM3": 67.5
+        }
       }
     }
   },
@@ -132,8 +141,8 @@
         ]
       ]
     },
-    "TEAMS": {
-      "headers": ["PIN", "TeamName", "Company", "Group", "Role", "Active", "Notes"],
+    "ACCESS_CODES": {
+      "headers": ["Code", "Team", "Company", "Group", "Role", "Active", "Notes"],
       "rows": [
         [
           "4821",
@@ -142,7 +151,7 @@
           "B",
           "student",
           true,
-          "Demo team: replace with your class"
+          "Example code: paste your PVL code list in column Code"
         ],
         [
           "1357",
@@ -151,7 +160,7 @@
           "A",
           "student",
           true,
-          "Demo team: replace with your class"
+          "Example code: paste your PVL code list in column Code"
         ],
         [
           "2468",
@@ -160,7 +169,7 @@
           "C",
           "student",
           true,
-          "Demo team: replace with your class"
+          "Example code: paste your PVL code list in column Code"
         ],
         [
           "9000",
@@ -169,7 +178,7 @@
           "",
           "trainer",
           true,
-          "Sees every team’s quotes. Change this PIN"
+          "Sees every team’s quotes. Change this code"
         ]
       ]
     },

@@ -1,5 +1,5 @@
 import { Img, imageUrl } from '@/components/ui/Img';
-import { ButtonLink, Callout, OriginalPageLink, PageHero, Section } from '@/components/ui/layout';
+import { ButtonLink, OriginalPageLink, PageHero, Section } from '@/components/ui/layout';
 import itus from '@/data/itus.json';
 import { getPage, pageMetadata } from '@/lib/page-meta';
 
@@ -94,15 +94,10 @@ export default function FleetPage() {
             </a>
           </div>
           <div>
-            <Callout title="Technical data under review">
-              The vehicle data below is shown exactly as on the original site. Some labels and
-              values appear to be shifted by one row (for example “Fuel tank: Up to 500 kN”), so do
-              not use these figures as verified specifications until they are reviewed.
-            </Callout>
-            <div className="mt-4 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200">
+            <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200">
               <table className="w-full text-left text-sm">
                 <caption className="text-railway-blue-900 border-b border-neutral-200 px-5 py-3 text-left font-semibold">
-                  Vehicle data (source, unverified)
+                  Vehicle data
                 </caption>
                 <tbody className="divide-y divide-neutral-200">
                   {EURODUAL_SOURCE.map(([k, v]) => (

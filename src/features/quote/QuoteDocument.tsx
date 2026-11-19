@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  EXAMPLE_REF,
   formatDateTime,
   legLabel,
   placeName,
@@ -57,8 +58,12 @@ export function QuoteDocument({
           </p>
         </div>
         <div className="text-right">
-          <span className="bg-railway-blue-100 text-railway-blue-900 inline-flex rounded-full px-3 py-1 text-sm font-semibold">
-            {STATUS_LABEL[status] ?? status}
+          <span
+            className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold ${quote.ref === EXAMPLE_REF ? 'bg-notice-bg text-notice-text' : 'bg-railway-blue-100 text-railway-blue-900'}`}
+          >
+            {quote.ref === EXAMPLE_REF
+              ? 'Example – not a valid offer'
+              : (STATUS_LABEL[status] ?? status)}
           </span>
           {booking && (
             <p className="text-railway-blue-900 mt-2 font-mono text-sm font-semibold">

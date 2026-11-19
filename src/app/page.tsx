@@ -86,7 +86,7 @@ export default function HomePage() {
         />
         <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28 lg:py-36">
           <p className="text-railway-green-100 text-sm font-semibold tracking-[0.18em] uppercase">
-            Training environment · Port Virtual Lab
+            Port Virtual Lab · powered by Escola Europea
           </p>
           <h1
             id="hero-title"
@@ -344,7 +344,7 @@ export default function HomePage() {
             </h2>
             <p className="mt-4 text-lg text-neutral-700">
               Plan a shipment from origin to destination terminal, choose the loading unit and the
-              service, and generate a simulated quotation with your PVL PIN code.
+              service, and generate a simulated quotation with your PVL access code.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/request-a-quotation/" icon="quote">

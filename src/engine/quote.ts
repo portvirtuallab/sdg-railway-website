@@ -13,7 +13,23 @@ export type Incoterm = (typeof INCOTERMS)[number];
 
 export type Place = { kind: 'door'; id: string } | { kind: 'terminal'; id: string };
 
+/** Reference of a quote shown as an example (access code not in ACCESS_CODES): never saved. */
+export const EXAMPLE_REF = 'EXAMPLE';
+
+/** Access codes are compared without spaces and case: " pvl-0042 " is "PVL-0042". */
+export function normaliseCode(code: string): string {
+  return String(code ?? '')
+    .trim()
+    .toUpperCase();
+}
+
+/** 3 to 32 letters, digits, "-" or "_" (the format of the PVL code list). */
+export function isCodeFormat(code: string): boolean {
+  return /^[A-Z0-9][A-Z0-9_-]{2,31}$/.test(normaliseCode(code));
+}
+
 export interface QuoteRequest {
+  /** PVL access code of the team (ACCESS_CODES tab). Named pin for compatibility. */
   pin: string;
   requester: string;
   shipper: string;
@@ -158,7 +174,7 @@ export function validateRequest(cat: Catalogue, req: QuoteRequest, now: Date): Q
   const need = (field: QuoteError['field'], ok: unknown, message: string) => {
     if (!ok) errs.push({ field, code: 'required', message });
   };
-  need('pin', /^\d{4}$/.test(req.pin), 'Enter your team’s 4-digit PVL PIN.');
+  need('pin', isCodeFormat(req.pin), 'Enter your PVL access code (from your trainer).');
   need('requester', req.requester.trim(), 'Enter the name of the person requesting the quote.');
   need('shipper', req.shipper.trim(), 'Enter the shipper (from your Click & Cargo case).');
   need('consignee', req.consignee.trim(), 'Enter the consignee (from your Click & Cargo case).');

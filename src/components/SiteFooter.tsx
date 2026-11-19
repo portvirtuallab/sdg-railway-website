@@ -59,6 +59,20 @@ export function SiteFooter() {
             <Img id="IMG-010" className="h-10 w-auto" />
             <span className="sr-only"> – PVL.ONE (opens in a new tab)</span>
           </a>
+          <a
+            href={ESCOLA_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 block w-fit rounded-xl border border-white/20 px-4 py-3 hover:border-white/50"
+          >
+            <span className="text-railway-green-100 block text-xs font-semibold tracking-[0.18em] uppercase">
+              PVL powered by
+            </span>
+            <span className="font-display block text-lg font-bold">
+              Escola Europea – Intermodal Transport
+            </span>
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
         </div>
         {COLUMNS.map((c) => (
           <nav key={c.title} aria-label={`Footer – ${c.title}`}>
