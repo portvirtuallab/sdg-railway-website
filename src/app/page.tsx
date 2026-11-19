@@ -1,5 +1,6 @@
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { Img, imageUrl } from '@/components/ui/Img';
+import { asset } from '@/lib/asset';
 import { ButtonLink, LinkCard, ScenarioBadge, Section, TrackDivider } from '@/components/ui/layout';
 import { PVL_ONE_URL } from '@/content/site-map';
 import corridors from '@/data/corridors.json';
@@ -155,7 +156,19 @@ export default function HomePage() {
               aria-hidden="true"
               className="bg-railway-green-100 absolute -inset-3 -z-10 rotate-2 rounded-3xl"
             />
-            <Img id="IMG-020" className="aspect-square w-full rounded-2xl object-cover shadow-xl" />
+            {/* Brand poster supplied by the owner on 2026-11-19; replaces the low-resolution IMG-020. */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- static export, pre-sized WebP */}
+            <img
+              src={asset('/images/brand/sdg-railway-poster-1200.webp')}
+              srcSet={`${asset('/images/brand/sdg-railway-poster-640.webp')} 640w, ${asset('/images/brand/sdg-railway-poster-1200.webp')} 1200w`}
+              sizes="(min-width: 1024px) 560px, 100vw"
+              alt="SDG Railway logo, rail freight transport digital game, over a container train and port cranes at dusk"
+              width={1200}
+              height={1200}
+              loading="lazy"
+              decoding="async"
+              className="aspect-square w-full rounded-2xl object-cover shadow-xl"
+            />
           </div>
         </div>
       </Section>
