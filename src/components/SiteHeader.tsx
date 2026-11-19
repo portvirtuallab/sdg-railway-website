@@ -18,7 +18,7 @@ function isActive(pathname: string, path: string): boolean {
 }
 
 const linkBase =
-  'flex min-h-11 items-center rounded-md px-3 text-[0.95rem] font-medium text-railway-blue-900 transition-colors hover:bg-railway-blue-100';
+  'flex min-h-11 items-center whitespace-nowrap rounded-md px-3 text-[0.95rem] font-medium text-railway-blue-900 transition-colors hover:bg-railway-blue-100 xl:px-2 xl:text-[0.9rem] 2xl:px-3';
 
 function Submenu({ item, pathname }: { item: NavItem; pathname: string }) {
   const [open, setOpen] = useState(false);
@@ -72,7 +72,7 @@ function Submenu({ item, pathname }: { item: NavItem; pathname: string }) {
       <ul
         id={id}
         hidden={!open}
-        className="border-railway-green-600 z-30 mb-2 ml-3 border-l-2 pl-2 lg:absolute lg:top-full lg:left-0 lg:mb-0 lg:ml-0 lg:min-w-72 lg:rounded-xl lg:border lg:border-neutral-200 lg:bg-white lg:p-2 lg:shadow-xl"
+        className="border-railway-green-600 z-30 mb-2 ml-3 border-l-2 pl-2 xl:absolute xl:top-full xl:left-0 xl:mb-0 xl:ml-0 xl:min-w-72 xl:rounded-xl xl:border xl:border-neutral-200 xl:bg-white xl:p-2 xl:shadow-xl"
       >
         {item.children.map((child) => (
           <li key={child.id}>
@@ -105,7 +105,7 @@ export function SiteHeader({ navigation }: { navigation: NavItem[] }) {
   const quote = navigation.find((n) => n.page.id === 'request-a-quotation');
 
   return (
-    <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+    <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85 print:hidden">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2">
         <Link
           href="/"
@@ -125,9 +125,9 @@ export function SiteHeader({ navigation }: { navigation: NavItem[] }) {
         <nav
           id="main-navigation"
           aria-label="Main"
-          className={`${menuOpen ? 'block' : 'hidden'} absolute inset-x-0 top-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-neutral-200 bg-white px-2 pb-4 shadow-lg lg:static lg:block lg:max-h-none lg:overflow-visible lg:border-0 lg:p-0 lg:shadow-none`}
+          className={`${menuOpen ? 'block' : 'hidden'} absolute inset-x-0 top-full max-h-[calc(100vh-4rem)] overflow-y-auto border-b border-neutral-200 bg-white px-2 pb-4 shadow-lg xl:static xl:block xl:max-h-none xl:overflow-visible xl:border-0 xl:p-0 xl:shadow-none`}
         >
-          <ul className="flex flex-col lg:flex-row lg:items-center lg:gap-0.5">
+          <ul className="flex flex-col xl:flex-row xl:items-center xl:gap-0.5">
             {items.map((item) =>
               item.children.length > 0 ? (
                 <Submenu key={item.page.id} item={item} pathname={pathname} />
@@ -144,7 +144,7 @@ export function SiteHeader({ navigation }: { navigation: NavItem[] }) {
               ),
             )}
             {quote && (
-              <li className="mt-2 px-1 lg:hidden">
+              <li className="mt-2 px-1 xl:hidden">
                 <Link
                   href={quote.page.path}
                   className="bg-railway-green-700 flex min-h-11 items-center justify-center rounded-lg px-4 font-semibold text-white"
@@ -161,7 +161,7 @@ export function SiteHeader({ navigation }: { navigation: NavItem[] }) {
             href={PVL_ONE_URL}
             rel="noopener noreferrer"
             target="_blank"
-            className="text-railway-blue-700 hidden min-h-11 items-center gap-1 px-2 text-sm font-semibold hover:underline xl:flex"
+            className="text-railway-blue-700 hidden min-h-11 items-center gap-1 px-2 text-sm font-semibold hover:underline 2xl:flex"
           >
             PVL.ONE <Icon name="external" className="size-4" />
             <span className="sr-only"> (opens in a new tab)</span>
@@ -170,7 +170,7 @@ export function SiteHeader({ navigation }: { navigation: NavItem[] }) {
             <Link
               href={quote.page.path}
               aria-current={normalise(pathname) === quote.page.path ? 'page' : undefined}
-              className="bg-railway-green-700 hover:bg-railway-green-800 hidden min-h-11 items-center gap-2 rounded-lg px-4 font-semibold text-white shadow-sm transition-colors sm:flex"
+              className="bg-railway-green-700 hover:bg-railway-green-800 hidden min-h-11 items-center gap-2 rounded-lg px-4 font-semibold whitespace-nowrap text-white shadow-sm transition-colors sm:flex"
             >
               <Icon name="quote" className="size-4" />
               {quote.page.label}
@@ -181,7 +181,7 @@ export function SiteHeader({ navigation }: { navigation: NavItem[] }) {
             aria-expanded={menuOpen}
             aria-controls="main-navigation"
             onClick={() => setMenuOpen((o) => !o)}
-            className="text-railway-blue-900 flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg border border-neutral-200 px-3 font-semibold lg:hidden"
+            className="text-railway-blue-900 flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg border border-neutral-200 px-3 font-semibold xl:hidden"
           >
             <svg
               aria-hidden="true"

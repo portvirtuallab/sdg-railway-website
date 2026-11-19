@@ -94,3 +94,21 @@
     }
   }
 }
+
+/* Printing a quotation ("Print or save as PDF"): only the document and the simulation notice. */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+  }
+  .quote-doc {
+    box-shadow: none !important;
+    break-inside: auto;
+  }
+  .quote-doc section {
+    break-inside: avoid;
+  }
+}

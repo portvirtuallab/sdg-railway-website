@@ -7,18 +7,30 @@ const col = (ids: string[]) =>
   ids.map((id) => SITE_PAGES.find((p) => p.id === id)!).filter(Boolean);
 
 const COLUMNS = [
-  { title: 'Company', pages: col(['about-us', 'railway-general-sales-conditions', 'contact']) },
   {
-    title: 'Services',
+    title: 'Plan and quote',
+    pages: col(['how-it-works', 'network-routes', 'request-a-quotation', 'my-quotes']),
+  },
+  {
+    title: 'Equipment and cargo',
     pages: col([
       'services',
-      'container-and-trailer-packing',
       'railway-equipment-fleet',
       'our-locomotive-models',
+      'container-and-trailer-packing',
       'dangerous-goods',
     ]),
   },
-  { title: 'Plan & learn', pages: col(['network-routes', 'request-a-quotation', 'resources']) },
+  {
+    title: 'Learn and company',
+    pages: col([
+      'teaching-help',
+      'resources',
+      'about-us',
+      'railway-general-sales-conditions',
+      'contact',
+    ]),
+  },
 ];
 
 /**
@@ -28,7 +40,7 @@ const COLUMNS = [
  */
 export function SiteFooter() {
   return (
-    <footer className="bg-railway-blue-950 mt-auto text-white">
+    <footer className="bg-railway-blue-950 mt-auto text-white print:hidden">
       <TrackDivider />
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-[1.3fr_repeat(3,1fr)]">
         <div>

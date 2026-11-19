@@ -20,7 +20,7 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="bg-railway-blue-950 relative isolate overflow-hidden text-white">
+    <section className="bg-railway-blue-950 relative isolate overflow-hidden text-white print:hidden">
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-cover bg-center opacity-55"
@@ -228,6 +228,7 @@ export function LinkCard({
 }
 
 export function OriginalPageLink({ page }: { page: SitePage }) {
+  if (!page.sourceUrl) return null;
   return (
     <a
       href={page.sourceUrl}
