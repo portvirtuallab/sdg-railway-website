@@ -1,14 +1,15 @@
 import Link from 'next/link';
 import { ButtonLink, Callout, LinkCard, PageHero, Section } from '@/components/ui/layout';
-import catalogue from '@/data/demo-catalogue.json';
-import { buildQuote } from '@/features/quote/engine';
-import { money } from '@/features/quote/QuoteDocument';
+import { buildQuote, terminalById } from '@/engine';
+import { money } from '@/features/quote/format';
+import { SNAPSHOT_CATALOGUE as catalogue, SNAPSHOT_DATE } from '@/features/quote/snapshot';
 import { getPage, pageMetadata } from '@/lib/page-meta';
 
 export const metadata = pageMetadata('teaching-help');
 
-// The worked example is priced by the same engine as the quote form, so the figures always match.
-const example = buildQuote(
+// The worked example is priced by the same engine and Sheet data as the quote form (snapshot taken
+// when the site was built), so the figures match a quote made that day.
+const result = buildQuote(
   catalogue,
   {
     pin: '4821',
@@ -16,22 +17,34 @@ const example = buildQuote(
     shipper: 'Toledo automotive parts manufacturer',
     consignee: 'Atessa assembly plant',
     incoterm: 'DAP',
-    origin: { kind: 'door', id: 'door-toledo' },
-    destination: { kind: 'door', id: 'door-atessa' },
-    readyDate: '2026-11-23',
+    origin: { kind: 'door', id: 'DOOR-TOLEDO' },
+    destination: { kind: 'door', id: 'DOOR-ATESSA' },
+    readyDate: '2026-11-24',
+    serviceId: 'STD-RAIL',
+    routingMetric: 'DISTANCE',
     cargoDescription: 'Automotive parts',
     grossWeightKg: 18000,
     packages: 24,
     packageCm: { length: 120, width: 100, height: 160 },
-    ituCode: '45HC',
+    utiType: 'CONTAINER-40',
     quantity: 1,
     dangerousGoods: null,
     temperatureC: null,
     insuranceValue: null,
   },
-  { ref: 'RWQ-EXAMPLE', version: 1, now: new Date(2026, 10, 19, 10, 0), usage: {} },
+  {
+    ref: 'RWQ-EXAMPLE',
+    version: 1,
+    now: new Date(2026, 10, 19, 10, 0),
+    usage: {},
+    team: 'Futura Cargo – Group B',
+  },
 );
-const SELLING_PRICE = 1050;
+if (!result.ok) throw new Error(`Worked example cannot be quoted: ${result.errors[0]?.message}`);
+const example = result.quote;
+const cities = example.route.pathIds.map((id) => terminalById(catalogue, id)?.city ?? id);
+// The forwarder's own price: about 15 % over the supplier cost, rounded up to 50.
+const SELLING_PRICE = Math.ceil((example.total * 1.15) / 50) * 50;
 
 const STEPS = [
   ['Create customer and request in Click & Cargo.', 'Shipper, consignee, Incoterm and cargo data.'],
@@ -40,7 +53,7 @@ const STEPS = [
     'Route and breakdown of every leg.',
   ],
   [
-    'Compare the offer and check ITU, date, scope and train.',
+    'Compare the services and check the unit, date, scope and train.',
     'Saved RWQ quote and PDF; note on cost and transit time.',
   ],
   ['Accept the offer and confirm capacity.', 'Booking linked to the RWQ and the assigned train.'],
@@ -49,7 +62,7 @@ const STEPS = [
     'Supplier cost, selling price and margin.',
   ],
   [
-    'Record ITU, carriers, driver, vehicle and terminal orders when applicable.',
+    'Record the unit, carriers, driver, vehicle and terminal orders when applicable.',
     'Consistent file and documents.',
   ],
   ['Explain who contracted whom.', 'Commercial chain distinguished from the production layer.'],
@@ -58,23 +71,23 @@ const STEPS = [
 const ERRORS = [
   [
     'Invalid PIN',
-    'The PIN does not belong to a team in this exercise.',
+    'The PIN is not in the TEAMS tab of the SDG Railway Sheet, or the team is inactive.',
     'Check the 4-digit PIN with your trainer.',
   ],
   [
     'Route not covered',
-    'There is no approved lane between the places you chose.',
-    'Pick places served by a lane in “Lanes you can quote”. A terminal being listed does not mean it connects everywhere.',
+    'There is no rail connection between the places you chose (or, with dangerous goods, none through terminals that handle them).',
+    'Pick other terminals: see the corridors in Network and trains. Some countries are separate networks.',
   ],
   [
-    'Incompatible loading unit',
-    'The ITU is not accepted on that lane (for example P400 trailers only run on lanes with pocket wagons).',
-    'See Equipment and cargo for compatibility.',
+    'No tariff for this unit',
+    'The service has no tariff for that loading unit.',
+    'Choose another service or unit: see the tariff table in Equipment and cargo.',
   ],
   [
     'Weight or volume too high',
     'The cargo does not fit the units you chose.',
-    'Add units or choose a larger ITU.',
+    'Add units or choose a larger loading unit.',
   ],
   [
     'Train pending confirmation',
@@ -101,21 +114,22 @@ export default function TeachingHelpPage() {
         intro="A worked example, the Click & Cargo handoff and the most common errors in the SDG Railway quotation exercise."
       />
 
-      <Section eyebrow="Worked example" title="Toledo to Atessa with one 45 ft unit">
+      <Section eyebrow="Worked example" title="Toledo to Atessa with one 40 ft container">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
           <div className="space-y-4 text-lg leading-relaxed text-neutral-600">
             <p>
               Futura Cargo, the freight forwarder (your team), receives an order from a manufacturer
-              in Toledo to move one 45 ft loading unit of automotive parts to a plant in Atessa.
+              in Toledo to move one 40 ft container of automotive parts to a plant in Atessa.
             </p>
             <p>
-              Teaching route:{' '}
+              Route found by the quotation:{' '}
               <strong className="text-railway-blue-900">
-                Toledo → Barcelona Morrot terminal → Civitavecchia terminal → Atessa
-              </strong>
-              . Futura Cargo asks SDG Railway, the intermodal carrier, for a door-to-door service.
-              SDG Railway books capacity on the train as MTO and coordinates Play Haulier for the
-              road legs.
+                Toledo → {cities.join(' → ')} → Atessa
+              </strong>{' '}
+              ({example.route.distanceKm.toLocaleString('en-GB')} km by rail, {example.service.name}
+              ). Futura Cargo asks SDG Railway, the intermodal carrier, for a door-to-door service.
+              SDG Railway books capacity on the train as MTO and coordinates{' '}
+              {catalogue.config.haulierName} for the road legs.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <ButtonLink href="/request-a-quotation/?example=1" icon="quote">
@@ -127,7 +141,7 @@ export default function TeachingHelpPage() {
             <h3 className="text-railway-blue-900 font-bold">
               Illustrative arithmetic{' '}
               <span className="bg-notice-bg text-notice-text ml-1 rounded px-1.5 py-0.5 text-xs">
-                DEMO
+                Simulation
               </span>
             </h3>
             <table className="mt-3 w-full text-sm">
@@ -162,8 +176,9 @@ export default function TeachingHelpPage() {
               </tbody>
             </table>
             <p className="mt-3 text-xs text-neutral-600">
-              Amounts from the versioned test catalogue {catalogue.version}. They are independent of
-              real rates and must not enter a commercial tariff.
+              Prices from the SDG Railway Sheet on {SNAPSHOT_DATE}, cargo ready on 24 Nov 2026. A
+              quote made today may differ if the trainers changed the tariff. Simulated amounts, not
+              a commercial tariff.
             </p>
           </div>
         </div>
@@ -214,10 +229,10 @@ export default function TeachingHelpPage() {
               'Booking reference (RWB)',
               'Customer, shipper and consignee',
               'Incoterm',
-              'ITU type and quantity',
+              'Loading unit type and quantity',
               'Route, terminals and legs',
               'Prices by leg and total (supplier cost)',
-              'Train ID, departure, cut-off and arrival',
+              'Service, departure, cut-off and arrival',
               'Ready date and estimated delivery',
               'Driver and vehicle for terminal orders',
               'Documents: quotation PDF, booking, terminal orders',
@@ -307,20 +322,20 @@ export default function TeachingHelpPage() {
             </summary>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
               <li>
-                Confirm that the teaching lane Barcelona Morrot → Civitavecchia and its train exist
-                in the active catalogue, and that the 45 ft unit is accepted.
+                Check the TEAMS tab of the SDG Railway Sheet: one active row (with a PIN) per team,
+                and a trainer row.
               </li>
               <li>
-                Compare the worked example with a PDF generated in the test environment and confirm
-                whether prices are per ITU and per leg.
+                Make the worked example with a team PIN and compare the PDF in the Drive folder with
+                the quote on screen.
               </li>
               <li>
                 Check that the booking reference and the train reach the student and the ERP file,
                 with no duplicate terminal charges.
               </li>
               <li>
-                Trainer PIN {catalogue.teams.find((t) => t.role === 'trainer')?.pin} shows every
-                team’s quotes in My quotes (prototype, same browser).
+                A PIN with Role “trainer” in the TEAMS tab shows every team’s quotes in My quotes.
+                Every operation is also in QUOTE_LOG, BOOKINGS and HISTORY.
               </li>
             </ul>
           </details>
@@ -342,7 +357,8 @@ export default function TeachingHelpPage() {
                 simplifications.
               </li>
               <li>
-                ITU and corridor: one 45 ft ITU, terminals, restrictions and a confirmed train.
+                Unit and corridor: one 40 ft container, terminals, restrictions and a confirmed
+                train.
               </li>
               <li>
                 The offer: price breakdown, scope, validity, RWQ and its difference from a booking.
@@ -361,16 +377,16 @@ export default function TeachingHelpPage() {
           </details>
           <details className="rounded-2xl bg-white/5 p-5 ring-1 ring-white/15">
             <summary className="min-h-11 cursor-pointer text-lg font-bold text-white">
-              Known limits of this prototype
+              Known limits
             </summary>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
               <li>
-                Prices, trains and capacity are DEMO test data ({catalogue.version}); real rates
-                must come from the SDG Railway back end.
+                Prices, trains and capacity are simulation data that the trainers keep in the SDG
+                Railway Sheet; they are not real rates.
               </li>
               <li>
-                Quotes and bookings are stored in each browser; the final version records them
-                centrally.
+                Without the quotation service connected (demo mode), quotes are kept in each browser
+                only.
               </li>
               <li>
                 The transport document (CMR, CIM or multimodal) must be validated academically for

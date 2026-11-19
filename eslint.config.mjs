@@ -8,6 +8,7 @@ const config = [
       'out/**',
       'node_modules/**',
       'docs/audit/**',
+      'apps-script/dist/**',
       'playwright-report/**',
       'test-results/**',
       'next-env.d.ts',

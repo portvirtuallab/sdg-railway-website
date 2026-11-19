@@ -1,0 +1,3394 @@
+{
+ "CONFIG": [
+  {
+   "Parameter": "CompanyName",
+   "Value": "SDG Railway",
+   "Description": "Displayed in UI/PDF"
+  },
+  {
+   "Parameter": "BrandName",
+   "Value": "Railway Quotation Simulator",
+   "Description": "Displayed in UI/PDF"
+  },
+  {
+   "Parameter": "Currency",
+   "Value": "EUR",
+   "Description": "ISO currency code"
+  },
+  {
+   "Parameter": "VATRate",
+   "Value": "0",
+   "Description": "Optional."
+  },
+  {
+   "Parameter": "InsuranceRate",
+   "Value": "0.005",
+   "Description": "Optional. Insurance = GoodsValue * rate"
+  },
+  {
+   "Parameter": "MinInsuranceValue",
+   "Value": "100",
+   "Description": "Minimum goods value to allow insurance"
+  },
+  {
+   "Parameter": "QuotationValidityDays",
+   "Value": "30",
+   "Description": "PDF validity text"
+  },
+  {
+   "Parameter": "DefaultRoutingMetric",
+   "Value": "DISTANCE",
+   "Description": "DISTANCE or TIME"
+  },
+  {
+   "Parameter": "DefaultSpeedKmH",
+   "Value": "80",
+   "Description": "Fallback speed if TimeMin is missing in LINKS"
+  },
+  {
+   "Parameter": "QuotePrefix",
+   "Value": "RWQ",
+   "Description": "Prefix for quote references"
+  }
+ ],
+ "COUNTRIES": [
+  {
+   "CountryCode": "ES",
+   "CountryName": "Spain",
+   "Status": "Active",
+   "FlagEmoji": "🇪🇸",
+   "Notes": "Domestic network"
+  },
+  {
+   "CountryCode": "FR",
+   "CountryName": "France",
+   "Status": "Active",
+   "FlagEmoji": "🇫🇷",
+   "Notes": "Cross-border network"
+  },
+  {
+   "CountryCode": "IT",
+   "CountryName": "Italy",
+   "Status": "Active",
+   "FlagEmoji": "🇮🇹",
+   "Notes": "Domestic and international corridor network"
+  },
+  {
+   "CountryCode": "PT",
+   "CountryName": "Portugal",
+   "Status": "Active",
+   "FlagEmoji": "🇵🇹",
+   "Notes": "Iberian Atlantic freight extension"
+  },
+  {
+   "CountryCode": "BE",
+   "CountryName": "Belgium",
+   "Status": "Active",
+   "FlagEmoji": "🇧🇪",
+   "Notes": "Benelux freight hub network"
+  },
+  {
+   "CountryCode": "NL",
+   "CountryName": "Netherlands",
+   "Status": "Active",
+   "FlagEmoji": "🇳🇱",
+   "Notes": "North European intermodal network"
+  },
+  {
+   "CountryCode": "JO",
+   "CountryName": "Jordan",
+   "Status": "Active",
+   "FlagEmoji": "🇯🇴",
+   "Notes": "Regional freight corridor"
+  },
+  {
+   "CountryCode": "EG",
+   "CountryName": "Egypt",
+   "Status": "Active",
+   "FlagEmoji": "🇪🇬",
+   "Notes": "Domestic freight corridor"
+  },
+  {
+   "CountryCode": "MA",
+   "CountryName": "Morocco",
+   "Status": "Active",
+   "FlagEmoji": "🇲🇦",
+   "Notes": "Port and industrial freight expansion"
+  },
+  {
+   "CountryCode": "TN",
+   "CountryName": "Tunisia",
+   "Status": "Planned",
+   "FlagEmoji": "🇹🇳",
+   "Notes": "Limited domestic freight extension"
+  },
+  {
+   "CountryCode": "DZ",
+   "CountryName": "Algeria",
+   "Status": "Planned",
+   "FlagEmoji": "🇩🇿",
+   "Notes": "Industrial freight expansion"
+  },
+  {
+   "CountryCode": "SA",
+   "CountryName": "Saudi Arabia",
+   "Status": "Active",
+   "FlagEmoji": "🇸🇦",
+   "Notes": "Strategic Gulf rail expansion"
+  },
+  {
+   "CountryCode": "AE",
+   "CountryName": "United Arab Emirates",
+   "Status": "Planned",
+   "FlagEmoji": "🇦🇪",
+   "Notes": "Advanced Gulf logistics extension"
+  },
+  {
+   "CountryCode": "GB",
+   "CountryName": "United Kingdom",
+   "Status": "Planned",
+   "FlagEmoji": "🇬🇧",
+   "Notes": "Standalone rail freight network"
+  },
+  {
+   "CountryCode": "LB",
+   "CountryName": "Lebanon",
+   "Status": "Future",
+   "FlagEmoji": "🇱🇧",
+   "Notes": "Rail rehabilitation concept"
+  },
+  {
+   "CountryCode": "PS",
+   "CountryName": "Palestinian Territories",
+   "Status": "Future",
+   "FlagEmoji": "🇵🇸",
+   "Notes": "Regional logistics extension"
+  }
+ ],
+ "TERMINALS": [
+  {
+   "TerminalID": "BCN-MORROT",
+   "TerminalName": "Barcelona Morrot Terminal",
+   "City": "Barcelona",
+   "CountryCode": "ES",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Main Mediterranean hub"
+  },
+  {
+   "TerminalID": "ZAR-PLAZA",
+   "TerminalName": "Zaragoza PLAZA Terminal",
+   "City": "Zaragoza",
+   "CountryCode": "ES",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Central logistics node"
+  },
+  {
+   "TerminalID": "PAM-NOAIN",
+   "TerminalName": "Noáin Freight Terminal",
+   "City": "Pamplona",
+   "CountryCode": "ES",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Northern regional freight node"
+  },
+  {
+   "TerminalID": "BIL-MERC",
+   "TerminalName": "Bilbao Mercancías Terminal",
+   "City": "Bilbao",
+   "CountryCode": "ES",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Atlantic freight gateway"
+  },
+  {
+   "TerminalID": "MAD-ABRONIGAL",
+   "TerminalName": "Madrid Abroñigal Terminal",
+   "City": "Madrid",
+   "CountryCode": "ES",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Capital region hub"
+  },
+  {
+   "TerminalID": "VLL-ESPERANZA",
+   "TerminalName": "Valladolid La Esperanza Terminal",
+   "City": "Valladolid",
+   "CountryCode": "ES",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Northwest inland logistics node"
+  },
+  {
+   "TerminalID": "TAR-MERCADERIES",
+   "TerminalName": "Tarragona Mercaderies Terminal",
+   "City": "Tarragona",
+   "CountryCode": "ES",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Petrochemical and port freight terminal"
+  },
+  {
+   "TerminalID": "VAL-FUENTESANLUIS",
+   "TerminalName": "Valencia Fuente San Luis Terminal",
+   "City": "Valencia",
+   "CountryCode": "ES",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Port connectivity and inland distribution"
+  },
+  {
+   "TerminalID": "PERP-STCHARLES",
+   "TerminalName": "Perpignan Saint-Charles Terminal",
+   "City": "Perpignan",
+   "CountryCode": "FR",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Southern France border logistics hub"
+  },
+  {
+   "TerminalID": "LYO-VENISSIEUX",
+   "TerminalName": "Lyon Vénissieux Terminal",
+   "City": "Lyon",
+   "CountryCode": "FR",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Rhône corridor freight hub"
+  },
+  {
+   "TerminalID": "PAR-VALENTON",
+   "TerminalName": "Paris Valenton Terminal",
+   "City": "Paris",
+   "CountryCode": "FR",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Île-de-France freight platform"
+  },
+  {
+   "TerminalID": "TLS-STJORY",
+   "TerminalName": "Toulouse Saint-Jory Terminal",
+   "City": "Toulouse",
+   "CountryCode": "FR",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Southwest regional freight hub"
+  },
+  {
+   "TerminalID": "BDX-HOURCADE",
+   "TerminalName": "Bordeaux Hourcade Terminal",
+   "City": "Bordeaux",
+   "CountryCode": "FR",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Atlantic corridor freight yard"
+  },
+  {
+   "TerminalID": "MAR-CANET",
+   "TerminalName": "Marseille Canet Terminal",
+   "City": "Marseille",
+   "CountryCode": "FR",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Mediterranean gateway and port interface"
+  },
+  {
+   "TerminalID": "VER-QUADRANTE",
+   "TerminalName": "Verona Quadrante Europa",
+   "City": "Verona",
+   "CountryCode": "IT",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Major northern Italian freight hub"
+  },
+  {
+   "TerminalID": "PES-PORTANUOVA",
+   "TerminalName": "Pescara Porta Nuova Freight Terminal",
+   "City": "Pescara",
+   "CountryCode": "IT",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Central Adriatic logistics node"
+  },
+  {
+   "TerminalID": "BAR-LAMASINATA",
+   "TerminalName": "Bari Lamasinata Terminal",
+   "City": "Bari",
+   "CountryCode": "IT",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Key southern Adriatic freight terminal"
+  },
+  {
+   "TerminalID": "CIV-FREIGHT",
+   "TerminalName": "Civitavecchia Freight Yard",
+   "City": "Civitavecchia",
+   "CountryCode": "IT",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Tyrrhenian maritime freight gateway"
+  },
+  {
+   "TerminalID": "ROM-SANTAPALOMBA",
+   "TerminalName": "Santa Palomba Interporto Roma Sud",
+   "City": "Rome",
+   "CountryCode": "IT",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Central Italian inland logistics hub"
+  },
+  {
+   "TerminalID": "LIS-POCEIRAO",
+   "TerminalName": "Poceirão Intermodal Platform",
+   "City": "Lisbon",
+   "CountryCode": "PT",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Main Lisbon freight platform"
+  },
+  {
+   "TerminalID": "ENT-HUB",
+   "TerminalName": "Entroncamento Freight Hub",
+   "City": "Entroncamento",
+   "CountryCode": "PT",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "National rail logistics node"
+  },
+  {
+   "TerminalID": "PORTO-LEIXOES",
+   "TerminalName": "Leixões Port Rail Terminal",
+   "City": "Porto",
+   "CountryCode": "PT",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Northern maritime rail gateway"
+  },
+  {
+   "TerminalID": "SINES-PORT",
+   "TerminalName": "Sines Port Freight Yard",
+   "City": "Sines",
+   "CountryCode": "PT",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Energy and container port hub"
+  },
+  {
+   "TerminalID": "BOB-LISBON",
+   "TerminalName": "Bobadela Freight Station",
+   "City": "Lisbon",
+   "CountryCode": "PT",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Greater Lisbon freight support terminal"
+  },
+  {
+   "TerminalID": "ANT-COMBINANT",
+   "TerminalName": "Antwerp Combinant Terminal",
+   "City": "Antwerp",
+   "CountryCode": "BE",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Major Belgian container and chemical hub"
+  },
+  {
+   "TerminalID": "LIE-TRILOGIPORT",
+   "TerminalName": "Liège Trilogiport Platform",
+   "City": "Liège",
+   "CountryCode": "BE",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Inland multimodal freight hub"
+  },
+  {
+   "TerminalID": "ZEE-RAILTERM",
+   "TerminalName": "Zeebrugge Rail Terminal",
+   "City": "Zeebrugge",
+   "CountryCode": "BE",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Ro-Ro and maritime freight rail terminal"
+  },
+  {
+   "TerminalID": "GENT-KLUIZENDOK",
+   "TerminalName": "Ghent Kluizendok Rail Terminal",
+   "City": "Ghent",
+   "CountryCode": "BE",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Industrial and steel logistics node"
+  },
+  {
+   "TerminalID": "GENK-HUPAC",
+   "TerminalName": "Genk Intermodal Terminal",
+   "City": "Genk",
+   "CountryCode": "BE",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Inland Benelux intermodal terminal"
+  },
+  {
+   "TerminalID": "RTM-MAASVLAKTE",
+   "TerminalName": "Rotterdam Maasvlakte Rail Terminal",
+   "City": "Rotterdam",
+   "CountryCode": "NL",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Largest rail-connected port terminal in the network"
+  },
+  {
+   "TerminalID": "VENLO-RAIL",
+   "TerminalName": "Venlo Rail Terminal",
+   "City": "Venlo",
+   "CountryCode": "NL",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Germany-facing inland logistics hub"
+  },
+  {
+   "TerminalID": "TIL-RAILPORT",
+   "TerminalName": "Tilburg Railport",
+   "City": "Tilburg",
+   "CountryCode": "NL",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "E-commerce and automotive logistics terminal"
+  },
+  {
+   "TerminalID": "AMS-WESTPOORT",
+   "TerminalName": "Amsterdam Westpoort Freight Hub",
+   "City": "Amsterdam",
+   "CountryCode": "NL",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "General cargo and chemical freight gateway"
+  },
+  {
+   "TerminalID": "MOERDIJK-IMT",
+   "TerminalName": "Moerdijk Intermodal Terminal",
+   "City": "Moerdijk",
+   "CountryCode": "NL",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Short-sea and inland rail logistics node"
+  },
+  {
+   "TerminalID": "AQA-FREIGHT",
+   "TerminalName": "Aqaba Freight Terminal",
+   "City": "Aqaba",
+   "CountryCode": "JO",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Red Sea import export gateway"
+  },
+  {
+   "TerminalID": "AMM-DRYPORT",
+   "TerminalName": "Amman Dry Port",
+   "City": "Amman",
+   "CountryCode": "JO",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Main inland customs and logistics hub"
+  },
+  {
+   "TerminalID": "RAM-LOGNODE",
+   "TerminalName": "Ramallah Logistics Node",
+   "City": "Ramallah",
+   "CountryCode": "PS",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Regional logistics extension node"
+  },
+  {
+   "TerminalID": "ALX-FREIGHT",
+   "TerminalName": "Alexandria Freight Terminal",
+   "City": "Alexandria",
+   "CountryCode": "EG",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Northern maritime rail interface"
+  },
+  {
+   "TerminalID": "CAI-TEBBIN",
+   "TerminalName": "Cairo El Tebbin Freight Station",
+   "City": "Cairo",
+   "CountryCode": "EG",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Central Egyptian industrial freight hub"
+  },
+  {
+   "TerminalID": "DAM-PORT",
+   "TerminalName": "Damietta Port Terminal",
+   "City": "Damietta",
+   "CountryCode": "EG",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Major grain and container export terminal"
+  },
+  {
+   "TerminalID": "TNG-TANGERMED",
+   "TerminalName": "Tanger Med Port Terminal",
+   "City": "Tangier",
+   "CountryCode": "MA",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Main Moroccan intermodal port gateway"
+  },
+  {
+   "TerminalID": "KEN-AUTO",
+   "TerminalName": "Kenitra Automotive Logistics Platform",
+   "City": "Kenitra",
+   "CountryCode": "MA",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Automotive and industrial freight node"
+  },
+  {
+   "TerminalID": "CAS-MOGHREB",
+   "TerminalName": "Casablanca Moghreb Terminal",
+   "City": "Casablanca",
+   "CountryCode": "MA",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "National Moroccan logistics hub"
+  },
+  {
+   "TerminalID": "MAR-FREIGHT",
+   "TerminalName": "Marrakech Freight Terminal",
+   "City": "Marrakech",
+   "CountryCode": "MA",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Southbound domestic freight terminal"
+  },
+  {
+   "TerminalID": "AGA-AGRI",
+   "TerminalName": "Agadir Agricultural Products Terminal",
+   "City": "Agadir",
+   "CountryCode": "MA",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Agri-food and southern distribution node"
+  },
+  {
+   "TerminalID": "TUN-KSARSAID",
+   "TerminalName": "Tunis Ksar Said Freight Yard",
+   "City": "Tunis",
+   "CountryCode": "TN",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Capital region intermodal freight yard"
+  },
+  {
+   "TerminalID": "SFX-FREIGHT",
+   "TerminalName": "Sfax Freight Terminal",
+   "City": "Sfax",
+   "CountryCode": "TN",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Southern industrial and export freight terminal"
+  },
+  {
+   "TerminalID": "GAF-MINING",
+   "TerminalName": "Gafsa Mining Terminal",
+   "City": "Gafsa",
+   "CountryCode": "TN",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Mining rail origin terminal"
+  },
+  {
+   "TerminalID": "GAB-CHEM",
+   "TerminalName": "Gabès Chemical Terminal",
+   "City": "Gabès",
+   "CountryCode": "TN",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Chemicals and fertilizer logistics terminal"
+  },
+  {
+   "TerminalID": "ALG-CENTRALFY",
+   "TerminalName": "Algiers Central Freight Yard",
+   "City": "Algiers",
+   "CountryCode": "DZ",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Main national freight yard"
+  },
+  {
+   "TerminalID": "ORN-PORT",
+   "TerminalName": "Oran Port Freight Terminal",
+   "City": "Oran",
+   "CountryCode": "DZ",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Western petrochemical and container gateway"
+  },
+  {
+   "TerminalID": "CST-INDHUB",
+   "TerminalName": "Constantine Industrial Distribution Hub",
+   "City": "Constantine",
+   "CountryCode": "DZ",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Eastern industrial freight node"
+  },
+  {
+   "TerminalID": "ANN-STEEL",
+   "TerminalName": "Annaba Mining and Steel Terminal",
+   "City": "Annaba",
+   "CountryCode": "DZ",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Mining and steel logistics platform"
+  },
+  {
+   "TerminalID": "HME-ENERGY",
+   "TerminalName": "Hassi Messaoud Energy Yard",
+   "City": "Hassi Messaoud",
+   "CountryCode": "DZ",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Petroleum and energy logistics yard"
+  },
+  {
+   "TerminalID": "RIYADH-DRYPORT",
+   "TerminalName": "Riyadh Dry Port",
+   "City": "Riyadh",
+   "CountryCode": "SA",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "National Saudi logistics hub"
+  },
+  {
+   "TerminalID": "DAMMAM-PORT",
+   "TerminalName": "King Abdulaziz Port Rail Terminal",
+   "City": "Dammam",
+   "CountryCode": "SA",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Eastern maritime and petrochemical gateway"
+  },
+  {
+   "TerminalID": "JUB-INDPORT",
+   "TerminalName": "Jubail Industrial Port Terminal",
+   "City": "Jubail",
+   "CountryCode": "SA",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Industrial and chemical export hub"
+  },
+  {
+   "TerminalID": "JED-LOGTERM",
+   "TerminalName": "Jeddah Logistics Terminal",
+   "City": "Jeddah",
+   "CountryCode": "SA",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Landbridge western logistics gateway"
+  },
+  {
+   "TerminalID": "HAIL-FREIGHT",
+   "TerminalName": "Hail Freight Hub",
+   "City": "Hail",
+   "CountryCode": "SA",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Northern inland freight support terminal"
+  },
+  {
+   "TerminalID": "AUH-KHALIFAPORT",
+   "TerminalName": "Khalifa Port Rail Terminal",
+   "City": "Abu Dhabi",
+   "CountryCode": "AE",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "National intermodal maritime hub"
+  },
+  {
+   "TerminalID": "DXB-JEBELALI",
+   "TerminalName": "Jebel Ali Logistics Rail Terminal",
+   "City": "Dubai",
+   "CountryCode": "AE",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Major Gulf container and automotive gateway"
+  },
+  {
+   "TerminalID": "ALAIN-ICD",
+   "TerminalName": "Al Ain Inland Container Depot",
+   "City": "Al Ain",
+   "CountryCode": "AE",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Border-facing inland container terminal"
+  },
+  {
+   "TerminalID": "FUJ-PORTLOG",
+   "TerminalName": "Fujairah Port Logistics Terminal",
+   "City": "Fujairah",
+   "CountryCode": "AE",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "East coast logistics and port interface"
+  },
+  {
+   "TerminalID": "FELIXSTOWE-RAIL",
+   "TerminalName": "Felixstowe Rail Terminal",
+   "City": "Felixstowe",
+   "CountryCode": "GB",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Main UK maritime container rail terminal"
+  },
+  {
+   "TerminalID": "SOU-MARITIME",
+   "TerminalName": "Southampton Maritime Freight Terminal",
+   "City": "Southampton",
+   "CountryCode": "GB",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "South coast import export rail terminal"
+  },
+  {
+   "TerminalID": "DAV-DIRFT",
+   "TerminalName": "Daventry International Rail Freight Terminal",
+   "City": "Daventry",
+   "CountryCode": "GB",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "National inland multimodal hub"
+  },
+  {
+   "TerminalID": "MAN-TRAFFORD",
+   "TerminalName": "Trafford Park Railport",
+   "City": "Manchester",
+   "CountryCode": "GB",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Northwest industrial and retail logistics hub"
+  },
+  {
+   "TerminalID": "TEE-NORTHHUB",
+   "TerminalName": "Teesport Northern Freight Hub",
+   "City": "Teesport",
+   "CountryCode": "GB",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Northern maritime and industrial rail gateway"
+  },
+  {
+   "TerminalID": "BEI-HISTORIC",
+   "TerminalName": "Beirut Historic Rail Yard",
+   "City": "Beirut",
+   "CountryCode": "LB",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "0",
+   "Notes": "Historical freight node under rehabilitation concept"
+  },
+  {
+   "TerminalID": "TRI-HISTORIC",
+   "TerminalName": "Tripoli Historic Rail Yard",
+   "City": "Tripoli",
+   "CountryCode": "LB",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "0",
+   "Notes": "Historical northern rail node under rehabilitation"
+  },
+  {
+   "TerminalID": "SID-HISTORIC",
+   "TerminalName": "Sidon Historic Rail Yard",
+   "City": "Sidon",
+   "CountryCode": "LB",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "0",
+   "Notes": "Historical southern rail node under rehabilitation"
+  },
+  {
+   "TerminalID": "RYA-HISTORIC",
+   "TerminalName": "Rayak Historic Rail Yard",
+   "City": "Rayak",
+   "CountryCode": "LB",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "0",
+   "Notes": "Historical inland rail logistics concept"
+  },
+  {
+   "TerminalID": "MAL-MACARENO",
+   "TerminalName": "Málaga Macareno Freight Terminal",
+   "City": "Málaga",
+   "CountryCode": "ES",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Southern Spain gateway to North Africa"
+  },
+  {
+   "TerminalID": "LIL-DOURGES",
+   "TerminalName": "Dourges Delta 3 Terminal",
+   "City": "Lille",
+   "CountryCode": "FR",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Channel Tunnel French gateway"
+  },
+  {
+   "TerminalID": "SET-SADOPORT",
+   "TerminalName": "Setúbal Sadoport Rail Terminal",
+   "City": "Setúbal",
+   "CountryCode": "PT",
+   "TerminalType": "Port Terminal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Sadoport industrial port rail terminal, paper pulp and containers"
+  },
+  {
+   "TerminalID": "AVR-CANAL",
+   "TerminalName": "Aveiro Canal Industrial Terminal",
+   "City": "Aveiro",
+   "CountryCode": "PT",
+   "TerminalType": "Intermodal",
+   "DGCapable": "1",
+   "Active": "1",
+   "Notes": "Central Portugal industrial and intermodal freight hub"
+  },
+  {
+   "TerminalID": "ERM-SADO",
+   "TerminalName": "Ermidas do Sado Freight Station",
+   "City": "Ermidas do Sado",
+   "CountryCode": "PT",
+   "TerminalType": "Freight Terminal",
+   "DGCapable": "0",
+   "Active": "1",
+   "Notes": "Alentejo regional freight relay station"
+  }
+ ],
+ "COUNTRY_CONNECTIONS": [
+  {
+   "FromCountry": "ES",
+   "ToCountry": "FR",
+   "Active": "1",
+   "Notes": "Mediterranean and cross-border freight corridor"
+  },
+  {
+   "FromCountry": "FR",
+   "ToCountry": "ES",
+   "Active": "1",
+   "Notes": "Mediterranean and cross-border freight corridor"
+  },
+  {
+   "FromCountry": "FR",
+   "ToCountry": "IT",
+   "Active": "1",
+   "Notes": "European Mediterranean corridor extension"
+  },
+  {
+   "FromCountry": "IT",
+   "ToCountry": "FR",
+   "Active": "1",
+   "Notes": "European Mediterranean corridor extension"
+  },
+  {
+   "FromCountry": "ES",
+   "ToCountry": "PT",
+   "Active": "1",
+   "Notes": "Iberian Atlantic freight connection"
+  },
+  {
+   "FromCountry": "PT",
+   "ToCountry": "ES",
+   "Active": "1",
+   "Notes": "Iberian Atlantic freight connection"
+  },
+  {
+   "FromCountry": "BE",
+   "ToCountry": "NL",
+   "Active": "1",
+   "Notes": "Benelux intermodal freight corridor"
+  },
+  {
+   "FromCountry": "NL",
+   "ToCountry": "BE",
+   "Active": "1",
+   "Notes": "Benelux intermodal freight corridor"
+  },
+  {
+   "FromCountry": "FR",
+   "ToCountry": "BE",
+   "Active": "1",
+   "Notes": "North-west European freight connection"
+  },
+  {
+   "FromCountry": "BE",
+   "ToCountry": "FR",
+   "Active": "1",
+   "Notes": "North-west European freight connection"
+  },
+  {
+   "FromCountry": "NL",
+   "ToCountry": "FR",
+   "Active": "1",
+   "Notes": "Extended corridor via Belgium and north-west Europe"
+  },
+  {
+   "FromCountry": "FR",
+   "ToCountry": "NL",
+   "Active": "1",
+   "Notes": "Extended corridor via Belgium and north-west Europe"
+  },
+  {
+   "FromCountry": "ES",
+   "ToCountry": "IT",
+   "Active": "1",
+   "Notes": "Long-range corridor via France"
+  },
+  {
+   "FromCountry": "IT",
+   "ToCountry": "ES",
+   "Active": "1",
+   "Notes": "Long-range corridor via France"
+  },
+  {
+   "FromCountry": "JO",
+   "ToCountry": "PS",
+   "Active": "1",
+   "Notes": "Regional logistics extension via Amman and Ramallah"
+  },
+  {
+   "FromCountry": "PS",
+   "ToCountry": "JO",
+   "Active": "1",
+   "Notes": "Regional logistics extension via Ramallah and Amman"
+  },
+  {
+   "FromCountry": "SA",
+   "ToCountry": "AE",
+   "Active": "1",
+   "Notes": "Future Gulf rail integration corridor"
+  },
+  {
+   "FromCountry": "AE",
+   "ToCountry": "SA",
+   "Active": "1",
+   "Notes": "Future Gulf rail integration corridor"
+  },
+  {
+   "FromCountry": "MA",
+   "ToCountry": "ES",
+   "Active": "1",
+   "Notes": "Potential future multimodal gateway connection"
+  },
+  {
+   "FromCountry": "ES",
+   "ToCountry": "MA",
+   "Active": "1",
+   "Notes": "Potential future multimodal gateway connection"
+  },
+  {
+   "FromCountry": "DZ",
+   "ToCountry": "TN",
+   "Active": "1",
+   "Notes": "Potential future Maghreb freight integration"
+  },
+  {
+   "FromCountry": "TN",
+   "ToCountry": "DZ",
+   "Active": "1",
+   "Notes": "Potential future Maghreb freight integration"
+  },
+  {
+   "FromCountry": "DZ",
+   "ToCountry": "MA",
+   "Active": "1",
+   "Notes": "Potential future western Maghreb rail integration"
+  },
+  {
+   "FromCountry": "MA",
+   "ToCountry": "DZ",
+   "Active": "1",
+   "Notes": "Potential future western Maghreb rail integration"
+  },
+  {
+   "FromCountry": "GB",
+   "ToCountry": "FR",
+   "Active": "1",
+   "Notes": "Channel-linked freight concept not active in this rail model"
+  },
+  {
+   "FromCountry": "FR",
+   "ToCountry": "GB",
+   "Active": "1",
+   "Notes": "Channel-linked freight concept not active in this rail model"
+  },
+  {
+   "FromCountry": "SA",
+   "ToCountry": "JO",
+   "Active": "1",
+   "Notes": "Gulf – Levant corridor"
+  },
+  {
+   "FromCountry": "JO",
+   "ToCountry": "SA",
+   "Active": "1",
+   "Notes": "Gulf – Levant corridor"
+  }
+ ],
+ "LINKS": [
+  {
+   "LinkID": "L-ES-001",
+   "FromTerminalID": "BCN-MORROT",
+   "ToTerminalID": "ZAR-PLAZA",
+   "DistanceKm": "315",
+   "TimeMin": "236",
+   "Active": "1",
+   "CorridorTag": "ES-N",
+   "Notes": "Barcelona ↔ Zaragoza"
+  },
+  {
+   "LinkID": "L-ES-002",
+   "FromTerminalID": "ZAR-PLAZA",
+   "ToTerminalID": "PAM-NOAIN",
+   "DistanceKm": "175",
+   "TimeMin": "117",
+   "Active": "1",
+   "CorridorTag": "ES-N",
+   "Notes": "Zaragoza ↔ Pamplona"
+  },
+  {
+   "LinkID": "L-ES-003",
+   "FromTerminalID": "PAM-NOAIN",
+   "ToTerminalID": "BIL-MERC",
+   "DistanceKm": "155",
+   "TimeMin": "103",
+   "Active": "1",
+   "CorridorTag": "ES-N",
+   "Notes": "Pamplona ↔ Bilbao"
+  },
+  {
+   "LinkID": "L-ES-004",
+   "FromTerminalID": "BCN-MORROT",
+   "ToTerminalID": "ZAR-PLAZA",
+   "DistanceKm": "315",
+   "TimeMin": "210",
+   "Active": "0",
+   "CorridorTag": "ES-C",
+   "Notes": "DEACTIVATED: duplicate of L-ES-001 (BCN-MORROT <-> ZAR-PLAZA)"
+  },
+  {
+   "LinkID": "L-ES-005",
+   "FromTerminalID": "ZAR-PLAZA",
+   "ToTerminalID": "MAD-ABRONIGAL",
+   "DistanceKm": "315",
+   "TimeMin": "210",
+   "Active": "1",
+   "CorridorTag": "ES-C",
+   "Notes": "Zaragoza ↔ Madrid"
+  },
+  {
+   "LinkID": "L-ES-006",
+   "FromTerminalID": "MAD-ABRONIGAL",
+   "ToTerminalID": "VLL-ESPERANZA",
+   "DistanceKm": "190",
+   "TimeMin": "127",
+   "Active": "1",
+   "CorridorTag": "ES-C",
+   "Notes": "Madrid ↔ Valladolid"
+  },
+  {
+   "LinkID": "L-ES-007",
+   "FromTerminalID": "BCN-MORROT",
+   "ToTerminalID": "TAR-MERCADERIES",
+   "DistanceKm": "95",
+   "TimeMin": "63",
+   "Active": "1",
+   "CorridorTag": "ES-S",
+   "Notes": "Barcelona ↔ Tarragona"
+  },
+  {
+   "LinkID": "L-ES-008",
+   "FromTerminalID": "VAL-FUENTESANLUIS",
+   "ToTerminalID": "MAD-ABRONIGAL",
+   "DistanceKm": "350",
+   "TimeMin": "260",
+   "Active": "1",
+   "CorridorTag": "ES-E",
+   "Notes": "Valencia ↔ Madrid"
+  },
+  {
+   "LinkID": "L-ES-009",
+   "FromTerminalID": "MAD-ABRONIGAL",
+   "ToTerminalID": "ZAR-PLAZA",
+   "DistanceKm": "320",
+   "TimeMin": "240",
+   "Active": "1",
+   "CorridorTag": "ES-E",
+   "Notes": "Madrid ↔ Zaragoza"
+  },
+  {
+   "LinkID": "L-INT-001",
+   "FromTerminalID": "BCN-MORROT",
+   "ToTerminalID": "PERP-STCHARLES",
+   "DistanceKm": "200",
+   "TimeMin": "150",
+   "Active": "1",
+   "CorridorTag": "ES-FR",
+   "Notes": "Barcelona ↔ Perpignan"
+  },
+  {
+   "LinkID": "L-FR-001",
+   "FromTerminalID": "PERP-STCHARLES",
+   "ToTerminalID": "LYO-VENISSIEUX",
+   "DistanceKm": "480",
+   "TimeMin": "320",
+   "Active": "1",
+   "CorridorTag": "FR-M",
+   "Notes": "Perpignan ↔ Lyon"
+  },
+  {
+   "LinkID": "L-FR-002",
+   "FromTerminalID": "LYO-VENISSIEUX",
+   "ToTerminalID": "PAR-VALENTON",
+   "DistanceKm": "460",
+   "TimeMin": "306",
+   "Active": "1",
+   "CorridorTag": "FR-M",
+   "Notes": "Lyon ↔ Paris"
+  },
+  {
+   "LinkID": "L-FR-003",
+   "FromTerminalID": "PERP-STCHARLES",
+   "ToTerminalID": "TLS-STJORY",
+   "DistanceKm": "250",
+   "TimeMin": "166",
+   "Active": "1",
+   "CorridorTag": "FR-A",
+   "Notes": "Perpignan ↔ Toulouse"
+  },
+  {
+   "LinkID": "L-FR-004",
+   "FromTerminalID": "TLS-STJORY",
+   "ToTerminalID": "BDX-HOURCADE",
+   "DistanceKm": "250",
+   "TimeMin": "166",
+   "Active": "1",
+   "CorridorTag": "FR-A",
+   "Notes": "Toulouse ↔ Bordeaux"
+  },
+  {
+   "LinkID": "L-FR-005",
+   "FromTerminalID": "LYO-VENISSIEUX",
+   "ToTerminalID": "MAR-CANET",
+   "DistanceKm": "320",
+   "TimeMin": "213",
+   "Active": "1",
+   "CorridorTag": "FR-S",
+   "Notes": "Lyon ↔ Marseille"
+  },
+  {
+   "LinkID": "L-INT-002",
+   "FromTerminalID": "LYO-VENISSIEUX",
+   "ToTerminalID": "VER-QUADRANTE",
+   "DistanceKm": "450",
+   "TimeMin": "338",
+   "Active": "1",
+   "CorridorTag": "FR-IT",
+   "Notes": "Lyon ↔ Verona extension"
+  },
+  {
+   "LinkID": "L-IT-001",
+   "FromTerminalID": "VER-QUADRANTE",
+   "ToTerminalID": "PES-PORTANUOVA",
+   "DistanceKm": "700",
+   "TimeMin": "467",
+   "Active": "1",
+   "CorridorTag": "IT-A",
+   "Notes": "Verona ↔ Pescara"
+  },
+  {
+   "LinkID": "L-IT-002",
+   "FromTerminalID": "PES-PORTANUOVA",
+   "ToTerminalID": "BAR-LAMASINATA",
+   "DistanceKm": "330",
+   "TimeMin": "220",
+   "Active": "1",
+   "CorridorTag": "IT-A",
+   "Notes": "Pescara ↔ Bari"
+  },
+  {
+   "LinkID": "L-IT-003",
+   "FromTerminalID": "CIV-FREIGHT",
+   "ToTerminalID": "ROM-SANTAPALOMBA",
+   "DistanceKm": "90",
+   "TimeMin": "60",
+   "Active": "1",
+   "CorridorTag": "IT-T",
+   "Notes": "Civitavecchia ↔ Santa Palomba"
+  },
+  {
+   "LinkID": "L-IT-004",
+   "FromTerminalID": "ROM-SANTAPALOMBA",
+   "ToTerminalID": "VER-QUADRANTE",
+   "DistanceKm": "530",
+   "TimeMin": "353",
+   "Active": "1",
+   "CorridorTag": "IT-T",
+   "Notes": "Santa Palomba ↔ Verona"
+  },
+  {
+   "LinkID": "L-IT-005",
+   "FromTerminalID": "ROM-SANTAPALOMBA",
+   "ToTerminalID": "PES-PORTANUOVA",
+   "DistanceKm": "225",
+   "TimeMin": "450",
+   "Active": "1",
+   "CorridorTag": "IT-C",
+   "Notes": "Santa Palomba ↔ Pescara"
+  },
+  {
+   "LinkID": "L-INT-003",
+   "FromTerminalID": "MAD-ABRONIGAL",
+   "ToTerminalID": "LIS-POCEIRAO",
+   "DistanceKm": "620",
+   "TimeMin": "465",
+   "Active": "1",
+   "CorridorTag": "ES-PT",
+   "Notes": "Madrid ↔ Lisbon area extension"
+  },
+  {
+   "LinkID": "L-PT-001",
+   "FromTerminalID": "LIS-POCEIRAO",
+   "ToTerminalID": "ENT-HUB",
+   "DistanceKm": "120",
+   "TimeMin": "90",
+   "Active": "1",
+   "CorridorTag": "PT-CORE",
+   "Notes": "Poceirão ↔ Entroncamento"
+  },
+  {
+   "LinkID": "L-PT-002",
+   "FromTerminalID": "ENT-HUB",
+   "ToTerminalID": "PORTO-LEIXOES",
+   "DistanceKm": "280",
+   "TimeMin": "210",
+   "Active": "1",
+   "CorridorTag": "PT-CORE",
+   "Notes": "Entroncamento ↔ Porto"
+  },
+  {
+   "LinkID": "L-PT-003",
+   "FromTerminalID": "LIS-POCEIRAO",
+   "ToTerminalID": "SINES-PORT",
+   "DistanceKm": "160",
+   "TimeMin": "120",
+   "Active": "1",
+   "CorridorTag": "PT-CORE",
+   "Notes": "Poceirão ↔ Sines"
+  },
+  {
+   "LinkID": "L-INT-004",
+   "FromTerminalID": "ANT-COMBINANT",
+   "ToTerminalID": "RTM-MAASVLAKTE",
+   "DistanceKm": "110",
+   "TimeMin": "83",
+   "Active": "1",
+   "CorridorTag": "BE-NL",
+   "Notes": "Antwerp ↔ Rotterdam"
+  },
+  {
+   "LinkID": "L-BE-001",
+   "FromTerminalID": "ANT-COMBINANT",
+   "ToTerminalID": "LIE-TRILOGIPORT",
+   "DistanceKm": "120",
+   "TimeMin": "90",
+   "Active": "1",
+   "CorridorTag": "BE-CORE",
+   "Notes": "Antwerp ↔ Liege"
+  },
+  {
+   "LinkID": "L-BE-002",
+   "FromTerminalID": "ANT-COMBINANT",
+   "ToTerminalID": "ZEE-RAILTERM",
+   "DistanceKm": "105",
+   "TimeMin": "79",
+   "Active": "1",
+   "CorridorTag": "BE-CORE",
+   "Notes": "Antwerp ↔ Zeebrugge"
+  },
+  {
+   "LinkID": "L-NL-001",
+   "FromTerminalID": "RTM-MAASVLAKTE",
+   "ToTerminalID": "VENLO-RAIL",
+   "DistanceKm": "190",
+   "TimeMin": "143",
+   "Active": "1",
+   "CorridorTag": "NL-CORE",
+   "Notes": "Rotterdam ↔ Venlo"
+  },
+  {
+   "LinkID": "L-NL-002",
+   "FromTerminalID": "RTM-MAASVLAKTE",
+   "ToTerminalID": "TIL-RAILPORT",
+   "DistanceKm": "95",
+   "TimeMin": "71",
+   "Active": "1",
+   "CorridorTag": "NL-CORE",
+   "Notes": "Rotterdam ↔ Tilburg"
+  },
+  {
+   "LinkID": "L-NL-003",
+   "FromTerminalID": "RTM-MAASVLAKTE",
+   "ToTerminalID": "AMS-WESTPOORT",
+   "DistanceKm": "85",
+   "TimeMin": "64",
+   "Active": "1",
+   "CorridorTag": "NL-CORE",
+   "Notes": "Rotterdam ↔ Amsterdam Westpoort"
+  },
+  {
+   "LinkID": "L-INT-005",
+   "FromTerminalID": "PAR-VALENTON",
+   "ToTerminalID": "ANT-COMBINANT",
+   "DistanceKm": "300",
+   "TimeMin": "225",
+   "Active": "1",
+   "CorridorTag": "FR-BE",
+   "Notes": "Paris ↔ Antwerp"
+  },
+  {
+   "LinkID": "L-INT-006",
+   "FromTerminalID": "RTM-MAASVLAKTE",
+   "ToTerminalID": "PAR-VALENTON",
+   "DistanceKm": "430",
+   "TimeMin": "323",
+   "Active": "1",
+   "CorridorTag": "NL-FR",
+   "Notes": "Rotterdam ↔ Paris extended corridor"
+  },
+  {
+   "LinkID": "L-INT-007",
+   "FromTerminalID": "BCN-MORROT",
+   "ToTerminalID": "VER-QUADRANTE",
+   "DistanceKm": "1150",
+   "TimeMin": "863",
+   "Active": "1",
+   "CorridorTag": "ES-IT",
+   "Notes": "Barcelona ↔ Verona via Mediterranean axis"
+  },
+  {
+   "LinkID": "L-JO-001",
+   "FromTerminalID": "AQA-FREIGHT",
+   "ToTerminalID": "AMM-DRYPORT",
+   "DistanceKm": "330",
+   "TimeMin": "247",
+   "Active": "1",
+   "CorridorTag": "JO-R",
+   "Notes": "Aqaba ↔ Amman"
+  },
+  {
+   "LinkID": "L-JO-002",
+   "FromTerminalID": "AMM-DRYPORT",
+   "ToTerminalID": "RAM-LOGNODE",
+   "DistanceKm": "75",
+   "TimeMin": "56",
+   "Active": "1",
+   "CorridorTag": "JO-R",
+   "Notes": "Amman ↔ Ramallah logistics extension"
+  },
+  {
+   "LinkID": "L-JO-003",
+   "FromTerminalID": "AQA-FREIGHT",
+   "ToTerminalID": "RAM-LOGNODE",
+   "DistanceKm": "400",
+   "TimeMin": "300",
+   "Active": "1",
+   "CorridorTag": "JO-R",
+   "Notes": "Aqaba ↔ Ramallah via Amman"
+  },
+  {
+   "LinkID": "L-EG-001",
+   "FromTerminalID": "ALX-FREIGHT",
+   "ToTerminalID": "CAI-TEBBIN",
+   "DistanceKm": "220",
+   "TimeMin": "188",
+   "Active": "1",
+   "CorridorTag": "EG-D",
+   "Notes": "Alexandria ↔ Cairo"
+  },
+  {
+   "LinkID": "L-EG-002",
+   "FromTerminalID": "CAI-TEBBIN",
+   "ToTerminalID": "DAM-PORT",
+   "DistanceKm": "200",
+   "TimeMin": "171",
+   "Active": "1",
+   "CorridorTag": "EG-D",
+   "Notes": "Cairo ↔ Damietta"
+  },
+  {
+   "LinkID": "L-EG-003",
+   "FromTerminalID": "ALX-FREIGHT",
+   "ToTerminalID": "DAM-PORT",
+   "DistanceKm": "230",
+   "TimeMin": "197",
+   "Active": "1",
+   "CorridorTag": "EG-D",
+   "Notes": "Alexandria ↔ Damietta"
+  },
+  {
+   "LinkID": "L-MA-001",
+   "FromTerminalID": "TNG-TANGERMED",
+   "ToTerminalID": "KEN-AUTO",
+   "DistanceKm": "230",
+   "TimeMin": "173",
+   "Active": "1",
+   "CorridorTag": "MA-CORE",
+   "Notes": "Tanger Med ↔ Kenitra"
+  },
+  {
+   "LinkID": "L-MA-002",
+   "FromTerminalID": "KEN-AUTO",
+   "ToTerminalID": "CAS-MOGHREB",
+   "DistanceKm": "150",
+   "TimeMin": "113",
+   "Active": "1",
+   "CorridorTag": "MA-CORE",
+   "Notes": "Kenitra ↔ Casablanca"
+  },
+  {
+   "LinkID": "L-MA-003",
+   "FromTerminalID": "CAS-MOGHREB",
+   "ToTerminalID": "MAR-FREIGHT",
+   "DistanceKm": "240",
+   "TimeMin": "180",
+   "Active": "1",
+   "CorridorTag": "MA-CORE",
+   "Notes": "Casablanca ↔ Marrakech"
+  },
+  {
+   "LinkID": "L-MA-004",
+   "FromTerminalID": "MAR-FREIGHT",
+   "ToTerminalID": "AGA-AGRI",
+   "DistanceKm": "250",
+   "TimeMin": "188",
+   "Active": "1",
+   "CorridorTag": "MA-SOUTH",
+   "Notes": "Marrakech ↔ Agadir"
+  },
+  {
+   "LinkID": "L-MA-005",
+   "FromTerminalID": "TNG-TANGERMED",
+   "ToTerminalID": "CAS-MOGHREB",
+   "DistanceKm": "380",
+   "TimeMin": "285",
+   "Active": "1",
+   "CorridorTag": "MA-CORE",
+   "Notes": "Tanger Med ↔ Casablanca"
+  },
+  {
+   "LinkID": "L-TN-001",
+   "FromTerminalID": "TUN-KSARSAID",
+   "ToTerminalID": "SFX-FREIGHT",
+   "DistanceKm": "270",
+   "TimeMin": "243",
+   "Active": "1",
+   "CorridorTag": "TN-CORE",
+   "Notes": "Tunis ↔ Sfax"
+  },
+  {
+   "LinkID": "L-TN-002",
+   "FromTerminalID": "SFX-FREIGHT",
+   "ToTerminalID": "GAF-MINING",
+   "DistanceKm": "210",
+   "TimeMin": "189",
+   "Active": "1",
+   "CorridorTag": "TN-MINING",
+   "Notes": "Sfax ↔ Gafsa"
+  },
+  {
+   "LinkID": "L-TN-003",
+   "FromTerminalID": "TUN-KSARSAID",
+   "ToTerminalID": "GAB-CHEM",
+   "DistanceKm": "400",
+   "TimeMin": "360",
+   "Active": "1",
+   "CorridorTag": "TN-SOUTH",
+   "Notes": "Tunis ↔ Gabes"
+  },
+  {
+   "LinkID": "L-TN-004",
+   "FromTerminalID": "SFX-FREIGHT",
+   "ToTerminalID": "GAB-CHEM",
+   "DistanceKm": "140",
+   "TimeMin": "126",
+   "Active": "1",
+   "CorridorTag": "TN-SOUTH",
+   "Notes": "Sfax ↔ Gabes"
+  },
+  {
+   "LinkID": "L-DZ-001",
+   "FromTerminalID": "ALG-CENTRALFY",
+   "ToTerminalID": "ORN-PORT",
+   "DistanceKm": "420",
+   "TimeMin": "378",
+   "Active": "1",
+   "CorridorTag": "DZ-WEST",
+   "Notes": "Algiers ↔ Oran"
+  },
+  {
+   "LinkID": "L-DZ-002",
+   "FromTerminalID": "ALG-CENTRALFY",
+   "ToTerminalID": "CST-INDHUB",
+   "DistanceKm": "390",
+   "TimeMin": "351",
+   "Active": "1",
+   "CorridorTag": "DZ-EAST",
+   "Notes": "Algiers ↔ Constantine"
+  },
+  {
+   "LinkID": "L-DZ-003",
+   "FromTerminalID": "CST-INDHUB",
+   "ToTerminalID": "ANN-STEEL",
+   "DistanceKm": "155",
+   "TimeMin": "140",
+   "Active": "1",
+   "CorridorTag": "DZ-EAST",
+   "Notes": "Constantine ↔ Annaba"
+  },
+  {
+   "LinkID": "L-DZ-004",
+   "FromTerminalID": "CST-INDHUB",
+   "ToTerminalID": "HME-ENERGY",
+   "DistanceKm": "550",
+   "TimeMin": "495",
+   "Active": "1",
+   "CorridorTag": "DZ-SOUTH",
+   "Notes": "Constantine ↔ Hassi Messaoud"
+  },
+  {
+   "LinkID": "L-DZ-005",
+   "FromTerminalID": "ALG-CENTRALFY",
+   "ToTerminalID": "ANN-STEEL",
+   "DistanceKm": "540",
+   "TimeMin": "486",
+   "Active": "1",
+   "CorridorTag": "DZ-EAST",
+   "Notes": "Algiers ↔ Annaba"
+  },
+  {
+   "LinkID": "L-SA-001",
+   "FromTerminalID": "RIYADH-DRYPORT",
+   "ToTerminalID": "DAMMAM-PORT",
+   "DistanceKm": "410",
+   "TimeMin": "273",
+   "Active": "1",
+   "CorridorTag": "SA-EAST",
+   "Notes": "Riyadh ↔ Dammam"
+  },
+  {
+   "LinkID": "L-SA-002",
+   "FromTerminalID": "RIYADH-DRYPORT",
+   "ToTerminalID": "HAIL-FREIGHT",
+   "DistanceKm": "650",
+   "TimeMin": "433",
+   "Active": "1",
+   "CorridorTag": "SA-NORTH",
+   "Notes": "Riyadh ↔ Hail"
+  },
+  {
+   "LinkID": "L-SA-003",
+   "FromTerminalID": "RIYADH-DRYPORT",
+   "ToTerminalID": "JED-LOGTERM",
+   "DistanceKm": "950",
+   "TimeMin": "633",
+   "Active": "1",
+   "CorridorTag": "SA-LANDBRIDGE",
+   "Notes": "Riyadh ↔ Jeddah landbridge"
+  },
+  {
+   "LinkID": "L-SA-004",
+   "FromTerminalID": "DAMMAM-PORT",
+   "ToTerminalID": "JUB-INDPORT",
+   "DistanceKm": "100",
+   "TimeMin": "67",
+   "Active": "1",
+   "CorridorTag": "SA-EAST",
+   "Notes": "Dammam ↔ Jubail"
+  },
+  {
+   "LinkID": "L-SA-005",
+   "FromTerminalID": "JED-LOGTERM",
+   "ToTerminalID": "RIYADH-DRYPORT",
+   "DistanceKm": "950",
+   "TimeMin": "633",
+   "Active": "1",
+   "CorridorTag": "SA-LANDBRIDGE",
+   "Notes": "Jeddah ↔ Riyadh reverse service"
+  },
+  {
+   "LinkID": "L-AE-001",
+   "FromTerminalID": "AUH-KHALIFAPORT",
+   "ToTerminalID": "DXB-JEBELALI",
+   "DistanceKm": "140",
+   "TimeMin": "105",
+   "Active": "1",
+   "CorridorTag": "AE-CORE",
+   "Notes": "Abu Dhabi ↔ Dubai"
+  },
+  {
+   "LinkID": "L-AE-002",
+   "FromTerminalID": "DXB-JEBELALI",
+   "ToTerminalID": "FUJ-PORTLOG",
+   "DistanceKm": "180",
+   "TimeMin": "135",
+   "Active": "1",
+   "CorridorTag": "AE-EAST",
+   "Notes": "Dubai ↔ Fujairah"
+  },
+  {
+   "LinkID": "L-AE-003",
+   "FromTerminalID": "AUH-KHALIFAPORT",
+   "ToTerminalID": "ALAIN-ICD",
+   "DistanceKm": "160",
+   "TimeMin": "120",
+   "Active": "1",
+   "CorridorTag": "AE-INLAND",
+   "Notes": "Abu Dhabi ↔ Al Ain"
+  },
+  {
+   "LinkID": "L-AE-004",
+   "FromTerminalID": "DXB-JEBELALI",
+   "ToTerminalID": "ALAIN-ICD",
+   "DistanceKm": "150",
+   "TimeMin": "113",
+   "Active": "1",
+   "CorridorTag": "AE-INLAND",
+   "Notes": "Dubai ↔ Al Ain"
+  },
+  {
+   "LinkID": "L-AE-005",
+   "FromTerminalID": "AUH-KHALIFAPORT",
+   "ToTerminalID": "FUJ-PORTLOG",
+   "DistanceKm": "320",
+   "TimeMin": "240",
+   "Active": "1",
+   "CorridorTag": "AE-CORE",
+   "Notes": "Abu Dhabi ↔ Fujairah"
+  },
+  {
+   "LinkID": "L-INT-008",
+   "FromTerminalID": "DAMMAM-PORT",
+   "ToTerminalID": "AUH-KHALIFAPORT",
+   "DistanceKm": "550",
+   "TimeMin": "413",
+   "Active": "1",
+   "CorridorTag": "GCC-FUTURE",
+   "Notes": "Gulf rail integration future link"
+  },
+  {
+   "LinkID": "L-INT-009",
+   "FromTerminalID": "RIYADH-DRYPORT",
+   "ToTerminalID": "DXB-JEBELALI",
+   "DistanceKm": "980",
+   "TimeMin": "735",
+   "Active": "0",
+   "CorridorTag": "GCC-FUTURE",
+   "Notes": "Riyadh ↔ Dubai future cross-border corridor"
+  },
+  {
+   "LinkID": "L-UK-001",
+   "FromTerminalID": "FELIXSTOWE-RAIL",
+   "ToTerminalID": "DAV-DIRFT",
+   "DistanceKm": "260",
+   "TimeMin": "195",
+   "Active": "1",
+   "CorridorTag": "UK-EAST",
+   "Notes": "Felixstowe ↔ Daventry"
+  },
+  {
+   "LinkID": "L-UK-002",
+   "FromTerminalID": "SOU-MARITIME",
+   "ToTerminalID": "DAV-DIRFT",
+   "DistanceKm": "220",
+   "TimeMin": "165",
+   "Active": "1",
+   "CorridorTag": "UK-SOUTH",
+   "Notes": "Southampton ↔ Daventry"
+  },
+  {
+   "LinkID": "L-UK-003",
+   "FromTerminalID": "DAV-DIRFT",
+   "ToTerminalID": "MAN-TRAFFORD",
+   "DistanceKm": "190",
+   "TimeMin": "143",
+   "Active": "1",
+   "CorridorTag": "UK-NORTH",
+   "Notes": "Daventry ↔ Manchester Trafford Park"
+  },
+  {
+   "LinkID": "L-UK-004",
+   "FromTerminalID": "MAN-TRAFFORD",
+   "ToTerminalID": "TEE-NORTHHUB",
+   "DistanceKm": "180",
+   "TimeMin": "135",
+   "Active": "1",
+   "CorridorTag": "UK-NORTH",
+   "Notes": "Manchester ↔ Teesport"
+  },
+  {
+   "LinkID": "L-UK-005",
+   "FromTerminalID": "FELIXSTOWE-RAIL",
+   "ToTerminalID": "SOU-MARITIME",
+   "DistanceKm": "280",
+   "TimeMin": "210",
+   "Active": "1",
+   "CorridorTag": "UK-PORTS",
+   "Notes": "Felixstowe ↔ Southampton"
+  },
+  {
+   "LinkID": "L-LB-001",
+   "FromTerminalID": "BEI-HISTORIC",
+   "ToTerminalID": "TRI-HISTORIC",
+   "DistanceKm": "90",
+   "TimeMin": "90",
+   "Active": "0",
+   "CorridorTag": "LB-REHAB",
+   "Notes": "Beirut ↔ Tripoli historical rehabilitation"
+  },
+  {
+   "LinkID": "L-LB-002",
+   "FromTerminalID": "BEI-HISTORIC",
+   "ToTerminalID": "SID-HISTORIC",
+   "DistanceKm": "45",
+   "TimeMin": "45",
+   "Active": "0",
+   "CorridorTag": "LB-REHAB",
+   "Notes": "Beirut ↔ Sidon future rehabilitation"
+  },
+  {
+   "LinkID": "L-LB-003",
+   "FromTerminalID": "BEI-HISTORIC",
+   "ToTerminalID": "RYA-HISTORIC",
+   "DistanceKm": "85",
+   "TimeMin": "85",
+   "Active": "0",
+   "CorridorTag": "LB-REHAB",
+   "Notes": "Beirut ↔ Rayak historical freight concept"
+  },
+  {
+   "LinkID": "L-PT-010",
+   "FromTerminalID": "LIS-POCEIRAO",
+   "ToTerminalID": "SET-SADOPORT",
+   "DistanceKm": "50",
+   "TimeMin": "38",
+   "Active": "1",
+   "CorridorTag": "PT-CORE",
+   "Notes": "Poceirão ↔ Setúbal (Linha de Setúbal)"
+  },
+  {
+   "LinkID": "L-PT-011",
+   "FromTerminalID": "SET-SADOPORT",
+   "ToTerminalID": "ERM-SADO",
+   "DistanceKm": "60",
+   "TimeMin": "45",
+   "Active": "1",
+   "CorridorTag": "PT-SOUTH",
+   "Notes": "Setúbal ↔ Ermidas do Sado (Linha do Alentejo)"
+  },
+  {
+   "LinkID": "L-PT-012",
+   "FromTerminalID": "ERM-SADO",
+   "ToTerminalID": "SINES-PORT",
+   "DistanceKm": "55",
+   "TimeMin": "41",
+   "Active": "1",
+   "CorridorTag": "PT-SOUTH",
+   "Notes": "Ermidas do Sado ↔ Sines (Ramal de Sines)"
+  },
+  {
+   "LinkID": "L-PT-013",
+   "FromTerminalID": "ERM-SADO",
+   "ToTerminalID": "ENT-HUB",
+   "DistanceKm": "130",
+   "TimeMin": "98",
+   "Active": "1",
+   "CorridorTag": "PT-SOUTH",
+   "Notes": "Ermidas do Sado ↔ Entroncamento (Linha do Alentejo)"
+  },
+  {
+   "LinkID": "L-PT-014",
+   "FromTerminalID": "AVR-CANAL",
+   "ToTerminalID": "PORTO-LEIXOES",
+   "DistanceKm": "80",
+   "TimeMin": "60",
+   "Active": "1",
+   "CorridorTag": "PT-CORE",
+   "Notes": "Aveiro ↔ Porto Leixões (Linha do Norte)"
+  },
+  {
+   "LinkID": "L-PT-015",
+   "FromTerminalID": "ENT-HUB",
+   "ToTerminalID": "AVR-CANAL",
+   "DistanceKm": "195",
+   "TimeMin": "146",
+   "Active": "1",
+   "CorridorTag": "PT-CORE",
+   "Notes": "Entroncamento ↔ Aveiro (Linha do Norte)"
+  },
+  {
+   "LinkID": "L-PT-005",
+   "FromTerminalID": "LIS-POCEIRAO",
+   "ToTerminalID": "BOB-LISBON",
+   "DistanceKm": "25",
+   "TimeMin": "20",
+   "Active": "1",
+   "CorridorTag": "PT-CORE",
+   "Notes": "Lisbon area freight connector"
+  },
+  {
+   "LinkID": "L-PT-006",
+   "FromTerminalID": "BOB-LISBON",
+   "ToTerminalID": "ENT-HUB",
+   "DistanceKm": "110",
+   "TimeMin": "80",
+   "Active": "1",
+   "CorridorTag": "PT-CORE",
+   "Notes": "Bobadela to Entroncamento"
+  },
+  {
+   "LinkID": "L-BE-005",
+   "FromTerminalID": "ANT-COMBINANT",
+   "ToTerminalID": "GENT-KLUIZENDOK",
+   "DistanceKm": "60",
+   "TimeMin": "48",
+   "Active": "1",
+   "CorridorTag": "BE-CORE",
+   "Notes": "Antwerp to Ghent rail link"
+  },
+  {
+   "LinkID": "L-BE-006",
+   "FromTerminalID": "ANT-COMBINANT",
+   "ToTerminalID": "GENK-HUPAC",
+   "DistanceKm": "95",
+   "TimeMin": "70",
+   "Active": "1",
+   "CorridorTag": "BE-CORE",
+   "Notes": "Antwerp to Genk intermodal"
+  },
+  {
+   "LinkID": "L-BE-007",
+   "FromTerminalID": "LIE-TRILOGIPORT",
+   "ToTerminalID": "GENK-HUPAC",
+   "DistanceKm": "50",
+   "TimeMin": "38",
+   "Active": "1",
+   "CorridorTag": "BE-CORE",
+   "Notes": "Liège to Genk corridor"
+  },
+  {
+   "LinkID": "L-NL-006",
+   "FromTerminalID": "RTM-MAASVLAKTE",
+   "ToTerminalID": "MOERDIJK-IMT",
+   "DistanceKm": "30",
+   "TimeMin": "24",
+   "Active": "1",
+   "CorridorTag": "NL-CORE",
+   "Notes": "Rotterdam to Moerdijk link"
+  },
+  {
+   "LinkID": "L-NL-007",
+   "FromTerminalID": "MOERDIJK-IMT",
+   "ToTerminalID": "TIL-RAILPORT",
+   "DistanceKm": "45",
+   "TimeMin": "35",
+   "Active": "1",
+   "CorridorTag": "NL-CORE",
+   "Notes": "Moerdijk to Tilburg"
+  },
+  {
+   "LinkID": "L-GB-FR-001",
+   "FromTerminalID": "FELIXSTOWE-RAIL",
+   "ToTerminalID": "LIL-DOURGES",
+   "DistanceKm": "310",
+   "TimeMin": "220",
+   "Active": "1",
+   "CorridorTag": "GB-FR",
+   "Notes": "Channel Tunnel – Felixstowe to Dourges"
+  },
+  {
+   "LinkID": "L-GB-FR-002",
+   "FromTerminalID": "DAV-DIRFT",
+   "ToTerminalID": "PAR-VALENTON",
+   "DistanceKm": "500",
+   "TimeMin": "340",
+   "Active": "1",
+   "CorridorTag": "GB-FR",
+   "Notes": "Channel Tunnel – Daventry to Paris"
+  },
+  {
+   "LinkID": "L-GB-001",
+   "FromTerminalID": "FELIXSTOWE-RAIL",
+   "ToTerminalID": "DAV-DIRFT",
+   "DistanceKm": "160",
+   "TimeMin": "120",
+   "Active": "1",
+   "CorridorTag": "GB-CORE",
+   "Notes": "Felixstowe to DIRFT"
+  },
+  {
+   "LinkID": "L-GB-002",
+   "FromTerminalID": "DAV-DIRFT",
+   "ToTerminalID": "MAN-TRAFFORD",
+   "DistanceKm": "100",
+   "TimeMin": "75",
+   "Active": "1",
+   "CorridorTag": "GB-CORE",
+   "Notes": "DIRFT to Manchester"
+  },
+  {
+   "LinkID": "L-GB-003",
+   "FromTerminalID": "DAV-DIRFT",
+   "ToTerminalID": "TEE-NORTHHUB",
+   "DistanceKm": "250",
+   "TimeMin": "180",
+   "Active": "1",
+   "CorridorTag": "GB-CORE",
+   "Notes": "DIRFT to Teesport"
+  },
+  {
+   "LinkID": "L-GB-004",
+   "FromTerminalID": "SOU-MARITIME",
+   "ToTerminalID": "DAV-DIRFT",
+   "DistanceKm": "170",
+   "TimeMin": "125",
+   "Active": "1",
+   "CorridorTag": "GB-CORE",
+   "Notes": "Southampton to DIRFT"
+  },
+  {
+   "LinkID": "L-ES-MA-001",
+   "FromTerminalID": "MAL-MACARENO",
+   "ToTerminalID": "TNG-TANGERMED",
+   "DistanceKm": "70",
+   "TimeMin": "90",
+   "Active": "1",
+   "CorridorTag": "ES-MA",
+   "Notes": "Algeciras – Tanger Med corridor"
+  },
+  {
+   "LinkID": "L-MA-DZ-001",
+   "FromTerminalID": "CAS-MOGHREB",
+   "ToTerminalID": "ORN-PORT",
+   "DistanceKm": "530",
+   "TimeMin": "380",
+   "Active": "1",
+   "CorridorTag": "MA-DZ",
+   "Notes": "Oujda – Maghnia cross-border"
+  },
+  {
+   "LinkID": "L-DZ-TN-001",
+   "FromTerminalID": "ANN-STEEL",
+   "ToTerminalID": "TUN-KSARSAID",
+   "DistanceKm": "300",
+   "TimeMin": "215",
+   "Active": "1",
+   "CorridorTag": "DZ-TN",
+   "Notes": "Annaba – Tunis cross-border"
+  },
+  {
+   "LinkID": "L-SA-JO-001",
+   "FromTerminalID": "RIYADH-DRYPORT",
+   "ToTerminalID": "AQA-FREIGHT",
+   "DistanceKm": "1100",
+   "TimeMin": "780",
+   "Active": "1",
+   "CorridorTag": "SA-JO",
+   "Notes": "Riyadh to Aqaba"
+  },
+  {
+   "LinkID": "L-ES-MAL-001",
+   "FromTerminalID": "MAL-MACARENO",
+   "ToTerminalID": "MAD-ABRONIGAL",
+   "DistanceKm": "530",
+   "TimeMin": "380",
+   "Active": "1",
+   "CorridorTag": "ES-S",
+   "Notes": "Málaga to Madrid"
+  },
+  {
+   "LinkID": "L-ES-MAL-002",
+   "FromTerminalID": "MAL-MACARENO",
+   "ToTerminalID": "VAL-FUENTESANLUIS",
+   "DistanceKm": "440",
+   "TimeMin": "315",
+   "Active": "1",
+   "CorridorTag": "ES-S",
+   "Notes": "Málaga to Valencia"
+  },
+  {
+   "LinkID": "L-GB-FR-003",
+   "FromTerminalID": "SOU-MARITIME",
+   "ToTerminalID": "LIL-DOURGES",
+   "DistanceKm": "290",
+   "TimeMin": "200",
+   "Active": "1",
+   "CorridorTag": "GB-FR",
+   "Notes": "Channel Tunnel – Southampton to Dourges"
+  },
+  {
+   "LinkID": "L-FR-LIL-001",
+   "FromTerminalID": "LIL-DOURGES",
+   "ToTerminalID": "PAR-VALENTON",
+   "DistanceKm": "200",
+   "TimeMin": "140",
+   "Active": "1",
+   "CorridorTag": "FR-CORE",
+   "Notes": "Dourges to Paris"
+  }
+ ],
+ "SCHEDULES": [
+  {
+   "ServiceID": "GLOBAL",
+   "DepartureDays": "daily",
+   "DepartureTime": "",
+   "BlockedDates": "2026-01-01,2026-01-06,2026-04-03,2026-04-06,2026-05-01,2026-07-04,2026-08-15,2026-10-12,2026-11-01,2026-12-08,2026-12-25,2026-12-26",
+   "Notes": "Public holidays EU"
+  },
+  {
+   "ServiceID": "STD-RAIL",
+   "DepartureDays": "Mon,Tue,Wed,Thu,Fri",
+   "DepartureTime": "08:00",
+   "BlockedDates": "2026-07-14,2026-07-15,2026-08-03,2026-08-04,2026-08-05",
+   "Notes": "Standard service — Mon to Fri departures"
+  },
+  {
+   "ServiceID": "EXP-RAIL",
+   "DepartureDays": "Mon,Wed,Fri,Sat",
+   "DepartureTime": "14:00",
+   "BlockedDates": "2026-06-29,2026-06-30,2026-11-02,2026-11-03",
+   "Notes": "Express service — 4 days/week"
+  },
+  {
+   "ServiceID": "GRN-RAIL",
+   "DepartureDays": "Mon,Wed",
+   "DepartureTime": "10:00",
+   "BlockedDates": "2026-07-06,2026-07-07,2026-07-08,2026-07-09,2026-07-10",
+   "Notes": "EcoRail — 2 departures/week. Summer maintenance Jul 6–10"
+  }
+ ],
+ "SERVICES": [
+  {
+   "ServiceID": "STD-RAIL",
+   "ServiceName": "Standard Rail Service",
+   "ServiceLevel": "Standard",
+   "SpeedKmH": "80",
+   "DGAllowed": "1",
+   "Active": "1",
+   "Description": "Baseline service, DG allowed"
+  },
+  {
+   "ServiceID": "EXP-RAIL",
+   "ServiceName": "Express Rail Service",
+   "ServiceLevel": "Express",
+   "SpeedKmH": "100",
+   "DGAllowed": "0",
+   "Active": "1",
+   "Description": "Faster service, no DG"
+  },
+  {
+   "ServiceID": "GRN-RAIL",
+   "ServiceName": "Economy Rail Service",
+   "ServiceLevel": "Economy",
+   "SpeedKmH": "70",
+   "DGAllowed": "0",
+   "Active": "1",
+   "Description": "Eco option with discount surcharge rule"
+  }
+ ],
+ "UTI_TYPES": [
+  {
+   "UTICode": "WAGON",
+   "UTIName": "Standard Freight Wagon",
+   "Category": "Rolling Stock",
+   "Description": "Conventional railway wagon"
+  },
+  {
+   "UTICode": "CONTAINER-20",
+   "UTIName": "20ft Container",
+   "Category": "Intermodal",
+   "Description": "ISO 20ft container"
+  },
+  {
+   "UTICode": "CONTAINER-40",
+   "UTIName": "40ft Container",
+   "Category": "Intermodal",
+   "Description": "ISO 40ft container"
+  },
+  {
+   "UTICode": "REEFER-40",
+   "UTIName": "40ft Reefer",
+   "Category": "Temperature Controlled",
+   "Description": "Refrigerated container"
+  },
+  {
+   "UTICode": "TANK",
+   "UTIName": "Tank Wagon",
+   "Category": "Specialized",
+   "Description": "Liquid cargo tank"
+  },
+  {
+   "UTICode": "SWAP-BODY",
+   "UTIName": "Swap Body",
+   "Category": "Intermodal",
+   "Description": "European swap body (7.15m, 7.45m, 7.82m)"
+  },
+  {
+   "UTICode": "SEMI-TRAILER",
+   "UTIName": "Semi-trailer",
+   "Category": "Road-Rail",
+   "Description": "Road semi-trailer on railway flat wagon"
+  }
+ ],
+ "ADR_CLASSES": [
+  {
+   "ClassCode": "NON-DG",
+   "ClassName": "Non-Dangerous Goods",
+   "Description": "General cargo (not classified as dangerous)"
+  },
+  {
+   "ClassCode": "3",
+   "ClassName": "Flammable Liquids",
+   "Description": "Liquids with flashpoint ≤60°C"
+  },
+  {
+   "ClassCode": "8",
+   "ClassName": "Corrosive Substances",
+   "Description": "Cause tissue damage"
+  }
+ ],
+ "TARIFFS": [
+  {
+   "ServiceID": "STD-RAIL",
+   "UTIType": "WAGON",
+   "FixedFee": "207",
+   "RatePerKm": "0.51",
+   "MinCharge": "414",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Standard wagon rate"
+  },
+  {
+   "ServiceID": "STD-RAIL",
+   "UTIType": "CONTAINER-20",
+   "FixedFee": "230",
+   "RatePerKm": "0.57",
+   "MinCharge": "460",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Standard 20ft container"
+  },
+  {
+   "ServiceID": "STD-RAIL",
+   "UTIType": "CONTAINER-40",
+   "FixedFee": "276",
+   "RatePerKm": "0.69",
+   "MinCharge": "552",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Standard 40ft container"
+  },
+  {
+   "ServiceID": "STD-RAIL",
+   "UTIType": "REEFER-40",
+   "FixedFee": "368",
+   "RatePerKm": "0.83",
+   "MinCharge": "690",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Standard reefer container"
+  },
+  {
+   "ServiceID": "STD-RAIL",
+   "UTIType": "SWAP-BODY",
+   "FixedFee": "221",
+   "RatePerKm": "0.55",
+   "MinCharge": "437",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Standard swap body"
+  },
+  {
+   "ServiceID": "STD-RAIL",
+   "UTIType": "SEMI-TRAILER",
+   "FixedFee": "253",
+   "RatePerKm": "0.62",
+   "MinCharge": "506",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Standard semi-trailer"
+  },
+  {
+   "ServiceID": "EXP-RAIL",
+   "UTIType": "WAGON",
+   "FixedFee": "299",
+   "RatePerKm": "0.64",
+   "MinCharge": "552",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Express wagon rate"
+  },
+  {
+   "ServiceID": "EXP-RAIL",
+   "UTIType": "CONTAINER-20",
+   "FixedFee": "331",
+   "RatePerKm": "0.74",
+   "MinCharge": "621",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Express 20ft container"
+  },
+  {
+   "ServiceID": "EXP-RAIL",
+   "UTIType": "CONTAINER-40",
+   "FixedFee": "391",
+   "RatePerKm": "0.87",
+   "MinCharge": "736",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Express 40ft container"
+  },
+  {
+   "ServiceID": "EXP-RAIL",
+   "UTIType": "REEFER-40",
+   "FixedFee": "483",
+   "RatePerKm": "1.01",
+   "MinCharge": "874",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Express reefer container"
+  },
+  {
+   "ServiceID": "EXP-RAIL",
+   "UTIType": "SWAP-BODY",
+   "FixedFee": "322",
+   "RatePerKm": "0.71",
+   "MinCharge": "598",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Express swap body"
+  },
+  {
+   "ServiceID": "EXP-RAIL",
+   "UTIType": "SEMI-TRAILER",
+   "FixedFee": "359",
+   "RatePerKm": "0.78",
+   "MinCharge": "667",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Express semi-trailer"
+  },
+  {
+   "ServiceID": "GRN-RAIL",
+   "UTIType": "WAGON",
+   "FixedFee": "184",
+   "RatePerKm": "0.46",
+   "MinCharge": "368",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Green wagon rate"
+  },
+  {
+   "ServiceID": "GRN-RAIL",
+   "UTIType": "CONTAINER-20",
+   "FixedFee": "207",
+   "RatePerKm": "0.53",
+   "MinCharge": "414",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Green 20ft container"
+  },
+  {
+   "ServiceID": "GRN-RAIL",
+   "UTIType": "CONTAINER-40",
+   "FixedFee": "248",
+   "RatePerKm": "0.62",
+   "MinCharge": "483",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Green 40ft container"
+  },
+  {
+   "ServiceID": "GRN-RAIL",
+   "UTIType": "REEFER-40",
+   "FixedFee": "322",
+   "RatePerKm": "0.74",
+   "MinCharge": "598",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Green reefer container"
+  },
+  {
+   "ServiceID": "GRN-RAIL",
+   "UTIType": "SWAP-BODY",
+   "FixedFee": "193",
+   "RatePerKm": "0.48",
+   "MinCharge": "386",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Green swap body"
+  },
+  {
+   "ServiceID": "GRN-RAIL",
+   "UTIType": "SEMI-TRAILER",
+   "FixedFee": "225",
+   "RatePerKm": "0.55",
+   "MinCharge": "451",
+   "Currency": "EUR",
+   "Active": "1",
+   "Notes": "Green semi-trailer"
+  }
+ ],
+ "SURCHARGES": [
+  {
+   "": "GENERAL — Dangerous Goods",
+   "Label": "",
+   "AmountType": "",
+   "Amount": "",
+   "Currency": "",
+   "Rule": "",
+   "Active": "",
+   "Notes": "",
+   "ApplyPer": ""
+  },
+  {
+   "": "DG-GEN",
+   "Label": "Dangerous goods handling",
+   "AmountType": "percent",
+   "Amount": "5",
+   "Currency": "EUR",
+   "Rule": "DG=YES",
+   "Active": "1",
+   "Notes": "5% on base freight for any DG cargo",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DG-ADR3",
+   "Label": "ADR Class 3 supplement",
+   "AmountType": "fixed",
+   "Amount": "150",
+   "Currency": "EUR",
+   "Rule": "DG=YES;ADR_CLASS=3",
+   "Active": "1",
+   "Notes": "Flammable liquids extra handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DG-ADR8",
+   "Label": "ADR Class 8 supplement",
+   "AmountType": "fixed",
+   "Amount": "120",
+   "Currency": "EUR",
+   "Rule": "DG=YES;ADR_CLASS=8",
+   "Active": "1",
+   "Notes": "Corrosive substances extra handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "GENERAL — Route & Service",
+   "Label": "",
+   "AmountType": "",
+   "Amount": "",
+   "Currency": "",
+   "Rule": "",
+   "Active": "",
+   "Notes": "",
+   "ApplyPer": ""
+  },
+  {
+   "": "INT-CROSS",
+   "Label": "International border crossing",
+   "AmountType": "fixed",
+   "Amount": "80",
+   "Currency": "EUR",
+   "Rule": "MODE=INTERNATIONAL",
+   "Active": "1",
+   "Notes": "Per border crossing fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "LONG-HAUL",
+   "Label": "Long haul supplement",
+   "AmountType": "percent",
+   "Amount": "3",
+   "Currency": "EUR",
+   "Rule": "DISTANCE_KM>=1000",
+   "Active": "1",
+   "Notes": "3% on base freight for routes over 1000 km",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "EXPRESS-PR",
+   "Label": "Express service premium",
+   "AmountType": "percent",
+   "Amount": "20",
+   "Currency": "EUR",
+   "Rule": "SERVICE_LEVEL=EXPRESS",
+   "Active": "1",
+   "Notes": "20% premium for express services",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "GREEN-DISC",
+   "Label": "Green service eco discount",
+   "AmountType": "percent",
+   "Amount": "-5",
+   "Currency": "EUR",
+   "Rule": "SERVICE_LEVEL=GREEN",
+   "Active": "1",
+   "Notes": "-5% eco discount for green services",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "GENERAL — Cargo",
+   "Label": "",
+   "AmountType": "",
+   "Amount": "",
+   "Currency": "",
+   "Rule": "",
+   "Active": "",
+   "Notes": "",
+   "ApplyPer": ""
+  },
+  {
+   "": "REEFER-SUR",
+   "Label": "Reefer power surcharge",
+   "AmountType": "fixed",
+   "Amount": "200",
+   "Currency": "EUR",
+   "Rule": "UTI=REEFER-40",
+   "Active": "1",
+   "Notes": "Temperature-controlled equipment surcharge",
+   "ApplyPer": "unit"
+  },
+  {
+   "": "MULTI-UNIT",
+   "Label": "Multi-unit handling",
+   "AmountType": "fixed",
+   "Amount": "50",
+   "Currency": "EUR",
+   "Rule": "UNITS>=3",
+   "Active": "1",
+   "Notes": "Additional handling for 3+ units",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "HEAVY-LOAD",
+   "Label": "Heavy load supplement",
+   "AmountType": "fixed",
+   "Amount": "100",
+   "Currency": "EUR",
+   "Rule": "WEIGHT_KG>=20000",
+   "Active": "1",
+   "Notes": "Supplement for cargo over 20 tonnes",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCUMENTATION — Per country of origin (add new country below defaults)",
+   "Label": "",
+   "AmountType": "",
+   "Amount": "",
+   "Currency": "",
+   "Rule": "",
+   "Active": "",
+   "Notes": "",
+   "ApplyPer": ""
+  },
+  {
+   "": "DOCS-ES",
+   "Label": "Documentation processing (Spain)",
+   "AmountType": "fixed",
+   "Amount": "20",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=ES",
+   "Active": "1",
+   "Notes": "Spain docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-PT",
+   "Label": "Documentation processing (Portugal)",
+   "AmountType": "fixed",
+   "Amount": "18",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=PT",
+   "Active": "1",
+   "Notes": "Portugal docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-FR",
+   "Label": "Documentation processing (France)",
+   "AmountType": "fixed",
+   "Amount": "25",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=FR",
+   "Active": "1",
+   "Notes": "France docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-IT",
+   "Label": "Documentation processing (Italy)",
+   "AmountType": "fixed",
+   "Amount": "25",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=IT",
+   "Active": "1",
+   "Notes": "Italy docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-BE",
+   "Label": "Documentation processing (Belgium)",
+   "AmountType": "fixed",
+   "Amount": "22",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=BE",
+   "Active": "1",
+   "Notes": "Belgium docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-NL",
+   "Label": "Documentation processing (Netherlands)",
+   "AmountType": "fixed",
+   "Amount": "22",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=NL",
+   "Active": "1",
+   "Notes": "Netherlands docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-GB",
+   "Label": "Documentation processing (UK)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=GB",
+   "Active": "1",
+   "Notes": "UK docs fee post-Brexit",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-MA",
+   "Label": "Documentation processing (Morocco)",
+   "AmountType": "fixed",
+   "Amount": "30",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=MA",
+   "Active": "1",
+   "Notes": "Morocco docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-DZ",
+   "Label": "Documentation processing (Algeria)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=DZ",
+   "Active": "1",
+   "Notes": "Algeria docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-TN",
+   "Label": "Documentation processing (Tunisia)",
+   "AmountType": "fixed",
+   "Amount": "28",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=TN",
+   "Active": "1",
+   "Notes": "Tunisia docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-SA",
+   "Label": "Documentation processing (Saudi Arabia)",
+   "AmountType": "fixed",
+   "Amount": "40",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=SA",
+   "Active": "1",
+   "Notes": "Saudi Arabia docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-AE",
+   "Label": "Documentation processing (UAE)",
+   "AmountType": "fixed",
+   "Amount": "38",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=AE",
+   "Active": "1",
+   "Notes": "UAE docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-JO",
+   "Label": "Documentation processing (Jordan)",
+   "AmountType": "fixed",
+   "Amount": "32",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=JO",
+   "Active": "1",
+   "Notes": "Jordan docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "DOCS-EG",
+   "Label": "Documentation processing (Egypt)",
+   "AmountType": "fixed",
+   "Amount": "30",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=EG",
+   "Active": "1",
+   "Notes": "Egypt docs fee",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERMINAL TAXES ORIGIN — Per country (add new country above default)",
+   "Label": "",
+   "AmountType": "",
+   "Amount": "",
+   "Currency": "",
+   "Rule": "",
+   "Active": "",
+   "Notes": "",
+   "ApplyPer": ""
+  },
+  {
+   "": "TERM-TAX-ES",
+   "Label": "Terminal taxes origin (Spain)",
+   "AmountType": "fixed",
+   "Amount": "15",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=ES",
+   "Active": "1",
+   "Notes": "Spain origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-PT",
+   "Label": "Terminal taxes origin (Portugal)",
+   "AmountType": "fixed",
+   "Amount": "12",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=PT",
+   "Active": "1",
+   "Notes": "Portugal origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-FR",
+   "Label": "Terminal taxes origin (France)",
+   "AmountType": "fixed",
+   "Amount": "18",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=FR",
+   "Active": "1",
+   "Notes": "France origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-IT",
+   "Label": "Terminal taxes origin (Italy)",
+   "AmountType": "fixed",
+   "Amount": "18",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=IT",
+   "Active": "1",
+   "Notes": "Italy origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-BE",
+   "Label": "Terminal taxes origin (Belgium)",
+   "AmountType": "fixed",
+   "Amount": "16",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=BE",
+   "Active": "1",
+   "Notes": "Belgium origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-NL",
+   "Label": "Terminal taxes origin (Netherlands)",
+   "AmountType": "fixed",
+   "Amount": "16",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=NL",
+   "Active": "1",
+   "Notes": "Netherlands origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-GB",
+   "Label": "Terminal taxes origin (UK)",
+   "AmountType": "fixed",
+   "Amount": "28",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=GB",
+   "Active": "1",
+   "Notes": "UK origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-MA",
+   "Label": "Terminal taxes origin (Morocco)",
+   "AmountType": "fixed",
+   "Amount": "22",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=MA",
+   "Active": "1",
+   "Notes": "Morocco origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-DZ",
+   "Label": "Terminal taxes origin (Algeria)",
+   "AmountType": "fixed",
+   "Amount": "25",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=DZ",
+   "Active": "1",
+   "Notes": "Algeria origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-TN",
+   "Label": "Terminal taxes origin (Tunisia)",
+   "AmountType": "fixed",
+   "Amount": "20",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=TN",
+   "Active": "1",
+   "Notes": "Tunisia origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-SA",
+   "Label": "Terminal taxes origin (Saudi Arabia)",
+   "AmountType": "fixed",
+   "Amount": "30",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=SA",
+   "Active": "1",
+   "Notes": "Saudi Arabia origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-AE",
+   "Label": "Terminal taxes origin (UAE)",
+   "AmountType": "fixed",
+   "Amount": "28",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=AE",
+   "Active": "1",
+   "Notes": "UAE origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-JO",
+   "Label": "Terminal taxes origin (Jordan)",
+   "AmountType": "fixed",
+   "Amount": "22",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=JO",
+   "Active": "1",
+   "Notes": "Jordan origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-EG",
+   "Label": "Terminal taxes origin (Egypt)",
+   "AmountType": "fixed",
+   "Amount": "20",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=EG",
+   "Active": "1",
+   "Notes": "Egypt origin terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERMINAL TAXES DESTINATION — Per country (add new country above default)",
+   "Label": "",
+   "AmountType": "",
+   "Amount": "",
+   "Currency": "",
+   "Rule": "",
+   "Active": "",
+   "Notes": "",
+   "ApplyPer": ""
+  },
+  {
+   "": "TERM-TAX-D-ES",
+   "Label": "Terminal taxes destination (Spain)",
+   "AmountType": "fixed",
+   "Amount": "15",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=ES",
+   "Active": "1",
+   "Notes": "Spain dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-PT",
+   "Label": "Terminal taxes destination (Portugal)",
+   "AmountType": "fixed",
+   "Amount": "12",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=PT",
+   "Active": "1",
+   "Notes": "Portugal dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-FR",
+   "Label": "Terminal taxes destination (France)",
+   "AmountType": "fixed",
+   "Amount": "18",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=FR",
+   "Active": "1",
+   "Notes": "France dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-IT",
+   "Label": "Terminal taxes destination (Italy)",
+   "AmountType": "fixed",
+   "Amount": "18",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=IT",
+   "Active": "1",
+   "Notes": "Italy dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-BE",
+   "Label": "Terminal taxes destination (Belgium)",
+   "AmountType": "fixed",
+   "Amount": "16",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=BE",
+   "Active": "1",
+   "Notes": "Belgium dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-NL",
+   "Label": "Terminal taxes destination (Netherlands)",
+   "AmountType": "fixed",
+   "Amount": "16",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=NL",
+   "Active": "1",
+   "Notes": "Netherlands dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-GB",
+   "Label": "Terminal taxes destination (UK)",
+   "AmountType": "fixed",
+   "Amount": "28",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=GB",
+   "Active": "1",
+   "Notes": "UK dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-MA",
+   "Label": "Terminal taxes destination (Morocco)",
+   "AmountType": "fixed",
+   "Amount": "22",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=MA",
+   "Active": "1",
+   "Notes": "Morocco dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-DZ",
+   "Label": "Terminal taxes destination (Algeria)",
+   "AmountType": "fixed",
+   "Amount": "25",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=DZ",
+   "Active": "1",
+   "Notes": "Algeria dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-TN",
+   "Label": "Terminal taxes destination (Tunisia)",
+   "AmountType": "fixed",
+   "Amount": "20",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=TN",
+   "Active": "1",
+   "Notes": "Tunisia dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-SA",
+   "Label": "Terminal taxes destination (Saudi Arabia)",
+   "AmountType": "fixed",
+   "Amount": "30",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=SA",
+   "Active": "1",
+   "Notes": "Saudi Arabia dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-AE",
+   "Label": "Terminal taxes destination (UAE)",
+   "AmountType": "fixed",
+   "Amount": "28",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=AE",
+   "Active": "1",
+   "Notes": "UAE dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-JO",
+   "Label": "Terminal taxes destination (Jordan)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=JO",
+   "Active": "1",
+   "Notes": "Jordan dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "TERM-TAX-D-EG",
+   "Label": "Terminal taxes destination (Egypt)",
+   "AmountType": "fixed",
+   "Amount": "20",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=EG",
+   "Active": "1",
+   "Notes": "Egypt dest terminal tax",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL HANDLING ORIGIN — Per country (add new country above default)",
+   "Label": "",
+   "AmountType": "",
+   "Amount": "",
+   "Currency": "",
+   "Rule": "",
+   "Active": "",
+   "Notes": "",
+   "ApplyPer": ""
+  },
+  {
+   "": "RAIL-HDL-O-ES",
+   "Label": "Rail handling origin (Spain)",
+   "AmountType": "fixed",
+   "Amount": "28",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=ES",
+   "Active": "1",
+   "Notes": "Spain origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-PT",
+   "Label": "Rail handling origin (Portugal)",
+   "AmountType": "fixed",
+   "Amount": "25",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=PT",
+   "Active": "1",
+   "Notes": "Portugal origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-FR",
+   "Label": "Rail handling origin (France)",
+   "AmountType": "fixed",
+   "Amount": "32",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=FR",
+   "Active": "1",
+   "Notes": "France origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-IT",
+   "Label": "Rail handling origin (Italy)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=IT",
+   "Active": "1",
+   "Notes": "Italy origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-BE",
+   "Label": "Rail handling origin (Belgium)",
+   "AmountType": "fixed",
+   "Amount": "30",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=BE",
+   "Active": "1",
+   "Notes": "Belgium origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-NL",
+   "Label": "Rail handling origin (Netherlands)",
+   "AmountType": "fixed",
+   "Amount": "30",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=NL",
+   "Active": "1",
+   "Notes": "Netherlands origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-GB",
+   "Label": "Rail handling origin (UK)",
+   "AmountType": "fixed",
+   "Amount": "45",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=GB",
+   "Active": "1",
+   "Notes": "UK origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-MA",
+   "Label": "Rail handling origin (Morocco)",
+   "AmountType": "fixed",
+   "Amount": "38",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=MA",
+   "Active": "1",
+   "Notes": "Morocco origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-DZ",
+   "Label": "Rail handling origin (Algeria)",
+   "AmountType": "fixed",
+   "Amount": "40",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=DZ",
+   "Active": "1",
+   "Notes": "Algeria origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-TN",
+   "Label": "Rail handling origin (Tunisia)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=TN",
+   "Active": "1",
+   "Notes": "Tunisia origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-SA",
+   "Label": "Rail handling origin (Saudi Arabia)",
+   "AmountType": "fixed",
+   "Amount": "42",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=SA",
+   "Active": "1",
+   "Notes": "Saudi Arabia origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-AE",
+   "Label": "Rail handling origin (UAE)",
+   "AmountType": "fixed",
+   "Amount": "40",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=AE",
+   "Active": "1",
+   "Notes": "UAE origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-JO",
+   "Label": "Rail handling origin (Jordan)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=JO",
+   "Active": "1",
+   "Notes": "Jordan origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-O-EG",
+   "Label": "Rail handling origin (Egypt)",
+   "AmountType": "fixed",
+   "Amount": "33",
+   "Currency": "EUR",
+   "Rule": "ORIGIN_COUNTRY=EG",
+   "Active": "1",
+   "Notes": "Egypt origin handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL HANDLING DESTINATION — Per country (add new country above default)",
+   "Label": "",
+   "AmountType": "",
+   "Amount": "",
+   "Currency": "",
+   "Rule": "",
+   "Active": "",
+   "Notes": "",
+   "ApplyPer": ""
+  },
+  {
+   "": "RAIL-HDL-D-ES",
+   "Label": "Rail handling destination (Spain)",
+   "AmountType": "fixed",
+   "Amount": "28",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=ES",
+   "Active": "1",
+   "Notes": "Spain dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-PT",
+   "Label": "Rail handling destination (Portugal)",
+   "AmountType": "fixed",
+   "Amount": "25",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=PT",
+   "Active": "1",
+   "Notes": "Portugal dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-FR",
+   "Label": "Rail handling destination (France)",
+   "AmountType": "fixed",
+   "Amount": "32",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=FR",
+   "Active": "1",
+   "Notes": "France dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-IT",
+   "Label": "Rail handling destination (Italy)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=IT",
+   "Active": "1",
+   "Notes": "Italy dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-BE",
+   "Label": "Rail handling destination (Belgium)",
+   "AmountType": "fixed",
+   "Amount": "30",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=BE",
+   "Active": "1",
+   "Notes": "Belgium dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-NL",
+   "Label": "Rail handling destination (Netherlands)",
+   "AmountType": "fixed",
+   "Amount": "30",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=NL",
+   "Active": "1",
+   "Notes": "Netherlands dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-GB",
+   "Label": "Rail handling destination (UK)",
+   "AmountType": "fixed",
+   "Amount": "45",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=GB",
+   "Active": "1",
+   "Notes": "UK dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-MA",
+   "Label": "Rail handling destination (Morocco)",
+   "AmountType": "fixed",
+   "Amount": "38",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=MA",
+   "Active": "1",
+   "Notes": "Morocco dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-DZ",
+   "Label": "Rail handling destination (Algeria)",
+   "AmountType": "fixed",
+   "Amount": "40",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=DZ",
+   "Active": "1",
+   "Notes": "Algeria dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-TN",
+   "Label": "Rail handling destination (Tunisia)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=TN",
+   "Active": "1",
+   "Notes": "Tunisia dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-SA",
+   "Label": "Rail handling destination (Saudi Arabia)",
+   "AmountType": "fixed",
+   "Amount": "42",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=SA",
+   "Active": "1",
+   "Notes": "Saudi Arabia dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-AE",
+   "Label": "Rail handling destination (UAE)",
+   "AmountType": "fixed",
+   "Amount": "40",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=AE",
+   "Active": "1",
+   "Notes": "UAE dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-JO",
+   "Label": "Rail handling destination (Jordan)",
+   "AmountType": "fixed",
+   "Amount": "35",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=JO",
+   "Active": "1",
+   "Notes": "Jordan dest handling",
+   "ApplyPer": "shipment"
+  },
+  {
+   "": "RAIL-HDL-D-EG",
+   "Label": "Rail handling destination (Egypt)",
+   "AmountType": "fixed",
+   "Amount": "33",
+   "Currency": "EUR",
+   "Rule": "DEST_COUNTRY=EG",
+   "Active": "1",
+   "Notes": "Egypt dest handling",
+   "ApplyPer": "shipment"
+  }
+ ]
+}

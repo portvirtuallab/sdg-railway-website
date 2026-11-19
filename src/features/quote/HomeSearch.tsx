@@ -3,28 +3,37 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
-import catalogue from '@/data/demo-catalogue.json';
+import { addDays, localNow, type Catalogue } from '@/engine';
+import { useCatalogue } from './catalogue-client';
 
 const field =
   'min-h-11 w-full rounded-lg border border-white/30 bg-white px-3 py-2 text-base text-neutral-900 outline-none focus:border-railway-green-600';
 
-function PlaceOptions() {
+function PlaceOptions({ catalogue }: { catalogue: Catalogue }) {
+  const countries = catalogue.countries.filter((c) => c.active);
   return (
     <>
-      <optgroup label="Door (road leg by Play Haulier)">
+      <optgroup label={`Door (road leg by ${catalogue.config.haulierName})`}>
         {catalogue.doors.map((d) => (
           <option key={d.id} value={`door:${d.id}`}>
-            {d.label}
+            {d.name}
           </option>
         ))}
       </optgroup>
-      <optgroup label="Terminal">
-        {catalogue.terminals.map((t) => (
-          <option key={t.id} value={`terminal:${t.id}`}>
-            {t.city} terminal
-          </option>
-        ))}
-      </optgroup>
+      {countries.map((c) => {
+        const list = catalogue.terminals
+          .filter((t) => t.active && t.countryCode === c.code)
+          .sort((a, b) => a.city.localeCompare(b.city));
+        return list.length ? (
+          <optgroup key={c.code} label={`Terminals – ${c.name}`}>
+            {list.map((t) => (
+              <option key={t.id} value={`terminal:${t.id}`}>
+                {t.city} – {t.name}
+              </option>
+            ))}
+          </optgroup>
+        ) : null;
+      })}
     </>
   );
 }
@@ -32,9 +41,11 @@ function PlaceOptions() {
 /** Quick quote search on the homepage: hands the values over to the quote form. */
 export function HomeSearch() {
   const router = useRouter();
+  const catalogue = useCatalogue();
+  const today = localNow(new Date()).slice(0, 10);
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
-  const [itu, setItu] = useState('');
+  const [uti, setUti] = useState('');
   const [date, setDate] = useState('');
   return (
     <form
@@ -43,7 +54,7 @@ export function HomeSearch() {
         const q = new URLSearchParams();
         if (from) q.set('from', from);
         if (to) q.set('to', to);
-        if (itu) q.set('itu', itu);
+        if (uti) q.set('uti', uti);
         if (date) q.set('date', date);
         router.push(`/request-a-quotation/?${q.toString()}#quote-form`);
       }}
@@ -61,7 +72,7 @@ export function HomeSearch() {
           onChange={(e) => setFrom(e.target.value)}
         >
           <option value="">Origin</option>
-          <PlaceOptions />
+          <PlaceOptions catalogue={catalogue} />
         </select>
       </div>
       <div className="grid gap-1">
@@ -70,16 +81,16 @@ export function HomeSearch() {
         </label>
         <select id="hs-to" className={field} value={to} onChange={(e) => setTo(e.target.value)}>
           <option value="">Destination</option>
-          <PlaceOptions />
+          <PlaceOptions catalogue={catalogue} />
         </select>
       </div>
       <div className="grid gap-1">
-        <label htmlFor="hs-itu" className="text-sm font-semibold text-white">
+        <label htmlFor="hs-uti" className="text-sm font-semibold text-white">
           Loading unit
         </label>
-        <select id="hs-itu" className={field} value={itu} onChange={(e) => setItu(e.target.value)}>
+        <select id="hs-uti" className={field} value={uti} onChange={(e) => setUti(e.target.value)}>
           <option value="">Any</option>
-          {catalogue.itus.map((u) => (
+          {catalogue.utiTypes.map((u) => (
             <option key={u.code} value={u.code}>
               {u.name}
             </option>
@@ -94,8 +105,8 @@ export function HomeSearch() {
           id="hs-date"
           type="date"
           className={field}
-          min={catalogue.validFrom}
-          max={catalogue.validTo}
+          min={addDays(today, 1)}
+          max={addDays(today, 180)}
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />

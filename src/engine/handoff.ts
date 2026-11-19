@@ -1,5 +1,5 @@
-import { placeName } from './engine';
-import type { Booking, Catalogue, Quote } from './types';
+import type { Catalogue } from './catalogue';
+import { placeName, type Booking, type Quote } from './quote';
 
 /**
  * Structured summary for Click & Cargo (brief §4). Until an API exists, students download it as
@@ -7,9 +7,9 @@ import type { Booking, Catalogue, Quote } from './types';
  * (docs/product/data-model-and-erp-mapping.md).
  */
 export interface Handoff {
-  schema: 'sdg-railway.handoff/v1';
+  schema: 'sdg-railway.handoff/v2';
   simulation: true;
-  catalogueVersion: string;
+  service: { id: string; name: string };
   readyForErp: boolean;
   blockedReason: string | null;
   references: { quote: string; quoteVersion: number; booking: string | null };
@@ -26,9 +26,9 @@ export interface Handoff {
     description: string;
     grossWeightKg: number;
     packages: number;
-    itu: string;
+    uti: string;
     quantity: number;
-    dangerousGoods: { ridClass: string; unNumber: string | null } | null;
+    dangerousGoods: { adrClass: string; unNumber: string | null } | null;
     temperatureC: number | null;
   };
   route: {
@@ -36,6 +36,8 @@ export interface Handoff {
     originTerminal: string;
     destinationTerminal: string;
     destination: string;
+    path: string[];
+    distanceKm: number;
   };
   legs: { leg: string; from: string; to: string; provider: string; scope: string }[];
   prices: { item: string; quantity: number; unitPrice: number; amount: number }[];
@@ -75,9 +77,9 @@ export function buildHandoff(cat: Catalogue, quote: Quote, booking: Booking | nu
     (l) => (l.kind === 'origin-road' || l.kind === 'destination-road') && l.scope === 'included',
   );
   return {
-    schema: 'sdg-railway.handoff/v1',
+    schema: 'sdg-railway.handoff/v2',
     simulation: true,
-    catalogueVersion: quote.catalogueVersion,
+    service: { id: quote.service.id, name: quote.service.name },
     readyForErp: blockedReason === null,
     blockedReason,
     references: { quote: quote.ref, quoteVersion: quote.version, booking: booking?.ref ?? null },
@@ -87,17 +89,17 @@ export function buildHandoff(cat: Catalogue, quote: Quote, booking: Booking | nu
       shipper: r.shipper,
       consignee: r.consignee,
       intermodalCarrier: 'SDG Railway',
-      roadHaulier: roadIncluded ? cat.haulier : null,
+      roadHaulier: roadIncluded ? cat.config.haulierName : null,
     },
     incoterm: r.incoterm,
     cargo: {
       description: r.cargoDescription,
       grossWeightKg: r.grossWeightKg,
       packages: r.packages,
-      itu: r.ituCode,
+      uti: r.utiType,
       quantity: r.quantity,
       dangerousGoods: r.dangerousGoods
-        ? { ridClass: r.dangerousGoods.ridClass, unNumber: r.dangerousGoods.unNumber || null }
+        ? { adrClass: r.dangerousGoods.adrClass, unNumber: r.dangerousGoods.unNumber || null }
         : null,
       temperatureC: r.temperatureC,
     },
@@ -106,6 +108,8 @@ export function buildHandoff(cat: Catalogue, quote: Quote, booking: Booking | nu
       originTerminal: `${ot.name}, ${ot.city}`,
       destinationTerminal: `${dt.name}, ${dt.city}`,
       destination: placeName(cat, r.destination),
+      path: quote.route.pathIds,
+      distanceKm: quote.route.distanceKm,
     },
     legs: quote.legs.map((l) => ({
       leg: l.kind,

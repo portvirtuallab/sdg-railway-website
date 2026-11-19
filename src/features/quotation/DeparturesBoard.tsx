@@ -2,31 +2,41 @@
 
 import { useState, useSyncExternalStore } from 'react';
 import { Icon } from '@/components/ui/Icon';
-import catalogue from '@/data/demo-catalogue.json';
-import { buildDepartures, RAIL_SERVICES } from '@/data/departures';
-import { formatDateTime } from '@/features/quote/time';
+import { addHours, departuresBetween, formatDateTime, localNow } from '@/engine';
+import { useCatalogueState } from '@/features/quote/catalogue-client';
 
-const PILL: Record<string, string> = {
-  'STD-RAIL': 'bg-railway-blue-100 text-railway-blue-900',
-  'EXP-RAIL': 'bg-[#fdecec] text-[#8a1a1a]',
-  'GRN-RAIL': 'bg-railway-green-100 text-railway-green-700',
-};
+const PILLS = [
+  'bg-railway-blue-100 text-railway-blue-900',
+  'bg-[#fdecec] text-[#8a1a1a]',
+  'bg-railway-green-100 text-railway-green-700',
+  'bg-notice-bg text-notice-text',
+];
 
 const noopSubscribe = () => () => {};
-const localToday = () => {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-};
-const city = (id: string) => catalogue.terminals.find((t) => t.id === id)?.city ?? id;
+const localToday = () => localNow(new Date()).slice(0, 10);
 
+/** Departures of every service over the next 7 days, from the SCHEDULES tab of the Sheet. */
 export function DeparturesBoard() {
   // The board depends on today's date, so it is only rendered in the browser (null on the server).
-  const todayIso = useSyncExternalStore(noopSubscribe, localToday, () => null);
+  const today = useSyncExternalStore(noopSubscribe, localToday, () => null);
+  const { catalogue, source } = useCatalogueState();
   const [filter, setFilter] = useState<string>('ALL');
-  const today = todayIso ? new Date(`${todayIso}T12:00:00`) : null;
+  const services = catalogue.services.filter((s) => s.active);
+  const pill = (id: string) => PILLS[services.findIndex((s) => s.id === id) % PILLS.length];
   const rows = today
-    ? buildDepartures(today).filter((r) => filter === 'ALL' || r.service.id === filter)
+    ? departuresBetween(catalogue, today, 7).filter(
+        (r) => filter === 'ALL' || r.serviceId === filter,
+      )
     : [];
+  const route = (key: string) =>
+    key === '*' || key === ''
+      ? 'All routes'
+      : key
+          .split('→')
+          .map((c) =>
+            c === '*' ? 'any country' : (catalogue.countries.find((x) => x.code === c)?.name ?? c),
+          )
+          .join(' → ');
 
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200">
@@ -36,7 +46,9 @@ export function DeparturesBoard() {
           <div>
             <p className="font-display font-bold">Departures – next 7 days</p>
             <p className="text-xs text-white/75">
-              Generated from test catalogue {catalogue.version}, not a live schedule
+              Timetable of each service from the SDG Railway Sheet
+              {source === 'live' ? ' (live)' : ''}. Each departure leaves from every terminal on the
+              route; a quote proposes the exact train.
             </p>
           </div>
         </div>
@@ -46,7 +58,7 @@ export function DeparturesBoard() {
         role="group"
         aria-label="Filter by service"
       >
-        {['ALL', ...RAIL_SERVICES.map((s) => s.id)].map((id) => (
+        {['ALL', ...services.map((s) => s.id)].map((id) => (
           <button
             key={id}
             type="button"
@@ -54,7 +66,7 @@ export function DeparturesBoard() {
             onClick={() => setFilter(id)}
             className={`min-h-11 rounded-full border px-4 text-sm font-semibold ${filter === id ? 'border-railway-blue-900 bg-railway-blue-900 text-white' : 'text-railway-blue-900 hover:border-railway-blue-700 border-neutral-200'}`}
           >
-            {id === 'ALL' ? 'All services' : RAIL_SERVICES.find((s) => s.id === id)!.name}
+            {id === 'ALL' ? 'All services' : services.find((s) => s.id === id)!.name}
           </button>
         ))}
       </div>
@@ -64,24 +76,21 @@ export function DeparturesBoard() {
         role="region"
         aria-label="Departures table (scrolls horizontally)"
       >
-        <table className="w-full min-w-[48rem] text-left text-sm">
-          <caption className="sr-only">Scenario departures for the next seven days</caption>
+        <table className="w-full min-w-[44rem] text-left text-sm">
+          <caption className="sr-only">Departures for the next seven days</caption>
           <thead className="bg-neutral-50 text-xs tracking-wide text-neutral-600 uppercase">
             <tr>
               <th scope="col" className="px-4 py-3">
-                Train
+                Service
               </th>
               <th scope="col" className="px-4 py-3">
-                Route
+                Applies to
               </th>
               <th scope="col" className="px-4 py-3">
-                Cut-off
+                Gate-in cut-off
               </th>
               <th scope="col" className="px-4 py-3">
                 Departure
-              </th>
-              <th scope="col" className="px-4 py-3">
-                Arrival
               </th>
               <th scope="col" className="px-4 py-3">
                 Status
@@ -91,60 +100,55 @@ export function DeparturesBoard() {
           <tbody className="divide-y divide-neutral-200">
             {!today && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-neutral-600">
+                <td colSpan={5} className="px-4 py-10 text-center text-neutral-600">
                   Loading timetable…
                 </td>
               </tr>
             )}
             {today && rows.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-neutral-600">
+                <td colSpan={5} className="px-4 py-10 text-center text-neutral-600">
                   No service in the next 7 days for this selection.
                 </td>
               </tr>
             )}
-            {rows.map((r) => (
-              <tr
-                key={`${r.lane.id}-${r.date}`}
-                className={r.date === todayIso ? 'bg-notice-bg/50' : ''}
-              >
-                <td className="px-4 py-3">
-                  <span className="text-railway-blue-900 font-mono font-semibold">
-                    {r.lane.train.id}
-                  </span>
-                  <span
-                    className={`mt-1 block w-fit rounded-md px-2 py-0.5 text-xs font-bold ${PILL[r.service.id]}`}
-                  >
-                    {r.service.name}
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <span className="text-railway-blue-900 font-medium">
-                    {city(r.lane.from)} → {city(r.lane.to)}
-                  </span>
-                  <span className="block text-xs text-neutral-600">
-                    {r.lane.distanceKm.toLocaleString('en-GB')} km ·{' '}
-                    {r.lane.dangerousGoods ? 'dangerous goods accepted' : 'no dangerous goods'}
-                  </span>
-                </td>
-                <td className="px-4 py-3 whitespace-nowrap">{formatDateTime(r.cutOff)}</td>
-                <td className="text-railway-blue-900 px-4 py-3 font-medium whitespace-nowrap">
-                  {formatDateTime(r.departure)}
-                </td>
-                <td className="px-4 py-3 whitespace-nowrap">{formatDateTime(r.arrival)}</td>
-                <td className="px-4 py-3">
-                  {r.cancelled ? (
-                    <span className="rounded-md bg-[#fdecec] px-2 py-0.5 text-xs font-bold text-[#8a1a1a]">
-                      No service
+            {rows.map((r) => {
+              const dep = `${r.date}T${r.departureTime}`;
+              return (
+                <tr
+                  key={`${r.serviceId}-${r.routeKey}-${r.date}`}
+                  className={r.date === today ? 'bg-notice-bg/50' : ''}
+                >
+                  <td className="px-4 py-3">
+                    <span
+                      className={`block w-fit rounded-md px-2 py-0.5 text-xs font-bold ${pill(r.serviceId)}`}
+                    >
+                      {r.serviceName}
                     </span>
-                  ) : (
-                    <span className="bg-railway-green-100 text-railway-green-700 rounded-md px-2 py-0.5 text-xs font-bold">
-                      Scheduled
-                    </span>
-                  )}
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="text-railway-blue-900 px-4 py-3 font-medium">
+                    {route(r.routeKey)}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {formatDateTime(addHours(dep, -catalogue.config.cutOffHours))}
+                  </td>
+                  <td className="text-railway-blue-900 px-4 py-3 font-medium whitespace-nowrap">
+                    {formatDateTime(dep)}
+                  </td>
+                  <td className="px-4 py-3">
+                    {r.blocked ? (
+                      <span className="rounded-md bg-[#fdecec] px-2 py-0.5 text-xs font-bold text-[#8a1a1a]">
+                        No service – {r.reason}
+                      </span>
+                    ) : (
+                      <span className="bg-railway-green-100 text-railway-green-700 rounded-md px-2 py-0.5 text-xs font-bold">
+                        Scheduled
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

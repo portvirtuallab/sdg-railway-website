@@ -2,31 +2,40 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import catalogue from '@/data/demo-catalogue.json';
+import { useEffect, useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
-import { placeName, teamByPin } from './engine';
-import { buildHandoff } from './handoff';
-import { money, QuoteDocument, STATUS_LABEL } from './QuoteDocument';
 import {
-  acceptQuoteByRef,
-  bookingFor,
-  clearDemoData,
-  quotesForTeam,
-  statusOf,
-  updateTerminalOrders,
-  useDemoStore,
-} from './store';
-import { formatDateTime } from './time';
-import type { Booking, Quote, TerminalOrders } from './types';
+  buildHandoff,
+  effectiveStatus,
+  formatDateTime,
+  placeName,
+  type Booking,
+  type Quote,
+  type TerminalOrders,
+} from '@/engine';
+import { backend, clearDemoData, isFailure, type TeamData } from './backend';
+import { useCatalogue } from './catalogue-client';
+import { money, STATUS_LABEL } from './format';
+import { QuoteDocument } from './QuoteDocument';
+import { REQUOTE_KEY } from './requote';
 
 const input =
   'min-h-11 w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-base outline-none focus:border-railway-blue-700';
 const btn = 'inline-flex min-h-11 items-center gap-2 rounded-lg px-5 font-semibold';
 
+function bookingFor(data: TeamData, quote: Quote): Booking | null {
+  return (
+    data.bookings.find((b) => b.quoteRef === quote.ref && b.quoteVersion === quote.version) ?? null
+  );
+}
+
+const statusOf = (q: Quote) => effectiveStatus(q, new Date());
+
 export function MyQuotes() {
   const params = useSearchParams();
-  const store = useDemoStore();
+  const catalogue = useCatalogue();
+  const [data, setData] = useState<TeamData | null>(null);
+  const [loading, setLoading] = useState(false);
   const [pinInput, setPinInput] = useState(params.get('pin') ?? '');
   const [pin, setPin] = useState(params.get('pin') ?? '');
   const [pinError, setPinError] = useState<string | null>(null);
@@ -35,26 +44,49 @@ export function MyQuotes() {
   );
   const [confirmReset, setConfirmReset] = useState(false);
 
-  const team = pin ? teamByPin(catalogue, pin) : undefined;
+  const team = data?.team;
+
+  // Load the team's quotes from the register whenever the PIN changes.
+  useEffect(() => {
+    if (!pin) return;
+    let cancelled = false;
+    backend.list(pin).then((res) => {
+      if (cancelled) return;
+      setLoading(false);
+      if (isFailure(res)) {
+        setPinError(res.errors.map((e) => e.message).join(' '));
+        setData(null);
+      } else {
+        setPinError(null);
+        setData(res);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [pin]);
+
+  async function reload() {
+    const res = await backend.list(pin);
+    if (!isFailure(res)) setData(res);
+  }
 
   function openTeam(e: React.FormEvent) {
     e.preventDefault();
-    if (!teamByPin(catalogue, pinInput.trim())) {
-      setPinError(
-        'This PIN does not belong to any team in this exercise. Check it with your trainer.',
-      );
+    const next = pinInput.trim();
+    if (!/^\d{4}$/.test(next)) {
+      setPinError('Enter your team’s 4-digit PVL PIN.');
       return;
     }
-    setPinError(null);
-    setPin(pinInput.trim());
     setSelected(null);
+    setLoading(true);
+    if (next === pin) void reload().then(() => setLoading(false));
+    else setPin(next);
   }
 
-  if (!store) return <p className="text-neutral-600">Loading your quotes…</p>;
-
-  const quotes = team ? quotesForTeam(store, pin) : [];
+  const quotes = data ? [...data.quotes].sort((a, b) => (a.issuedAt < b.issuedAt ? 1 : -1)) : [];
   const current = selected
-    ? store.quotes.find((q) => q.ref === selected.ref && q.version === selected.v)
+    ? quotes.find((q) => q.ref === selected.ref && q.version === selected.v)
     : undefined;
 
   return (
@@ -82,9 +114,14 @@ export function MyQuotes() {
         <button type="submit" className={`${btn} bg-railway-blue-900 text-white`}>
           Show quotes
         </button>
-        {team && (
+        {loading && (
+          <p role="status" className="text-sm text-neutral-600">
+            Loading the register…
+          </p>
+        )}
+        {team && !loading && (
           <p className="text-sm text-neutral-600">
-            Showing <strong className="text-railway-blue-900">{team.team}</strong>
+            Showing <strong className="text-railway-blue-900">{team.name}</strong>
             {team.role === 'trainer' ? ' (all teams)' : ''}
           </p>
         )}
@@ -95,7 +132,7 @@ export function MyQuotes() {
         )}
       </form>
 
-      {team && (
+      {team && data && (
         <section aria-labelledby="mq-list" className="print:hidden">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 id="mq-list" className="text-railway-blue-900 text-2xl font-bold">
@@ -110,7 +147,8 @@ export function MyQuotes() {
           </div>
           {quotes.length === 0 ? (
             <div className="mt-4 rounded-2xl border border-dashed border-neutral-200 p-10 text-center text-neutral-600">
-              No quotes yet for {team.team} in this browser.{' '}
+              No quotes yet for {team.name}
+              {backend.mode === 'demo' ? ' in this browser' : ''}.{' '}
               <Link
                 href="/request-a-quotation/?example=1"
                 className="text-railway-blue-700 font-semibold underline"
@@ -127,7 +165,7 @@ export function MyQuotes() {
               aria-label="Quotes table"
             >
               <table className="w-full min-w-[46rem] text-left text-sm">
-                <caption className="sr-only">Quotes of {team.team}</caption>
+                <caption className="sr-only">Quotes of {team.name}</caption>
                 <thead className="bg-neutral-50 text-xs tracking-wide text-neutral-600 uppercase">
                   <tr>
                     <th scope="col" className="px-4 py-3">
@@ -149,7 +187,7 @@ export function MyQuotes() {
                 </thead>
                 <tbody className="divide-y divide-neutral-200">
                   {quotes.map((q) => {
-                    const b = bookingFor(store, q);
+                    const b = bookingFor(data, q);
                     const isSel = current === q;
                     return (
                       <tr
@@ -184,7 +222,7 @@ export function MyQuotes() {
                               <span className="font-mono font-semibold">{b.ref}</span>
                               <span className="block text-xs text-neutral-600">
                                 {b.status === 'confirmed'
-                                  ? `${b.train.trainId}, ${formatDateTime(b.train.departure)}`
+                                  ? `Train ${formatDateTime(b.train.departure)}`
                                   : 'Train pending'}
                               </span>
                             </>
@@ -202,15 +240,17 @@ export function MyQuotes() {
         </section>
       )}
 
-      {team && current && (
+      {team && data && current && (
         <QuoteDetail
           key={`${current.ref}-${current.version}`}
           quote={current}
-          booking={bookingFor(store, current)}
+          booking={bookingFor(data, current)}
+          pin={pin}
+          onChange={reload}
         />
       )}
 
-      {team && (
+      {team && backend.mode === 'demo' && (
         <div className="print:hidden">
           {confirmReset ? (
             <div
@@ -228,6 +268,7 @@ export function MyQuotes() {
                   clearDemoData();
                   setConfirmReset(false);
                   setSelected(null);
+                  void reload();
                 }}
               >
                 Delete all
@@ -246,7 +287,7 @@ export function MyQuotes() {
               onClick={() => setConfirmReset(true)}
               className="text-sm font-semibold text-neutral-600 underline underline-offset-4"
             >
-              Reset prototype data in this browser
+              Reset demo data in this browser
             </button>
           )}
         </div>
@@ -255,18 +296,44 @@ export function MyQuotes() {
   );
 }
 
-function QuoteDetail({ quote, booking }: { quote: Quote; booking: Booking | null }) {
+function QuoteDetail({
+  quote,
+  booking,
+  pin,
+  onChange,
+}: {
+  quote: Quote;
+  booking: Booking | null;
+  pin: string;
+  onChange: () => Promise<void>;
+}) {
+  const catalogue = useCatalogue();
   const status = booking ? booking.status : statusOf(quote);
   const [msg, setMsg] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
   const handoff = buildHandoff(catalogue, quote, booking);
 
-  function accept() {
-    const res = acceptQuoteByRef(quote.ref, quote.version);
+  async function accept() {
+    setBusy(true);
+    const res = await backend.accept(catalogue, pin, quote.ref, quote.version);
+    setBusy(false);
     setMsg(
-      res.ok
-        ? `Booking ${res.booking.ref} created${res.booking.status === 'confirmed' ? ` on train ${res.booking.train.trainId}` : ' – train pending confirmation'}.`
-        : res.message,
+      isFailure(res)
+        ? res.errors.map((e) => e.message).join(' ')
+        : `Booking ${res.booking.ref} created${res.booking.status === 'confirmed' ? ` on the ${formatDateTime(res.booking.train.departure)} departure` : ' – train pending confirmation'}.`,
     );
+    await onChange();
+  }
+
+  function requote() {
+    try {
+      sessionStorage.setItem(
+        REQUOTE_KEY,
+        JSON.stringify({ ref: quote.ref, request: quote.request }),
+      );
+    } catch {
+      // The form then starts empty.
+    }
   }
 
   function download() {
@@ -299,14 +366,16 @@ function QuoteDetail({ quote, booking }: { quote: Quote; booking: Booking | null
             <button
               type="button"
               onClick={accept}
-              className={`${btn} bg-railway-green-700 hover:bg-railway-green-800 text-white`}
+              disabled={busy}
+              className={`${btn} bg-railway-green-700 hover:bg-railway-green-800 text-white disabled:opacity-60`}
             >
               <Icon name="check" className="size-4" /> Accept quote
             </button>
           )}
           {(status === 'issued' || status === 'expired') && (
             <Link
-              href={`/request-a-quotation/?requote=${encodeURIComponent(quote.ref)}&v=${quote.version}`}
+              href={`/request-a-quotation/?requote=${encodeURIComponent(quote.ref)}`}
+              onClick={requote}
               className={`${btn} text-railway-blue-900 border border-neutral-200 bg-white`}
             >
               New version
@@ -332,7 +401,7 @@ function QuoteDetail({ quote, booking }: { quote: Quote; booking: Booking | null
 
       <QuoteDocument quote={quote} status={status} booking={booking} />
 
-      {booking && <TerminalOrdersForm booking={booking} quote={quote} />}
+      {booking && <TerminalOrdersForm booking={booking} quote={quote} pin={pin} />}
 
       <section
         aria-labelledby="handoff-title"
@@ -342,7 +411,7 @@ function QuoteDetail({ quote, booking }: { quote: Quote; booking: Booking | null
           Hand off to Click & Cargo
         </h3>
         <p className="mt-1 text-sm text-neutral-600">
-          Structured summary for your ERP file: references, parties, ITU, route, legs, prices,
+          Structured summary for your ERP file: references, parties, UTI, route, legs, prices,
           dates, train and terminal orders. Until there is an API, download it or copy it.
         </p>
         {handoff.readyForErp ? (
@@ -382,11 +451,11 @@ function QuoteDetail({ quote, booking }: { quote: Quote; booking: Booking | null
               ['Shipper', handoff.parties.shipper],
               ['Consignee', handoff.parties.consignee],
               ['Incoterm', handoff.incoterm],
-              ['ITU', `${handoff.cargo.quantity} × ${handoff.cargo.itu}`],
+              ['UTI', `${handoff.cargo.quantity} × ${handoff.cargo.uti}`],
               ['Route', `${handoff.route.origin} → ${handoff.route.destination}`],
               [
                 'Train',
-                `${handoff.train.id} – ${handoff.train.status}${handoff.train.departure ? `, ${formatDateTime(handoff.train.departure)}` : ''}`,
+                `${handoff.service.name} – ${handoff.train.status}${handoff.train.departure ? `, ${formatDateTime(handoff.train.departure)}` : ''}`,
               ],
               ['Supplier cost (total)', money(handoff.total, handoff.currency)],
             ].map(([k, v]) => (
@@ -405,22 +474,32 @@ function QuoteDetail({ quote, booking }: { quote: Quote; booking: Booking | null
   );
 }
 
-function TerminalOrdersForm({ booking, quote }: { booking: Booking; quote: Quote }) {
+function TerminalOrdersForm({
+  booking,
+  quote,
+  pin,
+}: {
+  booking: Booking;
+  quote: Quote;
+  pin: string;
+}) {
+  const catalogue = useCatalogue();
   const [o, setO] = useState<TerminalOrders>(booking.terminalOrders);
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState('');
   const originRoadIncluded = quote.legs.find((l) => l.kind === 'origin-road')?.scope === 'included';
   const destRoadIncluded =
     quote.legs.find((l) => l.kind === 'destination-road')?.scope === 'included';
   const set = (k: keyof TerminalOrders, v: string) => {
     setO((s) => ({ ...s, [k]: v }));
-    setSaved(false);
+    setSaved('');
   };
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        updateTerminalOrders(booking.ref, o);
-        setSaved(true);
+        setSaved('Saving…');
+        const res = await backend.orders(pin, booking.ref, o);
+        setSaved(isFailure(res) ? res.errors.map((x) => x.message).join(' ') : 'Saved.');
       }}
       className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-neutral-200 sm:p-7"
       aria-labelledby="orders-title"
@@ -431,7 +510,7 @@ function TerminalOrdersForm({ booking, quote }: { booking: Booking; quote: Quote
       <p className="mt-1 text-sm text-neutral-600">
         Driver and vehicle registration for the gate-in and gate-out orders.{' '}
         {originRoadIncluded || destRoadIncluded
-          ? 'Where Play Haulier is included, enter the details the haulier gives you.'
+          ? `Where ${catalogue.config.haulierName} is included, enter the details the haulier gives you.`
           : 'In a terminal-to-terminal service your team arranges both road legs.'}
       </p>
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -461,7 +540,7 @@ function TerminalOrdersForm({ booking, quote }: { booking: Booking; quote: Quote
           Save orders
         </button>
         <span role="status" className="text-railway-green-700 text-sm">
-          {saved ? 'Saved.' : ''}
+          {saved}
         </span>
       </div>
     </form>

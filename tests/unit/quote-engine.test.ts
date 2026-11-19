@@ -1,239 +1,173 @@
-import { describe, expect, it } from 'vitest';
-import catalogue from '@/data/demo-catalogue.json';
+import snapshot from '@/data/sheet-snapshot.json';
 import {
   acceptQuote,
+  addHours,
+  buildCatalogue,
+  buildHandoff,
   buildQuote,
   capacityKey,
-  effectiveStatus,
-  resolveLane,
-  terminalHandling,
+  checkDate,
+  serviceOptions,
   validateRequest,
-} from '@/features/quote/engine';
-import { buildHandoff } from '@/features/quote/handoff';
-import type { QuoteRequest } from '@/features/quote/types';
+  type QuoteRequest,
+  type SheetTables,
+} from '@/engine';
 
-const cat = catalogue;
-const NOW = new Date(2026, 10, 19, 10, 0); // Thu 19 Nov 2026, 10:00
+const tables = snapshot.tables as unknown as SheetTables;
+const cat = buildCatalogue(tables);
+const NOW = new Date(2026, 10, 19, 10, 0); // Thu 19 Nov 2026
 
-/** The brief's teaching case: Toledo → Barcelona Morrot → Civitavecchia → Atessa, one 45 ft ITU. */
-const toledoAtessa = (over: Partial<QuoteRequest> = {}): QuoteRequest => ({
+const base: QuoteRequest = {
   pin: '4821',
-  requester: 'Alex Martín',
+  requester: 'Futura Cargo operations desk',
   shipper: 'Toledo automotive parts manufacturer',
   consignee: 'Atessa assembly plant',
   incoterm: 'DAP',
-  origin: { kind: 'door', id: 'door-toledo' },
-  destination: { kind: 'door', id: 'door-atessa' },
-  readyDate: '2026-11-23',
+  origin: { kind: 'door', id: 'DOOR-TOLEDO' },
+  destination: { kind: 'door', id: 'DOOR-ATESSA' },
+  readyDate: '2026-11-24',
+  serviceId: 'STD-RAIL',
+  routingMetric: 'DISTANCE',
   cargoDescription: 'Automotive parts',
   grossWeightKg: 18000,
   packages: 24,
   packageCm: { length: 120, width: 100, height: 160 },
-  ituCode: '45HC',
+  utiType: 'CONTAINER-40',
   quantity: 1,
   dangerousGoods: null,
   temperatureC: null,
   insuranceValue: null,
-  ...over,
-});
-const quote = (req: QuoteRequest, usage = {}) =>
-  buildQuote(cat, req, { ref: 'RWQ-2026-00001', version: 1, now: NOW, usage });
+};
+const quote = (over: Partial<QuoteRequest> = {}, usage = {}) =>
+  buildQuote(
+    cat,
+    { ...base, ...over },
+    { ref: 'RWQ00000001', version: 1, now: NOW, usage, team: 'Team' },
+  );
+const ok = (r: ReturnType<typeof quote>) => {
+  if (!r.ok) throw new Error(r.errors.map((e) => e.message).join(' '));
+  return r.quote;
+};
 
-describe('worked example (brief §5)', () => {
-  const q = quote(toledoAtessa());
+describe('door-to-door quotation (worked example)', () => {
+  const q = ok(quote());
 
-  it('reproduces the illustrative arithmetic: €890 integrated cost', () => {
-    expect(q.lines.map((l) => [l.id, l.amount])).toEqual([
-      ['origin-road', 180],
-      ['origin-terminal', 45],
-      ['rail', 420],
-      ['destination-terminal', 45],
-      ['destination-road', 160],
-      ['management', 40],
-    ]);
-    expect(q.total).toBe(890);
-  });
-
-  it('routes via Barcelona Morrot and Civitavecchia on the teaching lane', () => {
-    expect(q.laneId).toBe('BCN-CIV');
-    expect(q.route).toMatchObject({
-      originTerminal: 'es-barcelona',
-      destinationTerminal: 'it-civitavecchia',
-    });
-    expect(q.legs.map((l) => l.scope)).toEqual([
-      'included',
-      'included',
-      'included',
-      'included',
-      'included',
-    ]);
+  it('adds the Play Haulier legs to the rail price of the Sheet', () => {
+    expect(q.lines.find((l) => l.id === 'origin-road')).toMatchObject({ amount: 180 });
+    expect(q.lines.find((l) => l.id === 'destination-road')).toMatchObject({ amount: 160 });
+    expect(q.roadTotal).toBe(340);
+    expect(q.total).toBeCloseTo(q.rail.baseFreight + q.rail.surchargesTotal + 340, 2);
+    const sum = q.lines.reduce((a, l) => a + l.amount, 0);
+    expect(sum).toBeCloseTo(q.total, 2);
   });
 
-  it('proposes the first train after the road leg, before cut-off', () => {
-    // Ready Mon 23 Nov 08:00 + 24 h road = Tue 24 Nov 08:00 at the terminal; train Tue 20:00, cut-off 08:00.
-    expect(q.train).toMatchObject({
-      status: 'proposed',
-      trainId: 'SDG 41501',
-      departure: '2026-11-24T20:00',
-      cutOff: '2026-11-24T08:00',
-      arrival: '2026-11-25T16:00',
-    });
-    expect(q.deliveryEstimate).toBe('2026-11-26T16:00');
+  it('routes Barcelona → Civitavecchia through the LINKS graph', () => {
+    expect(q.route.originTerminal).toBe('BCN-MORROT');
+    expect(q.route.destinationTerminal).toBe('CIV-FREIGHT');
+    expect(q.route.mode).toBe('INTERNATIONAL');
+    expect(q.route.countries).toEqual(['ES', 'FR', 'IT']);
   });
 
-  it('has an RWQ reference, a version and an expiry within the catalogue validity', () => {
-    expect(q.ref).toMatch(/^RWQ-/);
-    expect(q.version).toBe(1);
-    expect(q.expiresAt).toBe('2026-12-03T23:59');
-  });
-});
-
-describe('prices', () => {
-  it('total always equals the line items, with no duplicate or empty charges', () => {
-    for (const req of [
-      toledoAtessa(),
-      toledoAtessa({ quantity: 3, insuranceValue: 50000 }),
-      toledoAtessa({ ituCode: '40RF', temperatureC: 4 }),
-    ]) {
-      const q = quote(req);
-      expect(new Set(q.lines.map((l) => l.id)).size).toBe(q.lines.length);
-      expect(q.lines.every((l) => l.amount > 0)).toBe(true);
-      expect(q.total).toBeCloseTo(
-        q.lines.reduce((a, l) => a + l.amount, 0),
-        2,
-      );
-    }
+  it('proposes the first Standard departure after the road leg and cut-off', () => {
+    // Ready Tue 24 at 08:00 + 24 h road → at Barcelona Wed 25 08:00; cut-off 12 h before.
+    expect(q.train).toMatchObject({ status: 'proposed', departure: '2026-11-26T08:00', cutOff: '2026-11-25T20:00' });
+    expect(q.deliveryEstimate).toBe(addHours(q.train.arrival!, 24));
   });
 
-  it('takes terminal handling from exactly one source (country rate replaces the default)', () => {
-    expect(terminalHandling(cat, 'es-madrid')).toEqual({ amount: 45, source: 'default rate' });
-    expect(terminalHandling(cat, 'pt-poceirao')).toEqual({ amount: 50, source: 'PT country rate' });
-    const q = quote(
-      toledoAtessa({
-        origin: { kind: 'door', id: 'door-toledo' },
-        destination: { kind: 'door', id: 'door-setubal' },
-        ituCode: '40DV',
-        readyDate: '2026-11-23',
-      }),
-    );
-    expect(q.laneId).toBe('MAD-POC');
-    expect(q.lines.filter((l) => l.leg === 'destination-terminal')).toHaveLength(1);
-    expect(q.lines.find((l) => l.leg === 'destination-terminal')?.unitPrice).toBe(50);
+  it('puts terminal charges on the terminal legs', () => {
+    expect(q.lines.find((l) => l.label.startsWith('Terminal taxes origin'))!.leg).toBe('origin-terminal');
+    expect(q.lines.find((l) => l.label.startsWith('Rail handling destination'))!.leg).toBe('destination-terminal');
+    expect(q.lines.find((l) => l.label.startsWith('Documentation'))!.leg).toBe('extra');
+  });
+}); // prettier-ignore
+
+describe('terminal-to-terminal and coverage', () => {
+  it('excludes the road legs when the team uses the terminals', () => {
+    const q = ok(quote({ origin: { kind: 'terminal', id: 'BAR-LAMASINATA' }, destination: { kind: 'terminal', id: 'CIV-FREIGHT' }, serviceId: 'GRN-RAIL' }));
+    expect(q.roadTotal).toBe(0);
+    expect(q.legs.find((l) => l.kind === 'origin-road')!.scope).toBe('excluded');
+    expect(q.total).toBeCloseTo(778.9, 2); // same as RWQ00000195 in the v7 log
   });
 
-  it('marks road legs excluded for terminal-to-terminal and charges no road haulage', () => {
-    const q = quote(
-      toledoAtessa({
-        origin: { kind: 'terminal', id: 'es-barcelona' },
-        destination: { kind: 'terminal', id: 'it-civitavecchia' },
-      }),
-    );
-    expect(q.legs.find((l) => l.kind === 'origin-road')?.scope).toBe('excluded');
-    expect(q.legs.find((l) => l.kind === 'destination-road')?.scope).toBe('excluded');
-    expect(q.lines.some((l) => l.leg === 'origin-road' || l.leg === 'destination-road')).toBe(
-      false,
-    );
-    expect(q.exclusions).toContain('Origin road haulage');
-    expect(q.total).toBe(45 + 420 + 45 + 40);
+  it('refuses a route between separate networks', () => {
+    const r = quote({ origin: { kind: 'terminal', id: 'BCN-MORROT' }, destination: { kind: 'terminal', id: 'CAI-TEBBIN' } });
+    expect(!r.ok && r.errors[0]!.code).toBe('route-not-covered');
   });
-});
+}); // prettier-ignore
 
-describe('validation errors never produce a false offer', () => {
-  const codes = (req: QuoteRequest) => validateRequest(cat, req, NOW).map((e) => e.code);
+describe('dangerous goods', () => {
+  const dg = { dangerousGoods: { adrClass: '3', unNumber: '1203' } };
 
-  it('rejects an invalid PIN', () => {
-    expect(codes(toledoAtessa({ pin: '0000' }))).toContain('invalid-pin');
-  });
-  it('rejects an uncovered route', () => {
-    expect(codes(toledoAtessa({ destination: { kind: 'door', id: 'door-corbas' } }))).toEqual([
-      'route-not-covered',
-    ]);
-    expect(
-      resolveLane(cat, { kind: 'door', id: 'door-toledo' }, { kind: 'door', id: 'door-corbas' }),
-    ).toBeNull();
-  });
-  it('rejects an incompatible ITU', () => {
-    expect(codes(toledoAtessa({ ituCode: 'TRLR', grossWeightKg: 20000 }))).toEqual([
-      'itu-incompatible',
-    ]);
-  });
-  it('rejects dangerous goods on a lane or terminal that does not accept them', () => {
-    expect(
-      codes(
-        toledoAtessa({
-          origin: { kind: 'terminal', id: 'es-barcelona' },
-          destination: { kind: 'terminal', id: 'it-verona' },
-          dangerousGoods: { ridClass: '3', unNumber: '1203' },
-        }),
-      ),
-    ).toEqual(['dangerous-goods-not-accepted']);
-  });
-  it('rejects weight above the ITU limit and a missing reefer temperature', () => {
-    expect(codes(toledoAtessa({ grossWeightKg: 999999 }))).toContain('weight-exceeded');
-    expect(codes(toledoAtessa({ ituCode: '40RF' }))).toContain('temperature-required');
-  });
-  it('rejects past dates and dates beyond the catalogue', () => {
-    expect(codes(toledoAtessa({ readyDate: '2026-11-19' }))).toContain('date-invalid');
-    expect(codes(toledoAtessa({ readyDate: '2027-06-01' }))).toContain('date-invalid');
-  });
-  it('throws instead of pricing an invalid request', () => {
-    expect(() => quote(toledoAtessa({ pin: '0000' }))).toThrow();
-  });
-});
-
-describe('quote, acceptance and booking', () => {
-  it('keeps the quote and booking references distinct and linked', () => {
-    const q = quote(toledoAtessa());
-    const b = acceptQuote(cat, q, { bookingRef: 'RWB-2026-00001', now: NOW, usage: {} });
-    expect(b).toMatchObject({
-      ref: 'RWB-2026-00001',
-      quoteRef: q.ref,
-      quoteVersion: 1,
-      status: 'confirmed',
-    });
-    expect(b.ref).not.toBe(q.ref);
-    expect(b.train.trainId).toBe('SDG 41501');
+  it('is refused on services without dangerous goods', () => {
+    const errs = validateRequest(cat, { ...base, ...dg, serviceId: 'EXP-RAIL' }, NOW);
+    expect(errs.map((e) => e.code)).toContain('dangerous-goods-not-accepted');
   });
 
-  it('shows a pending train when capacity is full, and blocks the ERP handoff', () => {
-    const q = quote(toledoAtessa());
-    const full = { [capacityKey('SDG 41501', '2026-11-24')]: 12 };
-    const b = acceptQuote(cat, q, { bookingRef: 'RWB-2026-00002', now: NOW, usage: full });
-    expect(b.status).toBe('pending-train');
-    expect(b.train.departure).toBeNull();
-    const h = buildHandoff(cat, q, b);
-    expect(h.readyForErp).toBe(false);
-    expect(h.blockedReason).toMatch(/pending/);
+  it('only routes through terminals that handle dangerous goods and adds the class surcharge', () => {
+    const q = ok(quote(dg));
+    for (const id of q.route.pathIds) expect(cat.terminals.find((t) => t.id === id)!.dgCapable, id).toBe(true);
+    expect(q.lines.map((l) => l.label)).toContain('ADR Class 3 supplement');
   });
 
-  it('proposes the next departure with free slots when one is full', () => {
-    const q = quote(toledoAtessa(), { [capacityKey('SDG 41501', '2026-11-24')]: 12 });
-    expect(q.train.departure).toBe('2026-11-27T20:00');
+  it('marks the other services as not available in the comparison', () => {
+    const opts = serviceOptions(cat, { ...base, ...dg }, {});
+    expect(opts.find((o) => o.serviceId === 'STD-RAIL')!.total).not.toBeNull();
+    expect(opts.find((o) => o.serviceId === 'EXP-RAIL')!.error).toMatch(/dangerous/i);
+  });
+}); // prettier-ignore
+
+describe('validation', () => {
+  const codes = (over: Partial<QuoteRequest>) => validateRequest(cat, { ...base, ...over }, NOW).map((e) => `${e.field}:${e.code}`);
+  it('checks the case data', () => {
+    expect(codes({ pin: '12' })).toContain('pin:required');
+    expect(codes({ incoterm: '' })).toContain('incoterm:required');
+    expect(codes({ readyDate: '2026-11-19' })).toContain('readyDate:date-invalid');
+  });
+  it('checks weight, reefer temperature and insurance against the Sheet', () => {
+    expect(codes({ grossWeightKg: 30000 })).toContain('grossWeightKg:weight-exceeded'); // 26 700 kg max
+    expect(codes({ utiType: 'REEFER-40' })).toContain('temperatureC:temperature-required');
+    expect(codes({ insuranceValue: 50 })).toContain('insuranceValue:insurance-below-minimum');
+    expect(codes({})).toEqual([]);
+  });
+}); // prettier-ignore
+
+describe('capacity, booking and handoff', () => {
+  const first = ok(quote());
+  const full = { [first.train.trainId]: cat.config.defaultSlotsPerDeparture };
+
+  it('moves to the next departure when the proposed one is full', () => {
+    const q = ok(quote({}, full));
+    expect(q.train.status).toBe('proposed');
+    expect(q.train.departure! > first.train.departure!).toBe(true);
   });
 
-  it('cannot accept an expired quote', () => {
-    const q = quote(toledoAtessa());
-    const later = new Date(2026, 11, 10, 9, 0);
-    expect(effectiveStatus(q, later)).toBe('expired');
-    expect(() => acceptQuote(cat, q, { bookingRef: 'RWB-X', now: later, usage: {} })).toThrow(
-      /expired/,
-    );
+  it('confirms the booking while there is room, otherwise leaves the train pending', () => {
+    const b = acceptQuote(cat, first, { bookingRef: 'RWB00000001', now: NOW, usage: {} });
+    expect(b).toMatchObject({ status: 'confirmed', quoteRef: 'RWQ00000001' });
+    const late = acceptQuote(cat, first, { bookingRef: 'RWB00000002', now: NOW, usage: full });
+    expect(late.status).toBe('pending-train');
   });
 
-  it('exports a complete Click & Cargo handoff once the train is confirmed', () => {
-    const q = quote(toledoAtessa());
-    const b = acceptQuote(cat, q, { bookingRef: 'RWB-2026-00003', now: NOW, usage: {} });
-    const h = buildHandoff(cat, q, b);
-    expect(h).toMatchObject({
-      readyForErp: true,
-      references: { quote: q.ref, quoteVersion: 1, booking: 'RWB-2026-00003' },
-      parties: {
-        customer: 'Futura Cargo – Group B',
-        intermodalCarrier: 'SDG Railway',
-        roadHaulier: 'Play Haulier',
-      },
-      train: { id: 'SDG 41501', status: 'proposed', departure: '2026-11-24T20:00' },
-      total: 890,
-    });
+  it('blocks the ERP handoff until the train is confirmed', () => {
+    expect(buildHandoff(cat, first, null).readyForErp).toBe(false);
+    const b = acceptQuote(cat, first, { bookingRef: 'RWB00000001', now: NOW, usage: {} });
+    const h = buildHandoff(cat, { ...first, status: 'accepted' }, b);
+    expect(h).toMatchObject({ readyForErp: true, references: { booking: 'RWB00000001' }, cargo: { uti: 'CONTAINER-40' } });
+    expect(h.route.path[0]).toBe('BCN-MORROT');
   });
-});
+
+  it('uses the capacity key service | origin terminal | date', () => {
+    expect(first.train.trainId).toBe(capacityKey('STD-RAIL', 'BCN-MORROT', '2026-11-26'));
+  });
+}); // prettier-ignore
+
+describe('route-specific timetables (SCHEDULES "SERVICE:ES→IT")', () => {
+  it('prefers the most specific row', () => {
+    const t = structuredClone(tables);
+    t.SCHEDULES!.push({ ServiceID: 'STD-RAIL:ES→IT', DepartureDays: 'Fri', DepartureTime: '06:30', BlockedDates: '', Notes: 'Iberia–Italy shuttle' });
+    const c = buildCatalogue(t);
+    expect(checkDate(c, 'STD-RAIL', '2026-11-26', 'ES', 'IT')).toMatchObject({ available: false, reason: 'Operates: Fri' });
+    expect(checkDate(c, 'STD-RAIL', '2026-11-27', 'ES', 'IT')).toMatchObject({ available: true, departureTime: '06:30' });
+    expect(checkDate(c, 'STD-RAIL', '2026-11-26', 'ES', 'FR').available).toBe(true);
+  });
+}); // prettier-ignore

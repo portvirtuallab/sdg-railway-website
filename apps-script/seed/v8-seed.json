@@ -1,0 +1,206 @@
+{
+  "_about": "Additions to the v7 Sheet made by Setup (Railway Quoter menu > Set up v8). Applied once and never overwrites existing data. Edit the Sheet afterwards, not this file.",
+  "config": [
+    ["BookingPrefix", "RWB", "Prefix for booking references"],
+    ["CutOffHours", 12, "Gate-in cut-off, hours before departure"],
+    [
+      "DefaultSlotsPerDeparture",
+      20,
+      "Loading units per train when SCHEDULES has no SlotsPerDeparture"
+    ],
+    ["HaulierName", "Play Haulier", "Road haulier for first and last mile (ROAD_LEGS)"],
+    ["TrainSearchDays", 14, "Days searched for the first train with room"]
+  ],
+  "addColumns": {
+    "SCHEDULES": ["SlotsPerDeparture"],
+    "UTI_TYPES": ["MaxGrossKg", "VolumeM3"],
+    "QUOTE_LOG": [
+      "Version",
+      "TeamPIN",
+      "Requester",
+      "Shipper",
+      "Consignee",
+      "Incoterm",
+      "OriginPlace",
+      "DestinationPlace",
+      "ReadyDate",
+      "TrainID",
+      "Departure",
+      "Arrival",
+      "DeliveryEstimate",
+      "RoadTotal",
+      "ValidUntil",
+      "BookingRef"
+    ]
+  },
+  "fillColumns": {
+    "UTI_TYPES": {
+      "key": "UTICode",
+      "rows": {
+        "CONTAINER-20": { "MaxGrossKg": 28200, "VolumeM3": 33.2 },
+        "CONTAINER-40": { "MaxGrossKg": 26700, "VolumeM3": 67.7 },
+        "REEFER-40": { "MaxGrossKg": 29000, "VolumeM3": 67.5 }
+      }
+    }
+  },
+  "newTabs": {
+    "ROAD_LEGS": {
+      "headers": [
+        "LegID",
+        "PlaceID",
+        "PlaceName",
+        "CountryCode",
+        "TerminalID",
+        "DistanceKm",
+        "Price",
+        "TransitHours",
+        "Active",
+        "Notes"
+      ],
+      "rows": [
+        [
+          "RL-001",
+          "DOOR-TOLEDO",
+          "Toledo – manufacturer’s plant",
+          "ES",
+          "MAD-ABRONIGAL",
+          75,
+          95,
+          6,
+          true,
+          "Demo road leg: review distance and price"
+        ],
+        [
+          "RL-002",
+          "DOOR-TOLEDO",
+          "Toledo – manufacturer’s plant",
+          "ES",
+          "BCN-MORROT",
+          690,
+          180,
+          24,
+          true,
+          "Demo road leg: review distance and price"
+        ],
+        [
+          "RL-003",
+          "DOOR-MARTORELL",
+          "Martorell – industrial area",
+          "ES",
+          "BCN-MORROT",
+          35,
+          75,
+          4,
+          true,
+          "Demo road leg: review distance and price"
+        ],
+        [
+          "RL-004",
+          "DOOR-CORBAS",
+          "Corbas – logistics park (Lyon)",
+          "FR",
+          "LYO-VENISSIEUX",
+          8,
+          70,
+          4,
+          true,
+          "Demo road leg: review distance and price"
+        ],
+        [
+          "RL-005",
+          "DOOR-SETUBAL",
+          "Setúbal – industrial area",
+          "PT",
+          "LIS-POCEIRAO",
+          30,
+          85,
+          4,
+          true,
+          "Demo road leg: review distance and price"
+        ],
+        [
+          "RL-006",
+          "DOOR-ATESSA",
+          "Atessa – automotive plant (Val di Sangro)",
+          "IT",
+          "CIV-FREIGHT",
+          330,
+          160,
+          24,
+          true,
+          "Demo road leg: review distance and price"
+        ]
+      ]
+    },
+    "TEAMS": {
+      "headers": ["PIN", "TeamName", "Company", "Group", "Role", "Active", "Notes"],
+      "rows": [
+        [
+          "4821",
+          "Futura Cargo – Group B",
+          "Futura Cargo",
+          "B",
+          "student",
+          true,
+          "Demo team: replace with your class"
+        ],
+        [
+          "1357",
+          "PlayForwarding – Group A",
+          "PlayForwarding",
+          "A",
+          "student",
+          true,
+          "Demo team: replace with your class"
+        ],
+        [
+          "2468",
+          "Futura Cargo – Group C",
+          "Futura Cargo",
+          "C",
+          "student",
+          true,
+          "Demo team: replace with your class"
+        ],
+        [
+          "9000",
+          "Trainer",
+          "Escola Europea",
+          "",
+          "trainer",
+          true,
+          "Sees every team’s quotes. Change this PIN"
+        ]
+      ]
+    },
+    "BOOKINGS": {
+      "headers": [
+        "BookingRef",
+        "Timestamp",
+        "QuoteRef",
+        "Version",
+        "TeamPIN",
+        "Team",
+        "Status",
+        "TrainID",
+        "ServiceID",
+        "OriginTerminal",
+        "DestTerminal",
+        "Departure",
+        "CutOff",
+        "Arrival",
+        "Units",
+        "DeliveryDriver",
+        "DeliveryVehicle",
+        "CollectionDriver",
+        "CollectionVehicle",
+        "HandoffJSON"
+      ],
+      "rows": []
+    },
+    "HISTORY": {
+      "headers": ["Timestamp", "Action", "Ref", "Version", "TeamPIN", "Details"],
+      "rows": []
+    }
+  }
+}

@@ -7,6 +7,25 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- Google Sheet back end (v8): one quotation engine (`src/engine`) shared by the website and the
+  Apps Script service (`apps-script/`). Prices replay the v7 Apps Script exactly (100 logged
+  quotes since 13 May 2026 match to the cent). The service records quotes, versions, bookings and
+  history in the Sheet, numbers them under a lock (no duplicates) and saves a PDF per quote.
+- Non-destructive Sheet set-up (Railway Quoter → Set up v8): ROAD_LEGS, TEAMS, BOOKINGS, HISTORY,
+  capacity and unit-limit columns, and the missing `SurchargeCode` header.
+- Live Sheet data on the website: network statistics, services and timetable, departures,
+  corridors (from LINKS), terminal directory (77 terminals, photos kept by city), unit cards and
+  rail tariff table; build-time snapshot as fallback (`npm run sheet:snapshot`).
+- Quote form: terminals grouped by country, rail route preview, routing by distance or time,
+  comparison of the services with price and first train, PDF link in Drive.
+
+### Removed
+
+- DEMO-2026.1 test catalogue, its generator and the browser-only quote engine and store; the
+  separate terminal and corridor lists copied from the old site (the Sheet is the only source).
+
+### Added (earlier in this release)
+
 - Intermodal quotation prototype (brief of 19 November 2026): Get a quote form with RWQ quotes,
   prices by leg, scope, validity and train; acceptance into RWB bookings with assigned or pending
   train; My quotes and bookings with terminal orders, print/PDF and Click & Cargo handoff (JSON).

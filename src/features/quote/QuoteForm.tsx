@@ -3,37 +3,46 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
-import catalogue from '@/data/demo-catalogue.json';
 import { Icon } from '@/components/ui/Icon';
-import { placeName, resolveLane, validateRequest } from './engine';
-import { QuoteDocument } from './QuoteDocument';
-import { acceptQuoteByRef, requestQuote, useDemoStore } from './store';
-import { addDays, dayName, localNow } from './time';
 import {
+  addDays,
+  formatDateTime,
   INCOTERMS,
-  RID_CLASSES,
+  localNow,
+  placeName,
+  previewRoute,
+  terminalById,
+  validateRequest,
   type Booking,
+  type Catalogue,
   type Place,
   type Quote,
   type QuoteError,
   type QuoteRequest,
-} from './types';
+  type ServiceOption,
+} from '@/engine';
+import { backend, isFailure } from './backend';
+import { useCatalogue } from './catalogue-client';
+import { money } from './format';
+import { QuoteDocument } from './QuoteDocument';
+import { REQUOTE_KEY } from './requote';
 
-const STEPS = ['Team and case', 'Route and date', 'Cargo and unit', 'Review'] as const;
+const STEPS = ['Team and case', 'Route and date', 'Cargo and unit', 'Service and review'] as const;
 const STEP_FIELDS: (QuoteError['field'] | string)[][] = [
   ['pin', 'requester', 'shipper', 'consignee', 'incoterm'],
-  ['origin', 'destination', 'readyDate', 'route'],
+  ['origin', 'destination', 'readyDate', 'route', 'routingMetric'],
   [
     'cargoDescription',
     'packages',
     'packageCm',
     'grossWeightKg',
-    'ituCode',
+    'utiType',
     'quantity',
     'dangerousGoods',
     'temperatureC',
     'insuranceValue',
   ],
+  ['serviceId'],
 ];
 
 interface FormState {
@@ -47,16 +56,18 @@ interface FormState {
   destKind: 'door' | 'terminal';
   destId: string;
   readyDate: string;
+  metric: 'DISTANCE' | 'TIME';
+  serviceId: string;
   cargoDescription: string;
   packages: string;
   length: string;
   width: string;
   height: string;
   grossWeightKg: string;
-  ituCode: string;
+  utiType: string;
   quantity: string;
   dg: boolean;
-  ridClass: string;
+  adrClass: string;
   unNumber: string;
   temperatureC: string;
   insuranceValue: string;
@@ -73,26 +84,28 @@ const EMPTY: FormState = {
   destKind: 'door',
   destId: '',
   readyDate: '',
+  metric: 'DISTANCE',
+  serviceId: '',
   cargoDescription: '',
   packages: '',
   length: '',
   width: '',
   height: '',
   grossWeightKg: '',
-  ituCode: '',
+  utiType: '',
   quantity: '1',
   dg: false,
-  ridClass: '',
+  adrClass: '',
   unNumber: '',
   temperatureC: '',
   insuranceValue: '',
 };
 
-/** Next Monday at least 3 days ahead: a ready date that always has a teaching-lane train. */
+/** A weekday at least 5 days ahead, so the Standard train has a departure after the road leg. */
 function exampleReadyDate(): string {
   const today = localNow(new Date()).slice(0, 10);
-  let d = addDays(today, 3);
-  while (new Date(`${d}T12:00:00Z`).getUTCDay() !== 1) d = addDays(d, 1);
+  let d = addDays(today, 5);
+  while ([0, 6].includes(new Date(`${d}T12:00:00Z`).getUTCDay())) d = addDays(d, 1);
   return d;
 }
 
@@ -104,17 +117,18 @@ const WORKED_EXAMPLE = (): FormState => ({
   consignee: 'Atessa assembly plant',
   incoterm: 'DAP',
   originKind: 'door',
-  originId: 'door-toledo',
+  originId: 'DOOR-TOLEDO',
   destKind: 'door',
-  destId: 'door-atessa',
+  destId: 'DOOR-ATESSA',
   readyDate: exampleReadyDate(),
+  serviceId: 'STD-RAIL',
   cargoDescription: 'Automotive parts',
   packages: '24',
   length: '120',
   width: '100',
   height: '160',
   grossWeightKg: '18000',
-  ituCode: '45HC',
+  utiType: 'CONTAINER-40',
   quantity: '1',
 });
 
@@ -137,15 +151,17 @@ function toRequest(f: FormState): QuoteRequest {
     origin: { kind: f.originKind, id: f.originId } as Place,
     destination: { kind: f.destKind, id: f.destId } as Place,
     readyDate: f.readyDate,
+    serviceId: f.serviceId,
+    routingMetric: f.metric,
     cargoDescription: f.cargoDescription,
     grossWeightKg: num(f.grossWeightKg),
     packages: num(f.packages),
     packageCm: dims.every((d) => d > 0)
       ? { length: dims[0]!, width: dims[1]!, height: dims[2]! }
       : null,
-    ituCode: f.ituCode,
+    utiType: f.utiType,
     quantity: num(f.quantity),
-    dangerousGoods: f.dg ? { ridClass: f.ridClass, unNumber: f.unNumber.trim() } : null,
+    dangerousGoods: f.dg ? { adrClass: f.adrClass, unNumber: f.unNumber.trim() } : null,
     temperatureC: f.temperatureC.trim() === '' ? null : Number(f.temperatureC),
     insuranceValue: f.insuranceValue.trim() === '' ? null : Number(f.insuranceValue),
   };
@@ -163,16 +179,18 @@ function fromRequest(r: QuoteRequest): FormState {
     destKind: r.destination.kind,
     destId: r.destination.id,
     readyDate: r.readyDate,
+    metric: r.routingMetric,
+    serviceId: r.serviceId,
     cargoDescription: r.cargoDescription,
     packages: String(r.packages),
     length: r.packageCm ? String(r.packageCm.length) : '',
     width: r.packageCm ? String(r.packageCm.width) : '',
     height: r.packageCm ? String(r.packageCm.height) : '',
     grossWeightKg: String(r.grossWeightKg),
-    ituCode: r.ituCode,
+    utiType: r.utiType,
     quantity: String(r.quantity),
     dg: !!r.dangerousGoods,
-    ridClass: r.dangerousGoods?.ridClass ?? '',
+    adrClass: r.dangerousGoods?.adrClass ?? '',
     unNumber: r.dangerousGoods?.unNumber ?? '',
     temperatureC: r.temperatureC === null ? '' : String(r.temperatureC),
     insuranceValue: r.insuranceValue === null ? '' : String(r.insuranceValue),
@@ -183,11 +201,33 @@ const input =
   'min-h-11 w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-base outline-none focus:border-railway-blue-700 aria-[invalid=true]:border-[#8a1a1a] aria-[invalid=true]:ring-1 aria-[invalid=true]:ring-[#8a1a1a]';
 const label = 'text-sm font-semibold text-railway-blue-900';
 
+/** Terminals grouped by country (active terminals of active countries only). */
+function terminalGroups(cat: Catalogue) {
+  return cat.countries
+    .filter((c) => c.active)
+    .map((c) => ({
+      country: c,
+      terminals: cat.terminals
+        .filter((t) => t.active && t.countryCode === c.code)
+        .sort((a, b) => a.city.localeCompare(b.city)),
+    }))
+    .filter((g) => g.terminals.length)
+    .sort((a, b) => a.country.name.localeCompare(b.country.name));
+}
+
+function loadRequote(): { ref: string; request: QuoteRequest } | null {
+  try {
+    const raw = sessionStorage.getItem(REQUOTE_KEY);
+    return raw ? (JSON.parse(raw) as { ref: string; request: QuoteRequest }) : null;
+  } catch {
+    return null;
+  }
+}
+
 export function QuoteForm() {
   const params = useSearchParams();
-  const store = useDemoStore();
+  const catalogue = useCatalogue();
   const requoteRef = params.get('requote');
-  const requoteVersion = Number(params.get('v') ?? '0');
   const [f, setF] = useState<FormState>(() => {
     if (params.get('example') === '1') return WORKED_EXAMPLE();
     const o = parsePlace(params.get('from'));
@@ -196,31 +236,37 @@ export function QuoteForm() {
       ...EMPTY,
       ...(o ? { originKind: o.kind, originId: o.id } : {}),
       ...(d ? { destKind: d.kind, destId: d.id } : {}),
-      ituCode: params.get('itu') ?? '',
+      utiType: params.get('uti') ?? '',
       readyDate: params.get('date') ?? '',
     };
   });
   const [loadedRequote, setLoadedRequote] = useState(false);
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState<QuoteError[]>([]);
+  const [options, setOptions] = useState<ServiceOption[] | null>(null);
+  const [busy, setBusy] = useState<string | null>(null);
   const [result, setResult] = useState<Quote | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | undefined>(undefined);
   const [booking, setBooking] = useState<Booking | null>(null);
   const [acceptMsg, setAcceptMsg] = useState<string | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const errorRef = useRef<HTMLDivElement>(null);
 
-  // Requote: load the request of an existing quote once the store is available.
-  if (requoteRef && store && !loadedRequote) {
-    const q = store.quotes.find((x) => x.ref === requoteRef && x.version === requoteVersion);
+  // Re-quote: My quotes stores the request of the quote to re-issue (browser only).
+  if (requoteRef && !loadedRequote && typeof window !== 'undefined') {
+    const saved = loadRequote();
     setLoadedRequote(true);
-    if (q) setF(fromRequest(q.request));
+    if (saved?.ref === requoteRef) setF(fromRequest(saved.request));
   }
 
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) => setF((s) => ({ ...s, [k]: v }));
   const req = toRequest(f);
-  const lane = f.originId && f.destId ? resolveLane(catalogue, req.origin, req.destination) : null;
-  const itu = catalogue.itus.find((u) => u.code === f.ituCode);
+  const path = f.originId && f.destId ? previewRoute(catalogue, req) : null;
+  const uti = catalogue.utiTypes.find((u) => u.code === f.utiType);
+  const adrClasses = catalogue.adrClasses.filter((a) => a.code.toUpperCase() !== 'NON-DG');
+  const groups = terminalGroups(catalogue);
   const today = localNow(new Date()).slice(0, 10);
+  const cfg = catalogue.config;
 
   function focusTop() {
     requestAnimationFrame(() => headingRef.current?.focus());
@@ -231,18 +277,33 @@ export function QuoteForm() {
   }
 
   function stepErrors(s: number): QuoteError[] {
-    const all = validateRequest(catalogue, req, new Date());
+    // The service is chosen in the last step: check the rest with a provisional one.
+    const probe = { ...req, serviceId: req.serviceId || catalogue.services[0]?.id || '' };
+    const all = validateRequest(catalogue, probe, new Date());
     const fields = STEP_FIELDS.slice(0, s + 1).flat();
     let list = all.filter((e) => fields.includes(e.field));
-    if (s === 1 && !list.length && f.originId && f.destId && !lane)
+    if (s === 1 && !list.length && f.originId && f.destId && !path)
       list = [
         {
           field: 'route',
           code: 'route-not-covered',
-          message: `SDG Railway has no approved service from ${placeName(catalogue, req.origin)} to ${placeName(catalogue, req.destination)} in catalogue ${catalogue.version}. Choose a covered lane (listed below the form).`,
+          message: `There is no rail route from ${placeName(catalogue, req.origin)} to ${placeName(catalogue, req.destination)} in the SDG Railway network. Choose other terminals (see Network and trains).`,
         },
       ];
     return list;
+  }
+
+  async function loadOptions() {
+    setOptions(null);
+    setBusy('Comparing the services…');
+    const probe = { ...req, serviceId: req.serviceId || catalogue.services[0]?.id || '' };
+    const res = await backend.options(catalogue, probe);
+    setBusy(null);
+    if (isFailure(res)) return showErrors(res.errors);
+    setOptions(res);
+    const usable = res.filter((o) => o.total !== null);
+    if (!usable.some((o) => o.serviceId === f.serviceId) && usable[0])
+      set('serviceId', usable[0].serviceId);
   }
 
   function next() {
@@ -250,30 +311,46 @@ export function QuoteForm() {
     showErrors(list);
     if (list.length) return;
     setStep(step + 1);
+    if (step + 1 === 3) void loadOptions();
     focusTop();
   }
 
-  function submit() {
-    const res = requestQuote(req, requoteRef ?? undefined);
-    if (!res.ok) {
-      const firstStep = STEP_FIELDS.findIndex((fs) => res.errors.some((e) => fs.includes(e.field)));
+  async function submit() {
+    const list = validateRequest(catalogue, req, new Date());
+    if (list.length) {
+      const firstStep = STEP_FIELDS.findIndex((fs) => list.some((e) => fs.includes(e.field)));
       if (firstStep >= 0) setStep(firstStep);
-      showErrors(res.errors);
-      return;
+      return showErrors(list);
+    }
+    setBusy(
+      backend.mode === 'live'
+        ? 'Issuing the quotation and its PDF in the SDG Railway Sheet…'
+        : 'Issuing the quotation…',
+    );
+    const res = await backend.quote(catalogue, req, requoteRef ?? undefined);
+    setBusy(null);
+    if (isFailure(res)) {
+      const firstStep = STEP_FIELDS.findIndex((fs) => res.errors.some((e) => fs.includes(e.field)));
+      if (firstStep >= 0 && firstStep < step) setStep(firstStep);
+      return showErrors(res.errors);
     }
     setErrors([]);
     setResult(res.quote);
+    setPdfUrl(res.pdfUrl);
     setBooking(null);
     focusTop();
   }
 
-  function accept() {
+  async function accept() {
     if (!result) return;
-    const res = acceptQuoteByRef(result.ref, result.version);
-    if (!res.ok) {
-      setAcceptMsg(res.message);
+    setBusy('Booking capacity on the train…');
+    const res = await backend.accept(catalogue, result.request.pin, result.ref, result.version);
+    setBusy(null);
+    if (isFailure(res)) {
+      setAcceptMsg(res.errors.map((e) => e.message).join(' '));
       return;
     }
+    setResult(res.quote);
     setBooking(res.booking);
     setAcceptMsg(null);
     focusTop();
@@ -304,13 +381,15 @@ export function QuoteForm() {
               Booking <strong className="font-mono">{booking.ref}</strong> is linked to quote{' '}
               <strong className="font-mono">{result.ref}</strong> v{result.version}.{' '}
               {booking.status === 'confirmed'
-                ? `Train ${booking.train.trainId} is assigned.`
+                ? `The ${formatDateTime(booking.train.departure)} departure is assigned.`
                 : 'SDG Railway will confirm the train; ERP steps that need a train are blocked meanwhile.'}
             </>
           ) : (
             <>
               Quote <strong className="font-mono">{result.ref}</strong> v{result.version} saved for{' '}
-              {result.team}. A quote is not a booking: accept it to confirm capacity.
+              {result.team}
+              {backend.mode === 'live' ? ' in the SDG Railway register' : ' in this browser (demo)'}
+              . A quote is not a booking: accept it to confirm capacity.
             </>
           )}
         </div>
@@ -319,6 +398,7 @@ export function QuoteForm() {
             quote={result}
             status={booking ? booking.status : 'issued'}
             booking={booking}
+            pdfUrl={pdfUrl}
           />
         </div>
         {acceptMsg && (
@@ -329,12 +409,18 @@ export function QuoteForm() {
             {acceptMsg}
           </p>
         )}
-        <div className="mt-6 flex flex-wrap gap-3">
+        {busy && (
+          <p role="status" className="text-railway-blue-900 mt-4 text-sm font-semibold">
+            {busy}
+          </p>
+        )}
+        <div className="mt-6 flex flex-wrap gap-3 print:hidden">
           {!booking && (
             <button
               type="button"
               onClick={accept}
-              className="bg-railway-green-700 hover:bg-railway-green-800 inline-flex min-h-11 items-center gap-2 rounded-lg px-5 font-semibold text-white"
+              disabled={!!busy}
+              className="bg-railway-green-700 hover:bg-railway-green-800 inline-flex min-h-11 items-center gap-2 rounded-lg px-5 font-semibold text-white disabled:opacity-60"
             >
               <Icon name="check" className="size-4" /> Accept quote and book capacity
             </button>
@@ -345,6 +431,13 @@ export function QuoteForm() {
           >
             Open in My quotes and bookings
           </Link>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="border-railway-blue-900/20 text-railway-blue-900 inline-flex min-h-11 items-center gap-2 rounded-lg border bg-white px-5 font-semibold"
+          >
+            Print or save as PDF
+          </button>
           {!booking && (
             <button
               type="button"
@@ -374,6 +467,7 @@ export function QuoteForm() {
               onClick={() => {
                 setStep(i);
                 setErrors([]);
+                if (i === 3) void loadOptions();
                 focusTop();
               }}
               aria-current={i === step ? 'step' : undefined}
@@ -567,7 +661,7 @@ export function QuoteForm() {
                           </span>
                           <span className="block text-sm text-neutral-600">
                             {k === 'door'
-                              ? 'Road leg by Play Haulier, included in the price'
+                              ? `Road leg by ${cfg.haulierName}, included in the price`
                               : 'Road leg arranged by your team, not included'}
                           </span>
                         </span>
@@ -589,48 +683,82 @@ export function QuoteForm() {
                       {f[kindKey] === 'door'
                         ? catalogue.doors.map((d) => (
                             <option key={d.id} value={d.id}>
-                              {d.label}
+                              {d.name} ({d.countryCode})
                             </option>
                           ))
-                        : catalogue.terminals.map((t) => (
-                            <option key={t.id} value={t.id}>
-                              {t.city} – {t.name}
-                            </option>
+                        : groups.map((g) => (
+                            <optgroup key={g.country.code} label={g.country.name}>
+                              {g.terminals.map((t) => (
+                                <option key={t.id} value={t.id}>
+                                  {t.city} – {t.name}
+                                  {t.dgCapable ? ' (DG)' : ''}
+                                </option>
+                              ))}
+                            </optgroup>
                           ))}
                     </select>
                   </div>
                 </fieldset>
               );
             })}
-            <div className="grid gap-1.5 sm:max-w-xs">
-              <label htmlFor="f-readyDate" className={label}>
-                Cargo ready on
-              </label>
-              <input
-                id="f-readyDate"
-                type="date"
-                className={input}
-                min={addDays(today, 1)}
-                max={catalogue.validTo}
-                value={f.readyDate}
-                onChange={(e) => set('readyDate', e.target.value)}
-                aria-invalid={invalid('readyDate')}
-              />
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div className="grid gap-1.5">
+                <label htmlFor="f-readyDate" className={label}>
+                  Cargo ready on
+                </label>
+                <input
+                  id="f-readyDate"
+                  type="date"
+                  className={input}
+                  min={addDays(today, 1)}
+                  max={addDays(today, 180)}
+                  value={f.readyDate}
+                  onChange={(e) => set('readyDate', e.target.value)}
+                  aria-invalid={invalid('readyDate')}
+                />
+              </div>
+              <fieldset id="f-routingMetric" className="grid gap-1.5">
+                <legend className={label}>Rail routing</legend>
+                <div className="grid grid-cols-2 gap-2">
+                  {(
+                    [
+                      ['DISTANCE', 'Shortest distance'],
+                      ['TIME', 'Fastest transit'],
+                    ] as const
+                  ).map(([v, l]) => (
+                    <label
+                      key={v}
+                      className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border px-3 text-sm font-semibold ${f.metric === v ? 'border-railway-green-600 bg-railway-green-100 text-railway-green-700' : 'text-railway-blue-900 border-neutral-200'}`}
+                    >
+                      <input
+                        type="radio"
+                        name="metric"
+                        className="accent-railway-green-700"
+                        checked={f.metric === v}
+                        onChange={() => set('metric', v)}
+                      />
+                      {l}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
             </div>
             <div id="f-route" aria-live="polite">
               {f.originId &&
                 f.destId &&
-                (lane ? (
+                (path ? (
                   <p className="bg-railway-blue-100 text-railway-blue-950 rounded-xl p-4 text-sm">
-                    <strong>Covered lane {lane.id}:</strong>{' '}
-                    {catalogue.terminals.find((t) => t.id === lane.from)?.city} →{' '}
-                    {catalogue.terminals.find((t) => t.id === lane.to)?.city}, train {lane.train.id}{' '}
-                    on {lane.train.days.map(dayName).join(', ')} at {lane.train.departure}.
+                    <strong>Rail route found:</strong>{' '}
+                    {path.pathIds.map((id) => terminalById(catalogue, id)?.city ?? id).join(' → ')}{' '}
+                    · {path.distanceKm.toLocaleString('en-GB')} km
+                    {path.borderCrossings > 0 &&
+                      ` · ${path.borderCrossings} border crossing${path.borderCrossings > 1 ? 's' : ''}`}
+                    . You compare the services and trains in the last step.
                   </p>
                 ) : (
                   <p className="border-notice-border bg-notice-bg text-notice-text rounded-xl border-l-4 p-4 text-sm">
-                    <strong>Route not covered.</strong> There is no approved SDG Railway service
-                    between these places. The quote cannot be issued.
+                    <strong>Route not covered.</strong> The SDG Railway network has no rail
+                    connection between these places. The quote cannot be issued.
                   </p>
                 ))}
             </div>
@@ -653,29 +781,34 @@ export function QuoteForm() {
             </div>
             <div className="grid gap-5 sm:grid-cols-3">
               <div className="grid gap-1.5">
-                <label htmlFor="f-ituCode" className={label}>
-                  Loading unit (ITU)
+                <label htmlFor="f-utiType" className={label}>
+                  Loading unit (UTI)
                 </label>
                 <select
-                  id="f-ituCode"
+                  id="f-utiType"
                   className={input}
-                  value={f.ituCode}
-                  onChange={(e) => set('ituCode', e.target.value)}
-                  aria-invalid={invalid('ituCode')}
-                  aria-describedby="h-itu"
+                  value={f.utiType}
+                  onChange={(e) => set('utiType', e.target.value)}
+                  aria-invalid={invalid('utiType')}
+                  aria-describedby="h-uti"
                 >
                   <option value="">— Choose —</option>
-                  {catalogue.itus.map((u) => (
+                  {catalogue.utiTypes.map((u) => (
                     <option key={u.code} value={u.code}>
                       {u.name}
-                      {lane && !lane.acceptedItus.includes(u.code) ? ' (not on this lane)' : ''}
                     </option>
                   ))}
                 </select>
-                <span id="h-itu" className="text-sm text-neutral-600">
-                  {itu
-                    ? `Max ${itu.maxGrossKg.toLocaleString('en-GB')} kg gross and about ${itu.volumeM3} m³ per unit (learning values).`
-                    : 'Units not accepted on your lane are marked.'}
+                <span id="h-uti" className="text-sm text-neutral-600">
+                  {uti
+                    ? [
+                        uti.description,
+                        uti.maxGrossKg && `max ${uti.maxGrossKg.toLocaleString('en-GB')} kg`,
+                        uti.volumeM3 && `about ${uti.volumeM3} m³ per unit`,
+                      ]
+                        .filter(Boolean)
+                        .join(' · ')
+                    : 'Types of unit SDG Railway carries.'}
                 </span>
               </div>
               <div className="grid gap-1.5">
@@ -686,7 +819,7 @@ export function QuoteForm() {
                   id="f-quantity"
                   type="number"
                   min={1}
-                  max={10}
+                  max={20}
                   className={input}
                   value={f.quantity}
                   onChange={(e) => set('quantity', e.target.value)}
@@ -756,30 +889,31 @@ export function QuoteForm() {
                 />
                 <span>
                   <span className="text-railway-blue-900 block font-semibold">
-                    Dangerous goods (RID)
+                    Dangerous goods (ADR/RID)
                   </span>
                   <span className="block text-sm text-neutral-600">
-                    Only Standard Rail lanes and terminals that handle dangerous goods accept them.
+                    Only services and terminals that handle dangerous goods accept them; the route
+                    avoids the others.
                   </span>
                 </span>
               </label>
               {f.dg && (
                 <div className="mt-3 grid gap-4 sm:grid-cols-2">
                   <div className="grid gap-1.5">
-                    <label htmlFor="f-ridClass" className={label}>
-                      RID class
+                    <label htmlFor="f-adrClass" className={label}>
+                      ADR/RID class
                     </label>
                     <select
-                      id="f-ridClass"
+                      id="f-adrClass"
                       className={input}
-                      value={f.ridClass}
-                      onChange={(e) => set('ridClass', e.target.value)}
+                      value={f.adrClass}
+                      onChange={(e) => set('adrClass', e.target.value)}
                       aria-invalid={invalid('dangerousGoods')}
                     >
                       <option value="">— Choose —</option>
-                      {RID_CLASSES.map(([c, n]) => (
-                        <option key={c} value={c}>
-                          Class {c} – {n}
+                      {adrClasses.map((a) => (
+                        <option key={a.code} value={a.code}>
+                          Class {a.code} – {a.name}
                         </option>
                       ))}
                     </select>
@@ -800,7 +934,7 @@ export function QuoteForm() {
                   </div>
                 </div>
               )}
-              {itu && 'reefer' in itu && itu.reefer && (
+              {uti?.reefer && (
                 <div className="mt-4 grid gap-1.5 sm:max-w-xs">
                   <label htmlFor="f-temperatureC" className={label}>
                     Reefer set temperature (°C)
@@ -818,7 +952,7 @@ export function QuoteForm() {
               )}
               <div className="mt-4 grid gap-1.5 sm:max-w-xs">
                 <label htmlFor="f-insuranceValue" className={label}>
-                  Insure declared value (EUR){' '}
+                  Insure declared value ({cfg.currency}){' '}
                   <span className="font-normal text-neutral-600">optional</span>
                 </label>
                 <input
@@ -829,11 +963,12 @@ export function QuoteForm() {
                   className={input}
                   value={f.insuranceValue}
                   onChange={(e) => set('insuranceValue', e.target.value)}
+                  aria-invalid={invalid('insuranceValue')}
                   aria-describedby="h-ins"
                 />
                 <span id="h-ins" className="text-sm text-neutral-600">
-                  {catalogue.charges.insuranceRate * 100}% of the value, from{' '}
-                  {catalogue.charges.insuranceMinValue} EUR.
+                  {Math.round(cfg.insuranceRate * 1000) / 10}% of the value, from{' '}
+                  {cfg.minInsuranceValue} {cfg.currency}.
                 </span>
               </div>
             </fieldset>
@@ -842,7 +977,66 @@ export function QuoteForm() {
 
         {step === 3 && (
           <div className="mt-6">
-            <dl className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
+            <fieldset id="f-serviceId">
+              <legend className="text-railway-blue-900 font-bold">Choose the rail service</legend>
+              <p className="mt-1 text-sm text-neutral-600">
+                Door-to-door price and first train with room, for the cargo ready on{' '}
+                {formatDateTime(f.readyDate, false)}.
+              </p>
+              {!options && busy && (
+                <p role="status" className="text-railway-blue-900 mt-4 text-sm font-semibold">
+                  {busy}
+                </p>
+              )}
+              {options && (
+                <div className="mt-4 grid gap-3 md:grid-cols-3">
+                  {options.map((o) => {
+                    const usable = o.total !== null;
+                    const chosen = f.serviceId === o.serviceId;
+                    return (
+                      <label
+                        key={o.serviceId}
+                        className={`relative flex flex-col gap-1 rounded-xl border p-4 ${usable ? 'cursor-pointer' : 'cursor-not-allowed opacity-70'} ${chosen && usable ? 'border-railway-green-600 bg-railway-green-100 ring-railway-green-600 ring-1' : 'border-neutral-200'}`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            name="service"
+                            className="accent-railway-green-700"
+                            disabled={!usable}
+                            checked={chosen && usable}
+                            onChange={() => set('serviceId', o.serviceId)}
+                          />
+                          <span className="text-railway-blue-900 font-bold">{o.serviceName}</span>
+                        </span>
+                        <span className="text-xs font-semibold tracking-wide text-neutral-600 uppercase">
+                          {o.level}
+                          {o.dgAllowed ? ' · dangerous goods allowed' : ''}
+                        </span>
+                        {usable ? (
+                          <>
+                            <span className="text-railway-blue-900 mt-1 text-2xl font-bold tabular-nums">
+                              {money(o.total!, cfg.currency)}
+                            </span>
+                            <span className="text-sm text-neutral-700">
+                              {o.train?.status === 'proposed'
+                                ? `Departs ${formatDateTime(o.train.departure)}`
+                                : `Train pending: ${o.train?.reason ?? ''}`}
+                            </span>
+                            <span className="text-sm text-neutral-600">
+                              About {Math.round((o.transitMin ?? 0) / 6) / 10} h by rail
+                            </span>
+                          </>
+                        ) : (
+                          <span className="mt-1 text-sm text-neutral-700">{o.error}</span>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
+            </fieldset>
+            <dl className="mt-6 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
               {[
                 ['Team PIN', f.pin],
                 ['Requested by', f.requester],
@@ -855,13 +1049,13 @@ export function QuoteForm() {
                   'Cargo',
                   `${f.cargoDescription}, ${f.packages} packages, ${Number(f.grossWeightKg).toLocaleString('en-GB')} kg`,
                 ],
-                ['Loading unit', `${f.quantity} × ${itu?.name ?? '–'}`],
+                ['Loading unit', `${f.quantity} × ${uti?.name ?? '–'}`],
                 [
                   'Special',
                   [
-                    f.dg ? `RID class ${f.ridClass}` : 'General cargo',
+                    f.dg ? `ADR/RID class ${f.adrClass}` : 'General cargo',
                     f.temperatureC && `${f.temperatureC} °C`,
-                    f.insuranceValue && `insured ${f.insuranceValue} EUR`,
+                    f.insuranceValue && `insured ${f.insuranceValue} ${cfg.currency}`,
                   ]
                     .filter(Boolean)
                     .join(' · '),
@@ -877,10 +1071,18 @@ export function QuoteForm() {
               ))}
             </dl>
             <p className="mt-4 text-sm text-neutral-600">
-              SDG Railway checks the lane, the loading unit and the train before pricing. Prices
-              come from the DEMO test catalogue {catalogue.version}.
+              Prices come from the SDG Railway tariff and surcharges in the course Sheet.
+              {backend.mode === 'live'
+                ? ' The quote is saved in the SDG Railway register with a PDF.'
+                : ' Demo mode: the quote is saved in this browser only.'}
             </p>
           </div>
+        )}
+
+        {busy && step < 3 && (
+          <p role="status" className="text-railway-blue-900 mt-4 text-sm font-semibold">
+            {busy}
+          </p>
         )}
 
         <div className="mt-8 flex flex-wrap justify-between gap-3 border-t border-neutral-200 pt-5">
@@ -911,9 +1113,13 @@ export function QuoteForm() {
             <button
               type="button"
               onClick={submit}
-              className="bg-railway-green-700 hover:bg-railway-green-800 inline-flex min-h-11 items-center gap-2 rounded-lg px-5 font-semibold text-white"
+              disabled={
+                !!busy || !options?.some((o) => o.serviceId === f.serviceId && o.total !== null)
+              }
+              className="bg-railway-green-700 hover:bg-railway-green-800 inline-flex min-h-11 items-center gap-2 rounded-lg px-5 font-semibold text-white disabled:opacity-60"
             >
-              <Icon name="quote" className="size-4" /> Get the quotation
+              <Icon name="quote" className="size-4" />{' '}
+              {busy && options ? busy : 'Get the quotation'}
             </button>
           )}
         </div>

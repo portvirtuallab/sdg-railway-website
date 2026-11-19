@@ -21,6 +21,9 @@ jobs:
     env:
       NEXT_PUBLIC_BASE_PATH: /sdg-railway-website
       NEXT_PUBLIC_SITE_URL: https://portvirtuallab.github.io/sdg-railway-website
+      # Apps Script web app URL (Settings → Secrets and variables → Actions → Variables).
+      # Empty: the site runs in demo mode (quotes kept in each browser).
+      NEXT_PUBLIC_QUOTE_API_URL: ${{ vars.QUOTE_API_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,6 +31,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Static pages start from the current Sheet; the browser then reads it live.
+      - name: Refresh the Sheet snapshot
+        if: env.NEXT_PUBLIC_QUOTE_API_URL != ''
+        continue-on-error: true
+        run: npm run sheet:snapshot -- --url "$NEXT_PUBLIC_QUOTE_API_URL"
       - run: npm run build
       - run: node scripts/check-links.mjs out "$NEXT_PUBLIC_BASE_PATH"
       - run: touch out/.nojekyll

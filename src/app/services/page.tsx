@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
-import { Img } from '@/components/ui/Img';
 import {
   ButtonLink,
   Callout,
@@ -9,23 +8,10 @@ import {
   PageHero,
   Section,
 } from '@/components/ui/layout';
-import catalogue from '@/data/demo-catalogue.json';
+import { TariffMatrix, UtiCards } from '@/features/network/EquipmentSheet';
 import { getPage, pageMetadata } from '@/lib/page-meta';
 
 export const metadata = pageMetadata('services');
-
-// Images of the loading units from the original Railway Equipment Fleet page.
-const ITU_IMAGE: Record<string, string> = {
-  '20DV': 'IMG-097',
-  '40DV': 'IMG-098',
-  '40HC': 'IMG-099',
-  '45HC': 'IMG-100',
-  '40RF': 'IMG-102',
-  TANK: 'IMG-103',
-  SWAP: 'IMG-104',
-  TRLR: 'IMG-105',
-};
-const city = (id: string) => catalogue.terminals.find((t) => t.id === id)?.city ?? id;
 
 export default function EquipmentAndCargoPage() {
   const page = getPage('services');
@@ -35,106 +21,25 @@ export default function EquipmentAndCargoPage() {
         page={page}
         image="IMG-036"
         eyebrow="Loading units and special cargo"
-        intro="Which loading units (ITUs) SDG Railway accepts, on which trains, and the limits for weight, volume and special cargo."
+        intro="Which loading units SDG Railway carries, on which services and at what rail tariff, and the rules for special cargo."
       />
 
       <Section eyebrow="Loading units" title="What you can ship with SDG Railway">
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {catalogue.itus.map((u) => {
-            const lanes = catalogue.lanes.filter((l) => l.acceptedItus.includes(u.code)).length;
-            return (
-              <li
-                key={u.code}
-                className="flex flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-neutral-200"
-              >
-                <div className="flex aspect-[4/3] items-center justify-center rounded-xl bg-neutral-50 p-3">
-                  <Img id={ITU_IMAGE[u.code]!} className="max-h-full w-auto object-contain" />
-                </div>
-                <h3 className="text-railway-blue-900 mt-4 font-bold">{u.name}</h3>
-                <p className="font-mono text-xs text-neutral-600">{u.code}</p>
-                <dl className="mt-3 grid grid-cols-2 gap-2 text-sm">
-                  <div>
-                    <dt className="text-neutral-600">Max gross</dt>
-                    <dd className="text-railway-blue-900 font-semibold">
-                      {u.maxGrossKg.toLocaleString('en-GB')} kg
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-neutral-600">Volume</dt>
-                    <dd className="text-railway-blue-900 font-semibold">about {u.volumeM3} m³</dd>
-                  </div>
-                  <div className="col-span-2">
-                    <dt className="text-neutral-600">Bookable on</dt>
-                    <dd className="text-railway-blue-900 font-semibold">
-                      {lanes} of {catalogue.lanes.length} trains
-                    </dd>
-                  </div>
-                </dl>
-              </li>
-            );
-          })}
-        </ul>
+        <UtiCards />
         <p className="mt-6 text-sm text-neutral-600">
-          Weights and volumes are learning values to be confirmed. The 60 ft extended container
-          shown on the fleet page is not yet bookable in catalogue {catalogue.version}.
+          Units, limits and tariffs come from the UTI_TYPES and TARIFFS tabs of the SDG Railway
+          Sheet. Maximum load and volume are standard container values for learning.
         </p>
       </Section>
 
       <Section
         tone="muted"
         id="compatibility"
-        eyebrow="Route compatibility"
-        title="Which unit runs on which train"
+        eyebrow="Rail tariff"
+        title="Rail freight by service and unit"
+        intro="Per loading unit: a fixed fee plus a rate per kilometre of the rail route, never less than the minimum. Surcharges (terminal, documentation, dangerous goods, border crossings…) are added in the quote."
       >
-        <div
-          className="overflow-x-auto rounded-2xl ring-1 ring-neutral-200"
-          tabIndex={0}
-          role="region"
-          aria-label="Compatibility table"
-        >
-          <table className="w-full min-w-[52rem] text-center text-sm">
-            <caption className="sr-only">Loading units accepted on each train</caption>
-            <thead className="bg-railway-blue-900 text-white">
-              <tr>
-                <th scope="col" className="px-3 py-3 text-left">
-                  Train and route
-                </th>
-                {catalogue.itus.map((u) => (
-                  <th key={u.code} scope="col" className="px-2 py-3 font-mono">
-                    {u.code}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-neutral-200 bg-white">
-              {catalogue.lanes.map((l) => (
-                <tr key={l.id}>
-                  <th scope="row" className="px-3 py-2.5 text-left">
-                    <span className="text-railway-blue-900 font-mono font-semibold">
-                      {l.train.id}
-                    </span>
-                    <span className="block text-xs font-normal text-neutral-600">
-                      {city(l.from)} → {city(l.to)}
-                    </span>
-                  </th>
-                  {catalogue.itus.map((u) =>
-                    l.acceptedItus.includes(u.code) ? (
-                      <td key={u.code} className="text-railway-green-700 px-2 py-2.5">
-                        <Icon name="check" className="mx-auto size-5" />
-                        <span className="sr-only">Accepted</span>
-                      </td>
-                    ) : (
-                      <td key={u.code} className="px-2 py-2.5 text-neutral-600">
-                        <span aria-hidden="true">–</span>
-                        <span className="sr-only">Not accepted</span>
-                      </td>
-                    ),
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <TariffMatrix />
       </Section>
 
       <Section eyebrow="Special cargo" title="Dangerous goods, reefers and semi-trailers">
@@ -142,22 +47,22 @@ export default function EquipmentAndCargoPage() {
           {[
             {
               icon: 'hazard' as const,
-              title: 'Dangerous goods (RID)',
-              text: 'Accepted only on Standard Rail trains and at terminals that handle dangerous goods. Declare the RID class (and UN number if you know it) in the quote.',
+              title: 'Dangerous goods (ADR/RID)',
+              text: 'Accepted only on services that allow dangerous goods, through terminals that handle them. Declare the ADR/RID class (and UN number if you know it); class surcharges apply.',
               href: '/services/dangerous-goods/',
               link: 'Dangerous goods resources',
             },
             {
               icon: 'snow' as const,
               title: 'Reefer containers',
-              text: 'Need power and monitoring on the train: only on trains marked for reefers. Give the set temperature in the quote; a reefer surcharge applies.',
+              text: 'Need power and monitoring on the train. Give the set temperature in the quote; a reefer power surcharge applies per unit.',
               href: '/network-routes/#trains',
-              link: 'Train table',
+              link: 'Services and timetable',
             },
             {
               icon: 'container' as const,
               title: 'P400 semi-trailers',
-              text: 'Travel unaccompanied in T3000e pocket wagons within the P400 loading gauge, only on the trains marked for semi-trailers.',
+              text: 'Travel unaccompanied in T3000e pocket wagons within the P400 loading gauge, at the semi-trailer tariff.',
               href: '/services/container-and-trailer-packing/',
               link: 'Loading methods',
             },
@@ -182,7 +87,7 @@ export default function EquipmentAndCargoPage() {
         </div>
         <div className="mt-6">
           <Callout title="Checked before pricing">
-            The quote form checks the lane, the loading unit, weight, volume and special cargo
+            The quote form checks the route, the loading unit, weight, volume and special cargo
             before giving a price. If something does not fit, you get a clear message instead of an
             offer.
           </Callout>

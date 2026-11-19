@@ -3,12 +3,17 @@ import { Img, imageUrl } from '@/components/ui/Img';
 import { asset } from '@/lib/asset';
 import { ButtonLink, LinkCard, ScenarioBadge, Section, TrackDivider } from '@/components/ui/layout';
 import { PVL_ONE_URL } from '@/content/site-map';
-import corridors from '@/data/corridors.json';
 import services from '@/data/home-services.json';
 import locomotives from '@/data/locomotives.json';
-import terminals from '@/data/terminals.json';
-import catalogue from '@/data/demo-catalogue.json';
+import { NetworkStats } from '@/features/network/ServicesTable';
 import { HomeSearch } from '@/features/quote/HomeSearch';
+import { SNAPSHOT_CATALOGUE } from '@/features/quote/snapshot';
+import { bookableTerminals } from '@/engine';
+
+const activeTerminals = bookableTerminals(SNAPSHOT_CATALOGUE).length;
+const corridorCount = new Set(
+  SNAPSHOT_CATALOGUE.links.filter((l) => l.active).map((l) => l.corridorTag),
+).size;
 
 const FLOW: { icon: IconName; title: string; text: string }[] = [
   {
@@ -106,18 +111,7 @@ export default function HomePage() {
               Access PVL.ONE
             </ButtonLink>
           </div>
-          <dl className="mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-white/20 pt-6">
-            {[
-              [catalogue.lanes.length, 'Bookable trains'],
-              [corridors.length, 'Corridors'],
-              [terminals.length, 'Terminals'],
-            ].map(([n, l]) => (
-              <div key={l}>
-                <dt className="text-sm text-white/75">{l}</dt>
-                <dd className="font-display text-3xl font-bold text-white">{n}</dd>
-              </div>
-            ))}
-          </dl>
+          <NetworkStats />
         </div>
         <TrackDivider />
       </section>
@@ -268,12 +262,12 @@ export default function HomePage() {
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <li>
             <LinkCard href="/network-routes/#terminals" icon="pin" title="Find a terminal">
-              Search {terminals.length} scenario terminals by country or city.
+              Search {activeTerminals} terminals of the network by country or city.
             </LinkCard>
           </li>
           <li>
             <LinkCard href="/network-routes/" icon="route" title="Explore the network">
-              {corridors.length} rail corridors from the Atlantic to the Red Sea.
+              {corridorCount} rail corridors from the Atlantic to the Gulf.
             </LinkCard>
           </li>
           <li>

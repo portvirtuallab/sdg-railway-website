@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #151a22; padding: 28px 36px; }
+      .head { display: table; width: 100%; border-bottom: 3px solid #062659; padding-bottom: 12px; margin-bottom: 16px; }
+      .head > div { display: table-cell; vertical-align: middle; }
+      .brand { font-size: 20px; font-weight: bold; color: #062659; }
+      .muted { color: #4b5565; }
+      .right { text-align: right; }
+      .ref { font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; color: #062659; }
+      .sim { background: #fff8e1; border: 1px solid #b98900; color: #4a3700; padding: 6px 10px; margin-bottom: 14px; font-size: 10px; }
+      h1 { font-size: 20px; margin-bottom: 2px; }
+      h2 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #062659; background: #e6ecf6; border-left: 3px solid #062659; padding: 5px 9px; margin: 16px 0 8px; }
+      table { width: 100%; border-collapse: collapse; }
+      td, th { padding: 5px 8px; border-bottom: 1px solid #dde2ea; vertical-align: top; text-align: left; }
+      th { font-size: 9.5px; text-transform: uppercase; color: #4b5565; background: #f7f8fa; }
+      .num { text-align: right; font-family: 'Courier New', monospace; white-space: nowrap; }
+      .key { width: 32%; font-weight: bold; color: #4b5565; background: #f7f8fa; }
+      .total td { background: #062659; color: #fff; font-weight: bold; font-size: 13px; }
+      .pending { color: #8a5a00; font-weight: bold; }
+      .small { font-size: 9.5px; }
+      .foot { margin-top: 20px; padding-top: 8px; border-top: 1px solid #dde2ea; font-size: 9px; color: #4b5565; }
+    </style>
+  </head>
+  <body>
+    <div class="head">
+      <div>
+        <div class="brand"><?= cfg.companyName ?></div>
+        <div class="muted">Intermodal carrier and multimodal transport operator (MTO) – <?= cfg.brandName ?></div>
+      </div>
+      <div class="right">
+        <div class="ref"><?= q.ref ?> v<?= q.version ?></div>
+        <div class="muted">Issued <?= q.issuedAt.replace('T', ' ') ?></div>
+        <div class="muted">Valid until <?= q.expiresAt.slice(0, 10) ?></div>
+      </div>
+    </div>
+
+    <div class="sim">Educational simulation (Port Virtual Lab). SDG Railway does not provide real transport services; prices and operations are simulated for training.</div>
+
+    <h1>Intermodal quotation</h1>
+    <div class="muted"><?= places.origin ?> → <?= places.destination ?> · <?= q.service.name ?> · <?= q.route.mode ?></div>
+
+    <h2>Customer and case</h2>
+    <table>
+      <tr><td class="key">Team</td><td><?= q.team ?></td></tr>
+      <tr><td class="key">Requested by</td><td><?= q.request.requester ?></td></tr>
+      <tr><td class="key">Shipper / consignee</td><td><?= q.request.shipper ?> / <?= q.request.consignee ?></td></tr>
+      <tr><td class="key">Incoterm</td><td><?= q.request.incoterm ?></td></tr>
+      <tr><td class="key">Cargo</td><td><?= q.request.cargoDescription ?> · <?= q.request.quantity ?> × <?= q.request.utiType ?> · <?= q.request.grossWeightKg ?> kg · <?= q.request.packages ?> packages<? if (q.request.dangerousGoods) { ?> · Dangerous goods class <?= q.request.dangerousGoods.adrClass ?><? if (q.request.dangerousGoods.unNumber) { ?> UN <?= q.request.dangerousGoods.unNumber ?><? } ?><? } ?><? if (q.request.temperatureC !== null) { ?> · Set point <?= q.request.temperatureC ?> °C<? } ?></td></tr>
+      <tr><td class="key">Cargo ready</td><td><?= q.request.readyDate ?></td></tr>
+    </table>
+
+    <h2>Door-to-door plan</h2>
+    <table>
+      <tr><th>Leg</th><th>From → to</th><th>Provider</th><th>Scope</th></tr>
+      <? for (var i = 0; i < q.legs.length; i++) { var l = q.legs[i]; ?>
+      <tr>
+        <td><?= l.kind.replace(/-/g, ' ') ?></td>
+        <td><?= l.from ?> → <?= l.to ?><div class="small muted"><?= l.note ?></div></td>
+        <td><?= l.provider ?></td>
+        <td class="<?= l.scope === 'pending' ? 'pending' : '' ?>"><?= l.scope ?></td>
+      </tr>
+      <? } ?>
+    </table>
+
+    <h2>Train</h2>
+    <table>
+      <? if (q.train.status === 'proposed') { ?>
+      <tr><td class="key">Proposed departure</td><td><?= q.train.departure.replace('T', ' ') ?> from <?= places.path[0] ?></td></tr>
+      <tr><td class="key">Gate-in cut-off</td><td><?= q.train.cutOff.replace('T', ' ') ?></td></tr>
+      <tr><td class="key">Arrival at terminal</td><td><?= q.train.arrival.replace('T', ' ') ?></td></tr>
+      <tr><td class="key">Estimated delivery</td><td><?= q.deliveryEstimate ? q.deliveryEstimate.replace('T', ' ') : '–' ?></td></tr>
+      <? } else { ?>
+      <tr><td class="key">Train</td><td class="pending">Pending: <?= q.train.reason ?></td></tr>
+      <? } ?>
+      <tr><td class="key">Rail route</td><td><?= places.path.join(' → ') ?><div class="small muted"><?= q.route.distanceKm ?> km · about <?= Math.round(q.route.transitMin / 6) / 10 ?> h terminal to terminal</div></td></tr>
+    </table>
+
+    <h2>Price</h2>
+    <table>
+      <tr><th>Item</th><th class="num">Qty</th><th class="num">Unit (<?= q.currency ?>)</th><th class="num">Amount (<?= q.currency ?>)</th></tr>
+      <? for (var j = 0; j < q.lines.length; j++) { var p = q.lines[j]; ?>
+      <tr>
+        <td><?= p.label ?><div class="small muted"><?= p.detail ?></div></td>
+        <td class="num"><?= p.quantity ?></td>
+        <td class="num"><?= p.unitPrice.toFixed(2) ?></td>
+        <td class="num"><?= p.amount.toFixed(2) ?></td>
+      </tr>
+      <? } ?>
+      <tr class="total"><td colspan="3">TOTAL</td><td class="num"><?= q.total.toFixed(2) ?> <?= q.currency ?></td></tr>
+    </table>
+
+    <h2>Included / not included</h2>
+    <table>
+      <tr><td class="key">Included</td><td><?= q.inclusions.join(' · ') ?></td></tr>
+      <tr><td class="key">Not included</td><td><?= q.exclusions.join(' · ') ?></td></tr>
+    </table>
+
+    <h2>Conditions</h2>
+    <? for (var k = 0; k < q.conditions.length; k++) { ?><div>• <?= q.conditions[k] ?></div><? } ?>
+
+    <div class="foot">
+      <?= cfg.companyName ?><? if (cfg.supportEmail) { ?> · <?= cfg.supportEmail ?><? } ?> · Generated automatically by the SDG Railway quotation service. Not a binding contract. <?= q.ref ?> v<?= q.version ?>
+    </div>
+  </body>
+</html>

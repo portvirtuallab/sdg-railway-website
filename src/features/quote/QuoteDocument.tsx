@@ -1,15 +1,15 @@
-import catalogue from '@/data/demo-catalogue.json';
-import { legLabel, placeName } from './engine';
-import { formatDateTime } from './time';
-import type { Booking, Quote } from './types';
+'use client';
 
-export function money(n: number, currency = 'EUR'): string {
-  return new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency,
-    minimumFractionDigits: 2,
-  }).format(n);
-}
+import {
+  formatDateTime,
+  legLabel,
+  placeName,
+  terminalById,
+  type Booking,
+  type Quote,
+} from '@/engine';
+import { useCatalogue } from './catalogue-client';
+import { money, STATUS_LABEL } from './format';
 
 const SCOPE_STYLE: Record<string, string> = {
   included: 'bg-railway-green-100 text-railway-green-700',
@@ -17,27 +17,22 @@ const SCOPE_STYLE: Record<string, string> = {
   pending: 'bg-notice-bg text-notice-text',
 };
 
-export const STATUS_LABEL: Record<string, string> = {
-  issued: 'Issued – awaiting acceptance',
-  accepted: 'Accepted',
-  expired: 'Expired',
-  superseded: 'Superseded by a newer version',
-  confirmed: 'Booking confirmed',
-  'pending-train': 'Booking – train pending confirmation',
-};
-
 /** The quotation as shown on screen, in "My quotes" and in the printable PDF. */
 export function QuoteDocument({
   quote,
   status,
   booking,
+  pdfUrl,
 }: {
   quote: Quote;
   status: string;
   booking: Booking | null;
+  pdfUrl?: string;
 }) {
+  const catalogue = useCatalogue();
   const r = quote.request;
-  const itu = catalogue.itus.find((u) => u.code === r.ituCode)!;
+  const uti = catalogue.utiTypes.find((u) => u.code === r.utiType);
+  const path = quote.route.pathIds.map((id) => terminalById(catalogue, id)?.city ?? id);
   const train = booking?.train ?? quote.train;
   return (
     <article
@@ -58,8 +53,7 @@ export function QuoteDocument({
           </h2>
           <p className="mt-1 text-sm text-neutral-600">
             Issued {formatDateTime(quote.issuedAt)} · valid until{' '}
-            {formatDateTime(quote.expiresAt.slice(0, 10), false)} · catalogue{' '}
-            {quote.catalogueVersion}
+            {formatDateTime(quote.expiresAt.slice(0, 10), false)} · {quote.service.name}
           </p>
         </div>
         <div className="text-right">
@@ -71,12 +65,22 @@ export function QuoteDocument({
               Booking {booking.ref}
             </p>
           )}
+          {pdfUrl && (
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-railway-blue-700 mt-2 block text-sm font-semibold underline underline-offset-4 print:hidden"
+            >
+              PDF in Google Drive<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          )}
         </div>
       </div>
 
       <p className="border-notice-border/40 bg-notice-bg text-notice-text border-b px-5 py-2 text-xs sm:px-7">
-        Educational simulation: SDG Railway, its prices and its operations are simulated. Amounts
-        come from DEMO test data and are not a commercial tariff.
+        Educational simulation: SDG Railway, its prices and its operations are simulated for
+        training. Amounts come from the SDG Railway tariff in the course Sheet, not a real tariff.
       </p>
 
       <div className="grid gap-6 p-5 sm:p-7 lg:grid-cols-2">
@@ -108,12 +112,12 @@ export function QuoteDocument({
           </dd>
           <dt className="text-neutral-600">Loading unit</dt>
           <dd>
-            {r.quantity} × {itu.name} ({itu.code})
+            {r.quantity} × {uti?.name ?? r.utiType} ({r.utiType})
           </dd>
           <dt className="text-neutral-600">Special</dt>
           <dd>
             {r.dangerousGoods
-              ? `Dangerous goods, RID class ${r.dangerousGoods.ridClass}${r.dangerousGoods.unNumber ? `, UN ${r.dangerousGoods.unNumber}` : ''}`
+              ? `Dangerous goods, ADR/RID class ${r.dangerousGoods.adrClass}${r.dangerousGoods.unNumber ? `, UN ${r.dangerousGoods.unNumber}` : ''}`
               : 'General cargo'}
             {r.temperatureC !== null && ` · ${r.temperatureC} °C`}
           </dd>
@@ -129,7 +133,7 @@ export function QuoteDocument({
             {[
               [
                 booking?.status === 'confirmed' ? 'Assigned train' : 'Proposed train',
-                `${train.trainId} · ${train.serviceName}`,
+                `${train.serviceName} from ${terminalById(catalogue, train.originTerminalId)?.city ?? train.originTerminalId}`,
               ],
               ['Cut-off (gate in)', formatDateTime(train.cutOff)],
               ['Departure', formatDateTime(train.departure)],
@@ -148,6 +152,12 @@ export function QuoteDocument({
           </p>
         )}
         <p className="mt-3 text-sm text-neutral-600">
+          Rail route: <strong className="text-railway-blue-900">{path.join(' → ')}</strong> ·{' '}
+          {quote.route.distanceKm.toLocaleString('en-GB')} km
+          {quote.route.borderCrossings > 0 &&
+            ` · ${quote.route.borderCrossings} border crossing${quote.route.borderCrossings > 1 ? 's' : ''}`}
+        </p>
+        <p className="mt-1 text-sm text-neutral-600">
           Estimated delivery:{' '}
           <strong className="text-railway-blue-900">
             {formatDateTime(quote.deliveryEstimate)}
@@ -222,9 +232,9 @@ export function QuoteDocument({
             <tfoot>
               <tr className="border-railway-blue-900 border-t-2">
                 <th scope="row" colSpan={3} className="py-3 text-base">
-                  Total (taxes not included){' '}
+                  Total{quote.rail.vatAmount > 0 ? '' : ' (taxes not included)'}{' '}
                   <span className="bg-notice-bg text-notice-text ml-1 rounded px-1.5 py-0.5 text-xs">
-                    DEMO
+                    Simulation
                   </span>
                 </th>
                 <td className="text-railway-blue-900 py-3 text-right text-lg font-bold tabular-nums">

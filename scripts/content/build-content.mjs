@@ -88,27 +88,16 @@ for (const s of services.sections) {
     });
   }
 }
-write('terminals.json', terminals);
-
-// ---------------------------------------------------------------- Corridors (Network & Routes cards)
-{
-  const $ = cheerio.load(embed('network-routes--embed-01.html'));
-  const corridors = $('article.card')
-    .map((_, a) => ({
-      id: slugify(`${$(a).attr('data-c')}-${$(a).find('.card-name').text()}`),
-      country: $(a).attr('data-c'),
-      name: clean($(a).find('.card-name').text()),
-      network: clean($(a).find('.card-sub').text()),
-      stops: $(a)
-        .find('.stop-name')
-        .map((__, n) => clean($(n).text()))
-        .get(),
-      source: 'network-routes cards',
-      reviewState: 'source',
-    }))
-    .get();
-  write('corridors.json', corridors);
-}
+// The terminal list itself comes from the TERMINALS tab of the Sheet; only the photos are kept,
+// keyed by city (Santa Palomba is called Rome in the Sheet).
+write(
+  'terminal-photos.json',
+  Object.fromEntries(
+    terminals
+      .filter((t) => t.image)
+      .map((t) => [t.city === 'Santa Palomba' ? 'Rome' : t.city, t.image]),
+  ),
+);
 
 // ---------------------------------------------------------------- Glossary (Resources)
 {

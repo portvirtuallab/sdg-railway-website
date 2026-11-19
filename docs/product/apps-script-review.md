@@ -8,14 +8,14 @@ CONFIG `PdfFolderId`.
 
 ## What each file does
 
-| File | Role | In use |
-| --- | --- | --- |
-| Code.gs | Web app entry (`doGet`), bootstrap data, quote engine, PDF, QUOTE_LOG, sheet menu | Yes |
-| Schedulesystem.gs | Reads SCHEDULES (`apiGetScheduleData`) and checks the date on the server (`isDateAvailable_`) | Yes |
-| Index.html | The 5-step form (route, cargo, service and date, contact, review) and the result panel | Yes |
-| app.js.html | Front-end logic of the form and calendar | Yes |
-| styles.css.html | Form styles | Yes |
-| QuotePdf.html | PDF template | Yes |
+| File              | Role                                                                                          | In use |
+| ----------------- | --------------------------------------------------------------------------------------------- | ------ |
+| Code.gs           | Web app entry (`doGet`), bootstrap data, quote engine, PDF, QUOTE_LOG, sheet menu             | Yes    |
+| Schedulesystem.gs | Reads SCHEDULES (`apiGetScheduleData`) and checks the date on the server (`isDateAvailable_`) | Yes    |
+| Index.html        | The 5-step form (route, cargo, service and date, contact, review) and the result panel        | Yes    |
+| app.js.html       | Front-end logic of the form and calendar                                                      | Yes    |
+| styles.css.html   | Form styles                                                                                   | Yes    |
+| QuotePdf.html     | PDF template                                                                                  | Yes    |
 
 ## How a price is calculated (to be kept identical)
 
@@ -36,24 +36,24 @@ CONFIG `PdfFolderId`.
 
 ## Problems found
 
-| # | Problem | Effect | Fix |
-| --- | --- | --- | --- |
-| 1 | SURCHARGES cell A1 is empty (should be `SurchargeCode`) | Codes are lost: the PDF shows "()" after each surcharge, and first-match families do not work | Type `SurchargeCode` in A1 |
-| 2 | Menu "Setup / Repair Sheets" clears any tab whose headers differ | With problem 1, pressing it **wipes SURCHARGES** | Fix A1 first; avoid the menu |
-| 3 | No lock when numbering quotes | 7 duplicate references (RWQ00000173 five times, with five PDFs) | `LockService` around numbering and logging |
-| 4 | GREEN-DISC rule is `SERVICE_LEVEL=GREEN`, service level is now `Economy` | The −5 % eco discount stopped applying | Change the rule to `SERVICE_LEVEL=ECONOMY` (changes prices) |
-| 5 | Booking reference is a random number made in the browser, never saved | PDF "Booking ref" is blank; the class cannot track bookings | Server-side bookings |
-| 6 | Departure date, contact name and cargo description are not written to QUOTE_LOG | Cannot check what was booked for which day | Add columns |
-| 7 | Company is free text | 100+ spellings of the same teams | Team list with PIN |
-| 8 | `clearServerCache` clears config only, not the schedule cache | SCHEDULES edits take up to 60 s to show | Clear both keys |
-| 9 | TARIFFS has a second, different price table in columns L–O | Unclear which prices are official (the engine uses A–H) | Owner to confirm, then delete or move |
-| 10 | Index.html polls the state every 200 ms | Wasted work in the browser | Update the card when the date changes |
-| 11 | Train names in app.js include a real brand ("Eurostar") | Possible brand confusion | Use neutral names |
+| #   | Problem                                                                         | Effect                                                                                        | Fix                                                         |
+| --- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| 1   | SURCHARGES cell A1 is empty (should be `SurchargeCode`)                         | Codes are lost: the PDF shows "()" after each surcharge, and first-match families do not work | Type `SurchargeCode` in A1                                  |
+| 2   | Menu "Setup / Repair Sheets" clears any tab whose headers differ                | With problem 1, pressing it **wipes SURCHARGES**                                              | Fix A1 first; avoid the menu                                |
+| 3   | No lock when numbering quotes                                                   | 7 duplicate references (RWQ00000173 five times, with five PDFs)                               | `LockService` around numbering and logging                  |
+| 4   | GREEN-DISC rule is `SERVICE_LEVEL=GREEN`, service level is now `Economy`        | The −5 % eco discount stopped applying                                                        | Change the rule to `SERVICE_LEVEL=ECONOMY` (changes prices) |
+| 5   | Booking reference is a random number made in the browser, never saved           | PDF "Booking ref" is blank; the class cannot track bookings                                   | Server-side bookings                                        |
+| 6   | Departure date, contact name and cargo description are not written to QUOTE_LOG | Cannot check what was booked for which day                                                    | Add columns                                                 |
+| 7   | Company is free text                                                            | 100+ spellings of the same teams                                                              | Team list with PIN                                          |
+| 8   | `clearServerCache` clears config only, not the schedule cache                   | SCHEDULES edits take up to 60 s to show                                                       | Clear both keys                                             |
+| 9   | TARIFFS has a second, different price table in columns L–O                      | Unclear which prices are official (the engine uses A–H)                                       | Owner to confirm, then delete or move                       |
+| 10  | Index.html polls the state every 200 ms                                         | Wasted work in the browser                                                                    | Update the card when the date changes                       |
+| 11  | Train names in app.js include a real brand ("Eurostar")                         | Possible brand confusion                                                                      | Use neutral names                                           |
 
-## Plan agreed with the owner (2026-11-19)
+## Status (2026-11-19)
 
-Work on a **copy** of the Sheet. Keep every existing tab; add TEAMS (with PIN), DEPARTURES and
-CAPACITY, ROAD_LEGS, BOOKINGS and HISTORY. New Apps Script with the same pricing as above plus road
-legs and bookings, a lock on numbering, QUOTE_LOG + PDF in the same folder. Before switching, replay
-the 209 logged quotes and check the new engine gives the same totals. The website keeps its design
-and reads from / writes to the new script.
+Implemented on the branch `feature/sheet-backend`: problems 1, 3, 5, 6, 7, 8, 10 and 11 are solved by
+the v8 service and website; 2 is solved by Setup v8 (it fixes A1 and never clears a tab); 4 and 9
+are left to the trainers because they change prices or data (see
+[outstanding-business-data.md](outstanding-business-data.md)). Set-up guide:
+[apps-script/README.md](../../apps-script/README.md).

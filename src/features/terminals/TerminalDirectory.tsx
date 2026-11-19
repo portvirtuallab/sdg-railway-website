@@ -1,38 +1,40 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { Img } from '@/components/ui/Img';
-import { COUNTRY_NAMES, flag } from '@/lib/page-meta';
-
-export interface Terminal {
-  id: string;
-  country: string;
-  city: string;
-  name: string;
-  dangerousGoods: boolean;
-  image: string | null;
-}
-
-const ORDER = ['ES', 'FR', 'IT', 'PT', 'JO', 'EG'];
+import { bookableTerminals } from '@/engine';
+import { terminalImage } from '@/content/terminal-images';
+import { useCatalogueState } from '@/features/quote/catalogue-client';
+import { flag } from '@/lib/page-meta';
 
 function normalise(s: string): string {
   return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 }
 
-export function TerminalDirectory({ terminals }: { terminals: Terminal[] }) {
+/** Terminals of the SDG Railway network, read from the TERMINALS tab of the Sheet. */
+export function TerminalDirectory() {
+  const { catalogue } = useCatalogueState();
   const [country, setCountry] = useState<string>('ALL');
   const [query, setQuery] = useState('');
   const [dgOnly, setDgOnly] = useState(false);
 
-  const countries = ORDER.filter((c) => terminals.some((t) => t.country === c));
+  const terminals = bookableTerminals(catalogue);
+  const countryName = (code: string) =>
+    catalogue.countries.find((c) => c.code === code)?.name ?? code;
+  const countries = catalogue.countries
+    .filter((c) => terminals.some((t) => t.countryCode === c.code))
+    .map((c) => c.code);
   const q = normalise(query.trim());
-  const results = terminals.filter(
-    (t) =>
-      (country === 'ALL' || t.country === country) &&
-      (!dgOnly || t.dangerousGoods) &&
-      (!q || normalise(`${t.city} ${t.name} ${COUNTRY_NAMES[t.country]}`).includes(q)),
-  );
+  const results = terminals
+    .filter(
+      (t) =>
+        (country === 'ALL' || t.countryCode === country) &&
+        (!dgOnly || t.dgCapable) &&
+        (!q || normalise(`${t.city} ${t.name} ${countryName(t.countryCode)}`).includes(q)),
+    )
+    .sort((a, b) => (terminalImage(b.city) ? 1 : 0) - (terminalImage(a.city) ? 1 : 0));
 
   return (
     <div>
@@ -67,7 +69,7 @@ export function TerminalDirectory({ terminals }: { terminals: Terminal[] }) {
               onChange={(e) => setDgOnly(e.target.checked)}
               className="accent-railway-green-700 size-4"
             />
-            Dangerous goods marked only
+            Dangerous goods only
           </label>
         </div>
         <fieldset>
@@ -75,7 +77,9 @@ export function TerminalDirectory({ terminals }: { terminals: Terminal[] }) {
           <div className="mt-2 flex flex-wrap gap-2">
             {['ALL', ...countries].map((c) => {
               const count =
-                c === 'ALL' ? terminals.length : terminals.filter((t) => t.country === c).length;
+                c === 'ALL'
+                  ? terminals.length
+                  : terminals.filter((t) => t.countryCode === c).length;
               const selected = country === c;
               return (
                 <button
@@ -90,7 +94,7 @@ export function TerminalDirectory({ terminals }: { terminals: Terminal[] }) {
                   }`}
                 >
                   {c !== 'ALL' && <span aria-hidden="true">{flag(c)}</span>}
-                  {c === 'ALL' ? 'All countries' : COUNTRY_NAMES[c]}
+                  {c === 'ALL' ? 'All countries' : countryName(c)}
                   <span
                     className={`rounded-full px-1.5 text-xs ${selected ? 'bg-white/20' : 'bg-neutral-50 text-neutral-600'}`}
                   >
@@ -113,34 +117,52 @@ export function TerminalDirectory({ terminals }: { terminals: Terminal[] }) {
         </div>
       ) : (
         <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {results.map((t) => (
-            <li
-              key={t.id}
-              className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200 transition hover:shadow-md"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden bg-neutral-200">
-                {t.image && (
-                  <Img
-                    id={t.image}
-                    className="size-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none"
-                  />
-                )}
-                <span className="text-railway-blue-900 absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold shadow">
-                  <span aria-hidden="true">{flag(t.country)}</span>
-                  {COUNTRY_NAMES[t.country]}
-                </span>
-                {t.dangerousGoods && (
-                  <span className="bg-notice-bg text-notice-text absolute top-3 right-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold shadow">
-                    <Icon name="hazard" className="size-3.5" /> DG
+          {results.map((t) => {
+            const image = terminalImage(t.city);
+            return (
+              <li
+                key={t.id}
+                className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-neutral-200 transition hover:shadow-md"
+              >
+                <div className="from-railway-blue-900 to-railway-blue-700 relative aspect-[16/10] overflow-hidden bg-linear-to-br">
+                  {image ? (
+                    <Img
+                      id={image}
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none"
+                    />
+                  ) : (
+                    <Icon
+                      name="pin"
+                      className="absolute top-1/2 left-1/2 size-12 -translate-x-1/2 -translate-y-1/2 text-white/30"
+                    />
+                  )}
+                  <span className="text-railway-blue-900 absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold shadow">
+                    <span aria-hidden="true">{flag(t.countryCode)}</span>
+                    {countryName(t.countryCode)}
                   </span>
-                )}
-              </div>
-              <div className="p-5">
-                <h3 className="text-railway-blue-900 text-lg font-bold">{t.city}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-neutral-600">{t.name}</p>
-              </div>
-            </li>
-          ))}
+                  {t.dgCapable && (
+                    <span className="bg-notice-bg text-notice-text absolute top-3 right-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold shadow">
+                      <Icon name="hazard" className="size-3.5" /> DG
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="text-railway-blue-900 text-lg font-bold">{t.city}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-neutral-600">{t.name}</p>
+                  <p className="mt-1 text-xs text-neutral-600">
+                    {t.type}
+                    {t.notes ? ` · ${t.notes}` : ''}
+                  </p>
+                  <Link
+                    href={`/request-a-quotation/?from=terminal:${encodeURIComponent(t.id)}#quote-form`}
+                    className="text-railway-blue-700 mt-auto pt-3 text-sm font-semibold underline underline-offset-4"
+                  >
+                    Quote from {t.city}
+                  </Link>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
