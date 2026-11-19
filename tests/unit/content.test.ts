@@ -60,23 +60,29 @@ describe('migrated content', () => {
   });
 });
 
-describe('departures board (scenario timetable)', () => {
-  it('follows operating days and cancels blocked dates', () => {
+describe('departures board (from the test catalogue)', () => {
+  it('follows operating days and marks blocked dates as no service', () => {
     // Monday 2 November 2026: Express Rail is blocked that day in the source data.
     const rows = buildDepartures(new Date('2026-11-02T12:00:00'), 1);
-    expect(rows.map((r) => r.service.id).sort()).toEqual(['EXP-RAIL', 'GRN-RAIL', 'STD-RAIL']);
-    expect(rows.find((r) => r.service.id === 'EXP-RAIL')?.cancelled).toBe(true);
-    expect(rows.find((r) => r.service.id === 'STD-RAIL')?.cancelled).toBe(false);
+    expect(new Set(rows.map((r) => r.service.id))).toEqual(
+      new Set(['EXP-RAIL', 'GRN-RAIL', 'STD-RAIL']),
+    );
+    expect(rows.filter((r) => r.service.id === 'EXP-RAIL').every((r) => r.cancelled)).toBe(true);
+    expect(rows.filter((r) => r.service.id === 'STD-RAIL').every((r) => !r.cancelled)).toBe(true);
   });
 
-  it('computes the ETA from distance and speed', () => {
-    const rows = buildDepartures(new Date('2026-11-10T12:00:00'), 1); // Tuesday: Standard only
-    expect(rows).toHaveLength(1);
-    const r = rows[0]!;
-    expect(r.etaHours).toBe(Math.round((r.route.km / r.service.speedKmh) * 10) / 10);
+  it('derives cut-off and arrival from the lane timetable', () => {
+    const rows = buildDepartures(new Date('2026-11-10T12:00:00'), 1); // Tuesday
+    const civ = rows.find((r) => r.lane.id === 'BCN-CIV')!;
+    expect(civ).toMatchObject({
+      departure: '2026-11-10T20:00',
+      cutOff: '2026-11-10T08:00',
+      arrival: '2026-11-11T16:00',
+    });
+    expect(rows.some((r) => r.service.id === 'EXP-RAIL')).toBe(false); // Express does not run on Tuesdays
   });
 
-  it('defines the three source services', () => {
+  it('keeps the three source services', () => {
     expect(RAIL_SERVICES.map((s) => s.id)).toEqual(['STD-RAIL', 'EXP-RAIL', 'GRN-RAIL']);
   });
 });

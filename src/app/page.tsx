@@ -6,6 +6,31 @@ import corridors from '@/data/corridors.json';
 import services from '@/data/home-services.json';
 import locomotives from '@/data/locomotives.json';
 import terminals from '@/data/terminals.json';
+import catalogue from '@/data/demo-catalogue.json';
+import { HomeSearch } from '@/features/quote/HomeSearch';
+
+const FLOW: { icon: IconName; title: string; text: string }[] = [
+  {
+    icon: 'quote',
+    title: 'Quote',
+    text: 'Ask SDG Railway for a door-to-door or terminal-to-terminal offer with prices by leg.',
+  },
+  {
+    icon: 'check',
+    title: 'Accept',
+    text: 'A quote is not a booking: accepting it asks for capacity on the train.',
+  },
+  {
+    icon: 'train',
+    title: 'Train and booking',
+    text: 'Receive a booking linked to your quote and the assigned train.',
+  },
+  {
+    icon: 'route',
+    title: 'Click & Cargo',
+    text: 'Hand the operation over to your ERP file without re-entering data.',
+  },
+];
 
 const SERVICE_ICONS: Record<string, IconName> = {
   'Rail Motorway Services': 'train',
@@ -36,8 +61,6 @@ const VALUES = [
   },
 ];
 
-const countries = new Set(terminals.map((t) => t.country)).size;
-
 export default function HomePage() {
   return (
     <>
@@ -57,24 +80,26 @@ export default function HomePage() {
         />
         <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28 lg:py-36">
           <p className="text-railway-green-100 text-sm font-semibold tracking-[0.18em] uppercase">
-            The rail freight simulation of Port Virtual Lab
+            Training environment · Port Virtual Lab
           </p>
           <h1
             id="hero-title"
             className="mt-4 max-w-3xl text-4xl leading-tight font-bold tracking-tight text-balance sm:text-6xl"
           >
-            Connecting ports and inland terminals through rail simulation
+            Quote an intermodal rail solution, door to door
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-white/90 sm:text-xl">
-            Explore railway equipment, terminal procedures and intermodal connections while
-            practising freight operations in Port Virtual Lab.
+            Your team is the freight forwarder. SDG Railway, the intermodal carrier of Port Virtual
+            Lab, quotes the road legs, the terminals and the train – then you hand the operation
+            over to Click &amp; Cargo.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <ButtonLink href="/request-a-quotation/" icon="quote">
-              Request a simulated quotation
+          <HomeSearch />
+          <div className="mt-6 flex flex-wrap gap-3">
+            <ButtonLink href="/how-it-works/" variant="ghost-light" icon="route">
+              How it works
             </ButtonLink>
-            <ButtonLink href="/network-routes/" variant="ghost-light" icon="route">
-              Explore the network
+            <ButtonLink href="/network-routes/" variant="ghost-light" icon="train">
+              Network and trains
             </ButtonLink>
             <ButtonLink href={PVL_ONE_URL} variant="ghost-light" external>
               Access PVL.ONE
@@ -82,9 +107,9 @@ export default function HomePage() {
           </div>
           <dl className="mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-white/20 pt-6">
             {[
-              [terminals.length, 'Terminals'],
+              [catalogue.lanes.length, 'Bookable trains'],
               [corridors.length, 'Corridors'],
-              [countries, 'Countries'],
+              [terminals.length, 'Terminals'],
             ].map(([n, l]) => (
               <div key={l}>
                 <dt className="text-sm text-white/75">{l}</dt>
@@ -102,21 +127,24 @@ export default function HomePage() {
           <div>
             <ScenarioBadge>Simulated company</ScenarioBadge>
             <h2 className="text-railway-blue-900 mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              Your partner in sustainable rail freight
+              Your intermodal carrier in the simulation
             </h2>
             <div className="mt-5 space-y-4 text-lg leading-relaxed text-neutral-600">
               <p>
-                In the Port Virtual Lab scenario, SDG Railway serves logistics operators, freight
-                forwarders and shippers with rail transport solutions that connect major ports and
-                inland terminals across Europe and the Mediterranean.
+                In the Port Virtual Lab scenario, SDG Railway offers freight forwarders integrated
+                rail solutions that connect ports and inland terminals across Europe and the
+                Mediterranean: Play Haulier road legs, terminal handling and the train, in one
+                offer.
               </p>
               <p>
-                Learners use its digital environment to plan routes, request simulated quotations
-                and coordinate intermodal shipments, exploring door-to-terminal and port-to-inland
-                connections as a real freight company would.
+                Your team quotes, accepts and books the service here, then continues the operation
+                in Click &amp; Cargo. Companies, prices and operations are simulated for training.
               </p>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="/how-it-works/" variant="secondary">
+                Who does what
+              </ButtonLink>
               <ButtonLink href="/about-us/" variant="secondary">
                 About SDG Railway
               </ButtonLink>
@@ -132,12 +160,47 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Key values */}
+      {/* How a quote works */}
       <Section
         tone="muted"
-        eyebrow="Key values"
-        title="Efficiency, sustainability and digital innovation"
+        eyebrow="How a quote works"
+        title="From request to ERP file in four steps"
       >
+        <ol className="grid gap-4 md:grid-cols-4">
+          {FLOW.map((s, i) => (
+            <li
+              key={s.title}
+              className="relative rounded-2xl bg-white p-5 shadow-sm ring-1 ring-neutral-200"
+            >
+              <span
+                className="font-display text-railway-green-100 absolute top-4 right-4 text-3xl font-bold"
+                aria-hidden="true"
+              >
+                {i + 1}
+              </span>
+              <span className="bg-railway-blue-900 inline-flex size-11 items-center justify-center rounded-xl text-white">
+                <Icon name={s.icon} />
+              </span>
+              <h3 className="text-railway-blue-900 mt-3 font-bold">
+                <span className="sr-only">Step {i + 1}: </span>
+                {s.title}
+              </h3>
+              <p className="mt-1 text-sm leading-relaxed text-neutral-600">{s.text}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <ButtonLink href="/request-a-quotation/?example=1" icon="quote">
+            Try the worked example
+          </ButtonLink>
+          <ButtonLink href="/my-quotes/" variant="secondary">
+            My quotes and bookings
+          </ButtonLink>
+        </div>
+      </Section>
+
+      {/* Key values */}
+      <Section eyebrow="Key values" title="Efficiency, sustainability and digital innovation">
         <ul className="grid gap-6 md:grid-cols-3">
           {VALUES.map((v) => (
             <li
@@ -156,6 +219,7 @@ export default function HomePage() {
 
       {/* Services */}
       <Section
+        tone="muted"
         id="services"
         eyebrow="Our services"
         title="Rail and intermodal services in the simulation"
@@ -187,10 +251,10 @@ export default function HomePage() {
       </Section>
 
       {/* Quick access */}
-      <Section tone="muted" eyebrow="Quick access" title="Find what you need for your exercise">
+      <Section eyebrow="Quick access" title="Find what you need for your exercise">
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <li>
-            <LinkCard href="/services/#terminals" icon="pin" title="Find a terminal">
+            <LinkCard href="/network-routes/#terminals" icon="pin" title="Find a terminal">
               Search {terminals.length} scenario terminals by country or city.
             </LinkCard>
           </li>

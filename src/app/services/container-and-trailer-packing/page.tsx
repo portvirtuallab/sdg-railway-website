@@ -149,7 +149,7 @@ export default function PackingPage() {
             </p>
             <p>Load securing follows EN 12195-1 (lashing and securing of cargo).</p>
             <div className="pt-2">
-              <ButtonLink href={page.sourceUrl} external variant="secondary">
+              <ButtonLink href={page.sourceUrl ?? '/'} external variant="secondary">
                 Try the Load Planner (original site)
               </ButtonLink>
             </div>

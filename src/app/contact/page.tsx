@@ -81,7 +81,7 @@ export default function ContactPage() {
                 The original site has a contact form for exercises. It sends your name and email to
                 a Google Apps Script service of Escola Europea.{' '}
                 <a
-                  href={page.sourceUrl}
+                  href={page.sourceUrl ?? undefined}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold underline"
