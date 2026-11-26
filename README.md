@@ -1,7 +1,7 @@
 # SDG Railway website
 
 Redesign of the website of **SDG Railway**, the simulated rail freight operator of
-[Port Virtual Lab](https://pvl.one/), developed by
+[Port Virtual Lab](https://www.pvl.one/), developed by
 [Escola Europea – Intermodal Transport](https://escolaeuropea.eu/) for education and professional
 training.
 
