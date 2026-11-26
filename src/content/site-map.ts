@@ -191,5 +191,5 @@ export const SITE_PAGES: readonly SitePage[] = [
   },
 ];
 
-export const PVL_ONE_URL = 'https://pvl.one/';
+export const PVL_ONE_URL = 'https://www.pvl.one/';
 export const ESCOLA_URL = 'https://escolaeuropea.eu/';
